@@ -5,18 +5,10 @@
 
 # Appearance
 
-theme: forest
+theme: mytheme
 day_night: true
 font: ''
 font_size: L
-
-# SEO
-
-site_type: Person
-local_business_type: ''
-org_name: ''
-description: ''
-twitter: 'https://twitter.com/roblerobusto'
 
 # Contact (edit or remove options as required)
 
@@ -58,8 +50,9 @@ highlight_languages:
   - r
   - python
   - javascript
-math: false
-diagram: false
+  - bash
+math: true
+diagram: true
 privacy_pack: false
 edit_page:
   repo_url: ''

@@ -1,0 +1,104 @@
+---
+title: Writing in R
+author: me
+date: '2021-03-25'
+slug: writing-in-r
+categories: []
+tags:
+  - R
+  - R Markdown
+subtitle: ''
+summary: 'Why I like R Markdown and want to share it'
+authors: []
+lastmod: '2021-03-25T15:37:19+01:00'
+featured: yes
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+bibliography: ../bib.bib
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<p>There is a lot out there written about R, R Markdown and all its family of tools.
+Most of what I have learned about it I got from Out There, by googling what I needed.
+I expect anyone reading this can do that too. These posts will help me organize and
+credit all those amazing sources that have made my own progress and learning possible
+and enjoyable. Ideally they will also reach other people that can benefit from my
+findings and that –even better!– may have ideas to share themselves.</p>
+<p>I have always liked to write, and for many years did most of it in MS Word and really enjoyed it.
+I love writing, I love formatting, I love seeing words in a beautiful environment and
+feeling all cozy inside, maybe just because I like the font. I do not underestimate
+the effect that graphics, colors, layout, sizes, margins, etc., have in my emotions,
+and therefore in my mood, my enthusiasm, my performance. Language is not only about
+the <em>what</em>, but very much about the <em>how</em>.</p>
+<p>About 5 years ago I was introduced to <span class="math inline">\(\LaTeX\)</span>. I was not sure what I could get from
+it, because most of its advantages seemed to be related to STEM-related writing, which
+(back then) I was not doing. However, the neat output that required so little tweaking,
+after a horrible-looking input that focused more on content, captivated me. I was
+looking forward to move from MS Word to <span class="math inline">\(\LaTeX\)</span>, and fearful of assignments that
+would require an MS Word output.</p>
+<p>I started my PhD position in Leuven shortly after, and my <span class="math inline">\(\LaTeX\)</span> experience was
+limited to a professional-looking CV and a chapter for what I thought was going
+to be my PhD thesis. I didn’t really write for a while, in this new position –mostly
+notes, for which I like to use Evernote. However, I did ask a colleague about what he
+used to write papers, given the requirements of different journals… and he said “R Markdown.”</p>
+<p>“You can just check the cheatsheet online,” he said. That was all. I took note of it for the future, but that was it for a while.
+I didn’t have chance to use it immediately (not that I could see, at least).
+I was already using R and R Studio, getting more and more familiar, but very slowly,
+and I certainly didn’t see it as a <em>word processor</em>.</p>
+<p>After a year or so, my R code was looking more complex and interesting, a whole
+story in a programming language. The comments I needed to understand what was going
+on, to remember the links between the pieces of code, were growing into full paragraphs.
+I wanted to document what I was doing properly, ideally close to the code itself.
+And R Markdown <span class="citation">(<a href="#ref-rmarkdown2018" role="doc-biblioref">Xie, Allaire, and Grolemund 2018</a>; <a href="#ref-rmarkdown2020" role="doc-biblioref">Xie, Dervieux, and Riederer 2020</a>)</span> is perfect for that.</p>
+<p>Suddenly, I could create texts that interlaced the documentation,
+my thinking process,
+and code –maybe the code itself was not visible in the final output, but the
+source document remains available and is quite readable itself. And that final output…</p>
+<p>First, you can have the same pretty PDFs you get with <span class="math inline">\(\LaTeX\)</span>, and include
+<span class="math inline">\(\LaTeX\)</span> expressions (like I’m doing here with the logo). Second, you can also
+have MS Word output, in case you need to write a paper with it as requirement (I only
+did that much later).
+Third –and foremost, in my opinion–, you can have HTML output. Beautiful,
+endless scrolling HTML, with collapsable table of contents, responsive features,
+tabs, and so much more! This seemed even more enticing given that I had been exploring
+HTML and CSS for a while (CSS is what you use to style HTML), so I could personalize
+and enhance my HTML’s even more.</p>
+<p>I started writing reports, merging documentation, code, visualization, and ideas.
+I explored new templates, like those from <code>rmdformats</code> <span class="citation">(<a href="#ref-R-rmdformats" role="doc-biblioref">Barnier 2021</a>)</span>.
+I wrote so much code for them that then I moved them to specialized scripts.
+I wrote so many scripts that I created a private package for most of them.
+I started writing my dissertation in <code>bookdown</code> <span class="citation">(<a href="#ref-bookdown2016" role="doc-biblioref">Xie 2016</a>)</span>,
+and gave a talk about it with <code>xaringan</code> <span class="citation">(<a href="#ref-R-xaringan" role="doc-biblioref">Xie 2021</a>)</span>.
+I created this site with <code>blogdown</code> <span class="citation">(<a href="#ref-blogdown2017" role="doc-biblioref">Xie, Hill, and Thomas 2017</a>)</span>.</p>
+<p>I grew so much in R, and I would not have anticipated it when I first started looking
+into corpus linguistics in 2013 and a professor suggested I “use R,” as if a single letter was
+enough to find anything about it. It certainly is –the community is solid and active,
+and I look forward to giving at least half what I’ve received from it ❤️.</p>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-rmdformats" class="csl-entry">
+Barnier, Julien. 2021. <em>Rmdformats: HTML Output Formats and Templates for Rmarkdown Documents</em>. <a href="https://github.com/juba/rmdformats">https://github.com/juba/rmdformats</a>.
+</div>
+<div id="ref-bookdown2016" class="csl-entry">
+Xie, Yihui. 2016. <em>Bookdown: Authoring Books and Technical Documents with <span>R</span> Markdown</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.
+</div>
+<div id="ref-R-xaringan" class="csl-entry">
+———. 2021. <em>Xaringan: Presentation Ninja</em>. <a href="https://github.com/yihui/xaringan">https://github.com/yihui/xaringan</a>.
+</div>
+<div id="ref-rmarkdown2018" class="csl-entry">
+Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. <em>R Markdown: The Definitive Guide</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown">https://bookdown.org/yihui/rmarkdown</a>.
+</div>
+<div id="ref-rmarkdown2020" class="csl-entry">
+Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. <em>R Markdown Cookbook</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown-cookbook">https://bookdown.org/yihui/rmarkdown-cookbook</a>.
+</div>
+<div id="ref-blogdown2017" class="csl-entry">
+Xie, Yihui, Alison Presmanes Hill, and Amber Thomas. 2017. <em>Blogdown: Creating Websites with <span>R</span> Markdown</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/blogdown/">https://bookdown.org/yihui/blogdown/</a>.
+</div>
+</div>
+</div>
