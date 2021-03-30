@@ -103,7 +103,7 @@ comments:
     publication: false
     event: true
   disqus:
-    shortname: 'montesmariana'
+    shortname: 'marianamontes'
     show_count: true
   commento:
     url: ''
