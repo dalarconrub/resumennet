@@ -1,0 +1,86 @@
+---
+title: Code switching with programming languages
+author: Mariana Montes
+date: '2021-04-17'
+slug: programming-code-switching
+categories: []
+tags:
+  - Javascript
+  - R
+  - Programming
+  - Python
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-05-08 16:13:16'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<!-- When I first started learning a programming language (<svg viewBox="0 0 581 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg">  <path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"></path></svg>)[^logo], I had some preconceptions of what it entailed that experience has changed. I tried to absorbe a lot of new concepts: general programming notions, things specific to R, and even statistical terminology, and got frustrated by how they just wouldn't stick. Since my first R incursion about 7 or 8 years ago, I've learned a lot about R and other programming languages and, most interestingly, about how learning works for me outside a class environment. -->
+<!-- Some of the main points I've learned are: -->
+<!-- - I need to understand how to apply my new skill to my own needs in order to actually learn it, -->
+<!-- - For which I need to figure out my own needs and possibilities, and -->
+<!-- - Remembering *how* to do things is not as important as knowing *what* you can use the skill *for* -->
+<!-- # Broad skills for narrow goals -->
+<!-- R is very broad and can be used in different fields. Ok, you can say that it is tailored for data science, but that doesn't really narrow it down so much. Data science is huge and varied, and linguistics is not a very noticeable portion of it. -->
+<!-- I didn't learn R in a school or university class. I joined a research team at the end of my second year at university, my supervisor suggested using a corpus for research (unaware of how hard I would embrace it), my father talked to another, unrelated professor about me and she said: "Tell her to learn R". That was all I got to start with. I tried to follow some courses online, but your basic R course is not going to tell you how to do corpus linguistics with it. I somehow came across Stefan Gries's [*Statistics for Linguistics with R*](http://www.stgries.info/research/sflwr/sflwr.html), but at some point it started talking about $\chi^2$ and I decided to stop and learn the statistics first. It took me so long to get to that topic in a statistics handbook (with no linguistic examples) ---and it made no sense, the way the statistic was used was completely different[^lingstat]--- that I never went back to that book. Maybe I was not there yet. -->
+<!-- [^logo]: I had actually learned with Logo as a kid, but then completely forgotten it for more than a decade, and you can program in Excel, but I didn't do that much of that either. -->
+<!-- [^lingstat]: I distinctly remember trying to figure it out with my mother: she definitely knows statistics but was not familiar with the linguistic applications, and I more or less understood what the linguists tried to do but could not connect it to what little I understood of statistics. -->
+<!-- A couple of years ago, already more proficient with R, statistics and even Python, I found Natalia Levshina's [How to do Linguistics with R](http://www.natalialevshina.com/publications.html), which explains the statistics, how to apply them with R and how they are relevant in linguistics (not necessarily corpus linguistics). It is my reference book, always on my desk. -->
+<!-- It was quite hard, at the beginning, but the challenge was not so much the content itself as the fact that I had no idea how to apply it to what I needed. I didn't even know what I needed it for. Was R going to *read* my corpus? Was it going to sort concordances? I had a list of sentences that I needed to classify based on whether Spanish *calor* 'heat' was used metaphorically or literally ---what did that have to do with vectors and taking the mean of `c(1, 2, 4, 6, 3)`{.r}? -->
+<!-- In the end, I used it in my master thesis to calculate proportions. I don't really remember how I opened my files, but I certainly didn't know how to save my analysis later (or even that I could). I just ran something like `prop.table(table(data$metaphor, data$lemma))`{.r} and transcribed the results on my Word file. I only worked interactively in the console. No scripts, no project files (I think I even looked up `table()` every week or so). I cringe at these memories, but well, I didn't know any better. I didn't know what I could use R for *that matched what I needed*. -->
+<!-- But at the same time, sometimes you don't even know what you need because you don't know that it exists, that it is even possible. You need to learn some basics of what the skill can give you access to ---what you can ask of it--- in order to identify those needs as problems that *can* be solved. -->
+<!-- # What that this skill make possible? -->
+<!-- I don't know how feasible this is, but sometimes it is worth the trouble to register and archive broad knowledge that doesn't seem very useful at the moment. I now do it actively, but my first realization of this was with the Python library [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/). -->
+<!-- Of course, the first time I heard about `Beautiful Soup` I could only try to imagine what a beautiful soup was supposed to look and taste like. It was suprisingly hard to get past that thought. -->
+<!-- It was at the beginning of 2016, I think, and my dad was trying to help me extract online newspaper articles to create a small corpus for my research. He knew Python, I didn't, so I just sat there next to him watching him write stuff that I could simply not make sense of, and somehow that page of gibberish meant that the text I saw up online ended up in my computer, all organized with the parts of the article and metadata. -->
+<!-- Naturally (for him), he wouldn't let me be a passive observer. I didn't think a programming language needed to be part of my toolkit, but he knew better and his teaching passion is irresistible. He gave me my first crash course in Python, during which I could make some connections with R ("hey, I know what a for loop is... kinda!"). And he explained his Python script to me, of which I only remember "Beautiful Soup". -->
+<!-- It might seem a waste of time to drill someone on a subject that they totally don't understand. He also told me five hundred times how to pull from git, and that I had to run tests, and to check the log for issues with the code, and I simply couldn't see the point of all that. But it stuck, there in the back of my mind, and never left. That meant that the next time I heard or read about it, it would be my second time, I would have *two* voices inside my head repeating the same thing. *I understand now, dad*. -->
+<!-- Going back to `Beautiful Soup`, it got stuck in my head somewhere in 2016 as the only bright spot in my first incursion to Python. I took online courses later to reinforce the basics, but that didn't come up again. Until two years later, when I was trying to read XML files from a corpus, with my own Python script. I knew how to open files now ---actually, I was still extatic from my first time *needing* to open a file from Python and succeeding! But XML files have structure, they are hierarchical, and just reading it as raw text will mix your actual content with metadata. You could try to extract it with [regular expressions](https://www.regular-expressions.info/) but `Beautiful Soup` just does the job. -->
+<!-- Now, I didn't know what a Python library was or what you would need one for. I didn't know that `Beautiful Soup` was a Python library. I didn't even know the terms to express what I needed (to parse an XML file). But somewhere in my mind the concept of parsing an HTML file (which is similar to XML and for me, back then, pretty much the same) was tied to a mysterious beautiful soup, so I googled that, and it made my life much easier. -->
+<!-- After that, I started appreciating my "background knowledge" much more. Sometimes the usefulness of a tool will not become clear until you need it, but at least knowing that it exists can save the day once your needs match what they offer. I started reading (almost skimming) reference books like [R for Data Science](https://r4ds.had.co.nz/), [How to do Linguistics with R](http://www.natalialevshina.com/publications.html), [R Markdown: The definitive guide](https://bookdown.org/yihui/rmarkdown/) and [R packages](https://r-pkgs.org/) when I thought I was ready for them, even though I couldn't immediately map them to my current needs, but just to have a notion of what they could offer me and where to look it up. These particular books are not too heavy to read: they take you by the hand through different topics, with concrete examples and insightful tips. If there is any chance you might use R for Data Science, in particular for Linguistics, write R Markdown and write tons of R code, respectively, they are absolutely worth it. You might not remember from a first, quick read, *how* to filter a dataframe by column values, to model syntactic alternations, to make lists in Pandoc or to add a test for your code (respectively) but you will probably remember *that* you can do that and where to look it up. -->
+<!-- # The how and the what -->
+<p>When I started learning about programming languages, one of my preconceptions was that everything you know at the beginning, you remember later.
+For example, one of the first things you might learn when you start with R is how to obtain the length of a vector or of a list. Let’s say we create a character vector (i.e. a bunch of wordlike things) called <code class="r">many_things</code> and then we ask how long it is, i.e. how many items it has. We use a function called <code class="r">length()</code> that returns that value. It sounds easy and obvious, if you think of functions as actions that do something, such as check the length of an item and tell you.</p>
+<pre class="r"><code>many_things &lt;- c(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;)
+length(many_things)</code></pre>
+<pre><code>#&gt; [1] 3</code></pre>
+<p>Even if it seems obvious and easy, at first it took me a while to learn it, especially because I had no idea why on Earth I would ever be interested in the length of a vector, whatever that was. But in any case, it is a pretty basic concept, I thought.</p>
+<p>One day, as my dad was showing me something in Python or some other language, he wanted to find the length of a list or array or something <em>and he looked it up</em>. My naïve self thought it was very weird that a professional would have to look up something so simple, but figured that if he knew so many languages and didn’t use all of them on a daily basis, he might forget these things. Like with any natural language as well —if you don’t speak it, some things go hybernate.</p>
+<p>Now that I know a bit more, I see that episode in a different light. First, it doesn’t matter so much if you know which exact syntax and wording you need to obtain that information, as long as you know that you can do it and how to look it up (e.g. “length of list python”). Second, the “obvious and easy” part is not so obvious or easy once you know multiple languages, with different ways of interpreting and expressing what you want to do.</p>
+<p>Like with natural languages. You can try to justify your prescriptivism (defining how people <em>should</em> use language) with a logical argument (e.g. double negatives cancel each other), but it doesn’t work because some other language (e.g. Spanish, Italian…) will use it a different way, based on some other “logic”.</p>
+<p>For example, while in R you obtain the length of a vector or a list with <code class="r">length()</code>, in Python you obtain the length of an item with the function <code class="python">len()</code>, like so:</p>
+<pre class="python"><code>many_things = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]
+len(many_things)</code></pre>
+<pre><code>#&gt; 3</code></pre>
+<p>In Javascript, on the other hand, the length of the item is a property, so you obtain it with the dot notation instead of as a function, like so:</p>
+<pre class="javascript"><code>const many_things = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;];
+console.log(many_things.length);</code></pre>
+<pre><code>#&gt; 3</code></pre>
+<p>Now, if you only write in one of those languages for a while, you won’t need to look this up, but if you alternate between them, or favor one and suddenly move to the other, you might get confused when <code class="js">length(many_things)</code> doesn’t work in Javascript.</p>
+<p>The discrepancies go beyond this kind of syntactic alternatives. Say you have a character string and you want to know how many characters it has. In both Python and Javascript you use the same method as for lists/arrays.</p>
+<pre class="python"><code># Python
+len(&quot;some string&quot;)</code></pre>
+<pre><code>#&gt; 11</code></pre>
+<pre class="javascript"><code>&lt;!-- Javascript --&gt;
+console.log(&quot;some string&quot;.length)</code></pre>
+<pre><code>#&gt; 11</code></pre>
+<p>However, if you apply the same reasoning in R, while the result is not an error, it is certainly not what you expected.</p>
+<pre class="r"><code># R
+length(&quot;some string&quot;)</code></pre>
+<pre><code>#&gt; [1] 1</code></pre>
+<p>As it turns out, while <code>"some string"</code> and the sequence of strings are different kind of things in Javascript and Python, they are both vectors in R, but <code>"some string"</code> just has one element. In order to obtain the number of characters you need another function, <code class="r">nchar()</code>, which is <em>vectorized</em>, meaning it will calculate the number of characters in each of the elements of the vector, regardless of the length of the vector.</p>
+<pre class="r"><code>nchar(&quot;some string&quot;)</code></pre>
+<pre><code>#&gt; [1] 11</code></pre>
+<pre class="r"><code>nchar(many_things)</code></pre>
+<pre><code>#&gt; [1] 3 3 5</code></pre>
+<p>I find this an important point when programming is a new experience. If you know what things are possible (what you can do with a given language, which libraries are available and what they do), you don’t necessarily need to memorize how to get things done. It will come easy if you practice it, like with anything else, but it is ok to be a bit lost and look things up.
+<!-- [Stack Overflow post](https://stackoverflow.com/questions/58577684/show-javascript-results-in-r-markdown-knitr-ouput) --></p>
