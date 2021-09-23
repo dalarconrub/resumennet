@@ -1,0 +1,33 @@
+---
+title: PhD Defense
+author: 'Mariana Montes'
+date: '2021-09-21'
+slug: defense
+categories:
+  - academic
+tags:
+  - Distributional semantics
+  - Cognitive linguistics
+  - Visualization
+  - Research
+subtitle: ''
+summary: 'Doctoral defense'
+authors: []
+lastmod: '2021-09-23T21:24:41+02:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects:
+  - nephological semantics
+---
+
+I defended my PhD and became a Doctor in Linguistics! Below you can see my slides: soon I will add the link to my presentation and to the thesis itself!
+
+```{r, echo=FALSE}
+xaringanExtra::embed_xaringan(
+  url = "https://slides.marianamontes.me/cloudspotting.html",
+  ratio = "9:6"
+)
+```

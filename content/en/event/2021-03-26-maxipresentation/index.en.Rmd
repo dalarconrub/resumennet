@@ -26,17 +26,17 @@ authors:
 lastmod: "`r Sys.time()`"
 featured: no
 image:
-  caption: ''
+  caption: 'Initial slide of maxipresentation'
   focal_point: ''
   preview_only: no
 projects: 
 - nephological-semantics
-url_slides: https://montesmariana.github.io/maxipresentation/
+url_slides: https://slides.marianamontes.me/maxipresentation.html
 ---
 
 ```{r, echo=FALSE}
 xaringanExtra::embed_xaringan(
-  url = "https://montesmariana.github.io/maxipresentation/",
+  url = "https://slides.marianamontes.me/maxipresentation.html",
   ratio = "4:3"
 )
 ```
