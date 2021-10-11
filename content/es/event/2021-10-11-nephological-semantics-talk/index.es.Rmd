@@ -1,0 +1,27 @@
+---
+title: Semántica Nephológica
+author: Mariana Montes
+date: '2021-10-01 17:00:00 CEST'
+slug: nephological-semantics-talk
+categories:
+  - academic
+tags: []
+subtitle: 'Uso de modelos vectoriales a nivel de instancia para análisis de variación y cambio léxicos a gran escala'
+summary: 'Talk by Mariana Montes and Karlien Franco as part of the II Jornadas de Lingüística y Gramática Española (USAL).'
+authors: ['Mariana Montes', 'Karlien Franco']
+lastmod: '2021-10-01 17:00:00'
+featured: no
+image:
+  alt_text: 'A piece of a concordance on the left, united by an arrow to a colourful scatterplot on the right.'
+  focal_point: ''
+  preview_only: true
+projects: 
+  - nephological semantics
+url_slides: 'ppt/nephological-semantics.pptx'
+---
+
+El primero de octubre de 2021, [Karlien Franco](https://www.arts.kuleuven.be/ling/qlvl/people/pages/00076167) y yo dimos una (larga) charla sobre el proyecto Semántica Nephológica: sociolingüística cognitiva, semántica distribucional y algunos ejemplos prácticos. Fue una experiencia maravillosa posibilitada por [Nuria Gómez Belart](https://www.nuriagomezbelart.com/), [Araceli Alemán](https://salvador.academia.edu/AraceliAlem%C3%A1n) y el resto del comité organizador de las II Jornadas de Lingüística y Gramática Española de la USAL (Buenos Aires, Argentina).
+
+Pueden ver la presentación completa en inglés [aquí](https://youtu.be/BZnTXSf6heY).
+
+La charla fue doblada en simultáneo al español por [Pilar Petrone](https://www.linkedin.com/in/pilar-petrone-611150180/?originalSubdomain=ar) y [Valeria Dorrego](https://www.linkedin.com/in/valeria-dorrego-aa0073a9/); pueden mirarla [aquí](https://youtu.be/lpqgBXZfuPc). Como verán, todas las diapositivas (disponibles en el link arriba) son bilingües.

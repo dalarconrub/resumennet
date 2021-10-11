@@ -1,0 +1,28 @@
+---
+title: Nephological Semantics
+author: Mariana Montes
+date: '2021-10-01 17:00:00 CEST'
+slug: nephological-semantics-talk
+categories:
+  - academic
+tags: []
+subtitle: 'Using token-based vector space models for large-scale analyses of lexical variation and change'
+summary: 'Talk by Mariana Montes and Karlien Franco as part of the II Jornadas de Lingüística y Gramática Española (USAL).'
+authors: ['Mariana Montes', 'Karlien Franco']
+lastmod: '2021-10-01 17:00:00'
+featured: no
+image:
+  alt_text: 'A piece of a concordance on the left, united by an arrow to a colourful scatterplot on the right.'
+  focal_point: ''
+  preview_only: true
+projects: 
+  - nephological semantics
+url_slides: 'ppt/nephological-semantics.pptx'
+---
+
+On October 1st, 2021, [Karlien Franco](https://www.arts.kuleuven.be/ling/qlvl/people/pages/00076167) and I gave a (long) talk about the [Nephological Semantics project](../../project/nephological-semantics): Cognitive Sociolinguistics, Distributional Semantics and some case studies. It was a wonderful experience made possible by [Nuria Gómez Belart](https://www.nuriagomezbelart.com/), [Araceli Alemán](https://salvador.academia.edu/AraceliAlem%C3%A1n) and the rest of the organizing committee of the II Jornadas de Lingüística y Gramática Española at the USAL (Buenos Aires, Argentina).
+
+You can watch the full presentation [here](https://youtu.be/BZnTXSf6heY)!
+
+The talk was also simultaneously interpreted to Spanish by [Pilar Petrone](https://www.linkedin.com/in/pilar-petrone-611150180/?originalSubdomain=ar) and [Valeria Dorrego](https://www.linkedin.com/in/valeria-dorrego-aa0073a9/); you can watch that video [here](https://youtu.be/lpqgBXZfuPc).
+As you can see, all slides (available above) are bilingual.

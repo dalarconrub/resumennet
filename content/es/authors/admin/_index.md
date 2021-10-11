@@ -53,4 +53,4 @@ Me gustan mucho mucho las lenguas, estudiarlas y estudiar sobre llas. También m
 
 Además de las vidas académica y virtual disfruto aikido e iaido, caminar en espacios verdes, leer y hacer repostería. Tomo mate (🧉), muchísimo, y es una gran parte de lo que soy.
 
-{{< icon name="download" pack="fas" >}} Descarga mi {{< staticref "https://github.com/montesmariana/CV/raw/main/CV/CV.pdf" "newtab" >}}CV{{< /staticref >}} (en inglés).
+{{< icon name="download" pack="fas" >}} Descarga mi {{< staticref "https://github.com/montesmariana/CV/raw/main/CV.pdf" "newtab" >}}CV{{< /staticref >}} (en inglés).
