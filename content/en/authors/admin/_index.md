@@ -54,4 +54,4 @@ I really really like languages, to study them and study about them. I also got i
 
 Next to the academic and virtual lives I enjoy aikido and iaido, walking in green spaces, reading and baking. I also drink mate (🧉), a lot, and it's very much part of who I am.
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "media/CV-en.pdf" "newtab" >}}resumé{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "https://github.com/montesmariana/CV/raw/main/CV/CV.pdf" "newtab" >}}resumé{{< /staticref >}}.
