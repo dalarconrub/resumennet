@@ -1,0 +1,42 @@
+---
+title: Defensa doctoral
+author: 'Mariana Montes'
+date: '2021-09-21 17:00:00 CEST'
+slug: defense
+categories:
+  - academic
+tags:
+  - Distributional semantics
+  - Cognitive linguistics
+  - Visualization
+  - Research
+subtitle: ''
+summary: 'Defensa doctoral'
+authors: []
+lastmod: '`r Sys.time()'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects:
+  - nephological semantics
+---
+
+¡Defendí mi doctorado y me volví Doctora en Lingüística!
+La tesis en sí (en inglés) se encuentra [aquí](https://cloudspotting.marianamontes.me).
+También subí la grabación de la presentación (en inglés) a YouTube, con subtítulos en inglés (pero eventualmente puedo traducirlos al español):
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eQgvyas2Du8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
+</iframe>
+
+Las diapositivas están disponibles aquí:
+
+```{r, echo=FALSE}
+xaringanExtra::embed_xaringan(
+  url = "https://slides.marianamontes.me/cloudspotting/",
+  ratio = "16:9"
+)
+```
+

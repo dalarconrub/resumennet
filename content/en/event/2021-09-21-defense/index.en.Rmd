@@ -1,7 +1,7 @@
 ---
 title: PhD Defense
 author: 'Mariana Montes'
-date: '2021-09-21'
+date: '2021-09-21 17:00:00 CEST'
 slug: defense
 categories:
   - academic
@@ -13,7 +13,7 @@ tags:
 subtitle: ''
 summary: 'Doctoral defense'
 authors: []
-lastmod: '2021-09-23T21:24:41+02:00'
+lastmod: '`r Sys.time()'
 featured: no
 image:
   caption: ''
@@ -23,11 +23,20 @@ projects:
   - nephological semantics
 ---
 
-I defended my PhD and became a Doctor in Linguistics! Below you can see my slides: soon I will add the link to my presentation and to the thesis itself!
+I defended my PhD and became a Doctor in Linguistics!
+The dissertation itself can be found [here](https://cloudspotting.marianamontes.me).
+Here you can watch the video of the presentation:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eQgvyas2Du8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
+</iframe>
+
+And here you can see the slides:
 
 ```{r, echo=FALSE}
 xaringanExtra::embed_xaringan(
-  url = "https://slides.marianamontes.me/cloudspotting.html",
-  ratio = "9:6"
+  url = "https://slides.marianamontes.me/cloudspotting/",
+  ratio = "16:9"
 )
 ```
+
