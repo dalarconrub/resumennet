@@ -10,14 +10,21 @@ tags:
 subtitle: 'On learning curves, git and GitHub'
 summary: ''
 authors: []
-lastmod: '2021-04-10T21:00:20+02:00'
+lastmod: '2021-10-23'
 featured: no
 image:
   caption: ''
   focal_point: ''
   preview_only: no
 projects: []
+url_slides: 'ppt/GitnGithub.pptx'
 ---
+
+{{% callout note %}}
+
+On 19/Oct/2021 gave a presentation on starting with Git and Github and why you might be interested; click on the link above to download the slides.
+
+{{% /callout %}}
 
 I've learned a lot in the past years and become extremely aware of it. Maybe because in school it is so _expected_ that you will learn new things, and tests and exams turn out to be more stressful than informative, we don't tend to celebrate the difference between our current experience and understanding and the ones we had back in the day when we started whatever path we're in. This time I also learned a lot of things that I didn't even imagine I could learn: they were not 'general fields', like baking and knitting, nor 'my field', say linguistics. They had to do with programming and web-design: stuff that other people did and that seemed like magic to me. Going through different stages of the learning process let me learn a lot about how learning itself goes. Let me exemplify with [git](https://git-scm.com/) and [Github `r icons::fontawesome("github")`](https://github.com/).
 
@@ -50,7 +57,7 @@ One trick I have for that is to set up small goals or deadlines. See what I can 
 
 The key is to be able to reach a concrete point where you clearly have more knowledge and experience than you had when you started, but close enough to the beginning that you still remember what it felt to be ignorant. Making a list of what you've learned, writing down a self-compliment or getting yourself some ice-cream are also interesting ways of reinforcing this `r emo::ji("smile")`.
 
-Once I learned how to run a server locally, I didn't need to stage, commit and push every little change. I could wait until I had a significant modification that I new worked, stage it and commit it with a meaningful message for whoever wanted to see it. As I grew confident with this new skill, I created other Github Pages, other repositories, where I could save and share my work. I split a large miscellaneous repository in different ones for different projects; once I even *collaborated* with someone (kind of).
+Once I learned how to run a server locally, I didn't need to stage, commit and push every little change.I could wait until I had a significant modification that I new worked, stage it and commit it with a meaningful message for whoever wanted to see it. As I grew confident with this new skill, I created other Github Pages, other repositories, where I could save and share my work. I split a large miscellaneous repository in different ones for different projects; once I even *collaborated* with someone (kind of).
 
 What I try to avoid is standing on that new landmark and just look up to the road ahead, whining at what I still have to learn, comparing myself to all those experienced, accomplished geniuses out there. Of course one should keep in mind that there is more to learn, be humble and respect those who have been struggling for years with the issues of a field you just now stepped on. But we all start from complete ignorance and build it up, with whatever time and tools we already have, and we all keep having a path ahead to keep exploring. I find that looking back makes me proud and gives me joy, gives me the energy to go forward, to trust in my own abilities and enjoy my achievements.
 
