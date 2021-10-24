@@ -56,7 +56,7 @@ R Markdown and $\LaTeX$ can read BibTex files: you just enter the citation key a
 
 The entries above, however, have no citation key. As it stands, you have to add them manually, before the comma in the first line of each entry.^[In R markdown, you can use `knitr::write_bib()` to create the same output as before, with nice citation keys.] When, instead, you export your entries from Zotero without Better BibTex, the default keys tend to be long names in camelCase, such as `montesCloudspotting2021`. Better BibTex gives you a nicer default pattern and the possibility to create your own template for easier-to-remember citation keys.
 
-Once you have [installed Better BibTex](https://retorque.re/zotero-better-bibtex/installation/), you can find a new tab in your Zotero Preferences, where you can define a [template](https://docs.jabref.org/setup/citationkeypatterns) for your citation keys. Mine uses, in lower case, the last name of the first author, separated by a period from the last name of the second author or, if there are more than two, *etal*. Then, it adds an underscore and the year.
+Once you have [installed Better BibTex](https://retorque.re/zotero-better-bibtex/installation/), you will find a new tab in your Zotero Preferences, where you can define a [template](https://docs.jabref.org/setup/citationkeypatterns) for your citation keys. Mine uses, in lower case, the last name of the first author, separated by a period from the last name of the second author or, if there are more than two, *etal*. Then, it adds an underscore and the year.
 
 ![Zotero menu to tailor Better BibTex.](images/bbkey.png)
 
@@ -74,16 +74,16 @@ I can make Obsidian and Zotero talk to each other thanks to [a plugin](https://g
 
 Once you turn off 'Safe mode', you have to 'browse community plugins', search for the citation plugin, install it *and enable it* to use it. That's it.
 
-One of its most interesting features is the **literature note**: a note with bibliographical information extracted from your Zotero entry... well, technically, from a BibTex file exported from Zotero (or any other bibliography manager). I will address this later, but for now let's assume you have a BibTex file with all your Zotero data. With `Ctrl`+`Shift`+`E`, you get a dropdown menu in which you can search through all your entries. Once you select one, it creates a note that, by default, uses your **citation key** as the title, and adds a bunch of information to the preamble of your note. It can also add other information, such as the abstract or, more interestingly... *a link to your Zotero reference*. When you click on that link, it opens Zotero; if it is already open, it selects the reference you clicked on.
+One of its most interesting features is the **literature note**: a note with bibliographical information extracted from your Zotero entry... well, technically, from a BibTex file exported from Zotero (or any other bibliography manager). I will address this later, but for now let's assume you have a BibTex file with all your Zotero data. With `Ctrl`+`Shift`+`E`, you get a dropdown menu in which you can search through all your entries. Once you select one, it creates a note that, by default, uses your **citation key** as the title, and adds a bunch of information to the preamble of your note. It can also add other information, such as the abstract or, more interestingly... *a link to your Zotero entry*. When you click on that link, it opens Zotero; if it is already open, it selects the reference you clicked on.
 
-This is a lot of information, I know. That is why I will first show how I'm using this plugin now and then I will talk a bit more about how to customize the literature note and create other links to Zotero references by hand.
+This is a lot of information, I know. That is why I will first show how I'm using this plugin now and then I will talk a bit more about how to customize the literature note and create other links to Zotero entries by hand.
 
 ## How I use it
 
-Back when I was using Evernote, I had one notebook per source I read and its first note was a sort of bibliographical card, with basic information so I remembered what it was a long time later (it also forced me to check the outline of a paper, for example, and get more familiar with it before reading it). Sometimes, when a source A cited another source B I had already taken notes from, I would link the citation in notebook A to the bibliographical card of A.
+Back when I was using Evernote, I had one notebook per source I read and its first note was a sort of bibliographical card, with basic information so I remembered what it was a long time later (it also forced me to check the outline of a paper, for example, and get more familiar with it before reading it). Sometimes, when a source A cited another source B I had already taken notes from, I would link the citation in notebook A to the bibliographical card of B.
 Setting this up required me to copy the information from Zotero, and I found it sad that it wasn't really *connected* to Zotero itself.
 
-With Obsidian, inside my research vault, I have a folder for "Reading notes", where I plan to add folders for different sources (and import them from Evernote, too). It turns out that one of the citation plugin's main features, the literature card, is precisely an *automatic version* of my beloved bibliographical card!
+With Obsidian, inside my research vault, I have a folder for "Reading notes", where I plan to add folders for different sources (and import them from Evernote, too). It turns out that one of the citation plugin's main features, the literature note, is precisely an *automatic version* of my beloved bibliographical card!
 
 As an example, let's say I want to add a folder for notes on Koptjevskaja-Tamm and Sahlgren's (2014) paper. First, I press `Ctrl`+`Shift`+`E` and select the right entry.
 
@@ -93,7 +93,7 @@ This creates the following literature note in my "Reading notes" folder:
 
 ![Literature note example.](images/literaturenote.png)
 
-The main bibliographical information is in the Yaml (but need not be), and then there is a hyperlink that shows the citation key (which is also the name of the note) and takes you to the Zotero reference: if I click on it, it goes to Zotero and highlights that reference.
+The main bibliographical information is in the Yaml (but need not be), and then there is a hyperlink that shows the citation key (which, preceded by a `@`, is also the name of the note) and takes you to the Zotero entry: if I click on it, it goes to Zotero and highlights that reference.
 
 I will later add the abstract, the outline of the paper and some comments on why I'm reading it. I also manually create the "Koptjevskaja-Tamm & Sahlgren (2014)" folder to add my new literature note and, later, other notes I might want to make.
 
@@ -103,15 +103,15 @@ Next to creating the literature note, if you are also using the "Daily notes" pl
 
 Because the name of the note follows your chosen citation key pattern, you can easily use it to reference the source as well as the bibliographical data. So my current (new) practice is to add *all* references (that is, when I take notes from a source that is citing another source I might be interested in) in the format of internal notes.
 
-For example, suppose I'm taking notes for Koptjevskaja-Tamm & Sahlgren (2014) and it references Lenci (2018). I could write it as `[[@lenci_2018]]`, i.e. an internal link to the literature note that I could create for that second source. Even if I have not created the note yet, Obsidian lets me create the link, which means that *notes that cite the same source will be linked in the note network*. The image below shows a bit of my network of notes: there is no literature note for `@curran_2004` yet, but it is referenced in two notes and thus connects them.
+For example, suppose I'm taking notes for Koptjevskaja-Tamm & Sahlgren (2014) and it references Lenci (2018). I could write it as `[[@lenci_2018]]`, i.e. an internal link to the literature note that I could create for that second source. Even if I have not created the note yet, Obsidian lets me create the link, which means that (i) whenever I create the note it will be already linked and (ii) *notes that cite the same source will be linked in the note network*. The image below shows a bit of my network of notes: there is no literature note for `@curran_2004` yet, but it is referenced in two notes and thus connects them.
 
 ![Snippet of network linked by a note that does not exist yet.](images/network.png)
 
 The easy citation key pattern means that I can guess what the reference should look like, but if there is a chance that it actually ends in *a*, *b*, etc., I can also use the plugin's citation tool. I haven't created a hotkey for it yet, so I have to go to Obsidian's command palette and choose `Citations: Insert Markdown citation`, which takes me to a menu of all my references again.
 
-![Menu to insert citation.](images/insertcitation.png)
+![Choosing "insert citation" from the command palette.](images/insertcitation.png)
 
-The plugin allows you two kinds of citation (you access the primary one by pressing `Enter` and the secondary one with `Shift`+`Enter`). By default, this will insert something like `[@lenci_2018]`, i.e. the pandoc format (how you would cite it in R Markdown). But, as I will show later, you can customize it to return `[[@lenci_2018]]`, and therefore it becomes a link that you know for sure will take you to a(n eventual) literature note for that source. You can even customize it to return `[@lenci_2018](zotero://select/items/@lenci_2018)`, that is, the Zotero entry in your Desktop app!
+The plugin allows you two kinds of citation ---you access the primary one by pressing `Enter` and the secondary one with `Shift`+`Enter`. By default, this will insert something like `[@lenci_2018]`, i.e. the [pandoc format](https://pandoc.org/MANUAL.html#extension-citations) used by R markdown. But, as I will show later, you can customize it to return `[[@lenci_2018]]`, and therefore it becomes a link that you know for sure will take you to a(n eventual) literature note for that source. You can even customize it to return `[@lenci_2018](zotero://select/items/@lenci_2018)`, that is, the Zotero entry in your Desktop app!^[The pattern to create the link to the Zotero entry is `zotero://select/items/@` + the citekey (e.g. `lenci_2018`)]
 
 As a plus, you can then copy the texts with references to your R markdown files to create nice articles with perfect citations, just by replacing `[[` with `[` and `]]` with `]`.
 
@@ -132,7 +132,7 @@ Under the basic configuration settings there are some instructions on how to dea
 
 ![Customizing literature note.](images/customcit2.png)
 
-Given those instructions, the title of my literature notes starts with a `@` followed by the citation key (variable: `{{citekey}}`, example value: `montes_2021`). The initial information will be determined by the values in that template: a yaml will be created adding the values of `{{title}}` (the title of the referenced work), `{{authorString}}` (the names of the authors), `{{year}}` (the publication date) and `{{page}}` (the number of pages or the pages range), and then the body will include the hyperlink to the Zotero reference and, if available, the abstract.
+Given those instructions, the title of my literature notes starts with a `@` followed by the citation key (variable: `{{citekey}}`, example value: `montes_2021`). The initial information will be determined by the values in that template: a yaml will be created adding the values of `{{title}}` (the title of the referenced work), `{{authorString}}` (the names of the authors), `{{year}}` (the publication date) and `{{page}}` (the number of pages or the pages range), and then the body will include the hyperlink to the Zotero entry and, if available, the abstract.
 
 
 ```md
