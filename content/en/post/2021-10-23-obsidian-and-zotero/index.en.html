@@ -10,7 +10,7 @@ tags:
 subtitle: ''
 summary: "Now that I learned about Obsidian, I'm readjusting how I take notes and organize my literature readings. The next step is to integrate it with Zotero!"
 authors: []
-lastmod: '2021-10-23T19:16:27+02:00'
+lastmod: '2021-10-26'
 featured: no
 image:
   caption: ''
@@ -39,7 +39,7 @@ projects: []
 <div id="bb" class="section level1">
 <h1>Zotero and Better BibTex</h1>
 <p>Better BibTex helps you clean and manage your Zotero references. It may have more functions than I’m aware of, but the main feature I’m interested in is in defining the <strong>citation key</strong>. If you only use Zotero in combination with MS Word or Open Office, this might be irrelevant, but when you handle <a href="http://www.bibtex.org/">bib(la)tex files</a>, e.g. for <span class="math inline">\(\LaTeX\)</span> or R Markdown, it’s super important.</p>
-<p>A bibtex entry looks like these:</p>
+<p>A BibTex entry looks like these:</p>
 <pre><code>@Manual{,
   title = {blogdown: Create Blogs and Websites with R Markdown},
   author = {Yihui Xie and Christophe Dervieux and Alison Presmanes Hill},
@@ -58,7 +58,7 @@ projects: []
   url = {https://bookdown.org/yihui/blogdown/},
 }</code></pre>
 <p>The word next to the <code>@</code> symbol points to the type of element (e.g. ‘Manual’, ‘Book’), and the entry consists of key-value pairs with different kinds of bibliographical information. In this case, I obtained it via the <code>toBibtex()</code> and <code>citation()</code> functions in R, but you can often find this format as an option for downloading a citation, or as an export option in Zotero. If you have a file with BibTex entries, you can also import them to Zotero (or if you copy a BibTex entry, you can import it to Zotero from the clipboard!).</p>
-<p>R Markdown and <span class="math inline">\(\LaTeX\)</span> can read BibTex files: you just enter the citation key and, when your text is compiled, your source is cited perfectly. For example, in R markdown I could write <code>[@montes_2021]</code> to cite my thesis, and it would be rendered as <code>(Montes 2021)</code> or however it should be based on the chosen citation style. Then, all the relevant information tied to the citation key <code>montes_2021</code> would be used in the full reference.</p>
+<p>R Markdown and <span class="math inline">\(\LaTeX\)</span> can read BibTex files: you just enter the citation key and, when your text is compiled, your source is cited perfectly. For example, in R Markdown I could write <code>[@montes_2021]</code> to cite my thesis, and it would be rendered as <code>(Montes 2021)</code> or however it should be based on the chosen citation style. Then, all the relevant information tied to the citation key <code>montes_2021</code> would be used in the full reference.</p>
 <p>The entries above, however, have no citation key. As it stands, you have to add them manually, before the comma in the first line of each entry.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> When, instead, you export your entries from Zotero without Better BibTex, the default keys tend to be long names in camelCase, such as <code>montesCloudspotting2021</code>. Better BibTex gives you a nicer default pattern and the possibility to create your own template for easier-to-remember citation keys.</p>
 <p>Once you have <a href="https://retorque.re/zotero-better-bibtex/installation/">installed Better BibTex</a>, you will find a new tab in your Zotero Preferences, where you can define a <a href="https://docs.jabref.org/setup/citationkeypatterns">template</a> for your citation keys. Mine uses, in lower case, the last name of the first author, separated by a period from the last name of the second author or, if there are more than two, <em>etal</em>. Then, it adds an underscore and the year.</p>
 <div class="figure">
@@ -70,7 +70,7 @@ projects: []
 <img src="images/zoteroentries.png" alt="" />
 <p class="caption">List of Zotero entries with citation keys.</p>
 </div>
-<p>In short, using Better BibTex gives you a nicer experience with BibTex files, e.g. using R markdown or <span class="math inline">\(\LaTeX\)</span>. Now… what about Obsidian?</p>
+<p>In short, using Better BibTex gives you a nicer experience with BibTex files, e.g. using R Markdown or <span class="math inline">\(\LaTeX\)</span>. Now… what about Obsidian?</p>
 </div>
 <div id="howto" class="section level1">
 <h1>Citation plugin for Obsidian</h1>
@@ -79,7 +79,7 @@ projects: []
 <img src="images/obsidiancomplugin.png" alt="" />
 <p class="caption">Window to set up Obsidian community plugins.</p>
 </div>
-<p>Once you turn off ‘Safe mode’, you have to ‘browse community plugins’, search for the citation plugin, install it <em>and enable it</em> to use it. That’s it.</p>
+<p>Once you turn off ‘Safe mode’, you have to ‘browse community plugins’, search for the citation plugin, install it <em>and enable it</em> to use it. That’s it. Note that in order for it to <em>work</em> properly you still need export your Zotero library and tell Obsidian where it is, as I mention <a href="#setup">below</a>.</p>
 <p>One of its most interesting features is the <strong>literature note</strong>: a note with bibliographical information extracted from your Zotero entry… well, technically, from a BibTex file exported from Zotero (or any other bibliography manager). I will address this later, but for now let’s assume you have a BibTex file with all your Zotero data. With <code>Ctrl</code>+<code>Shift</code>+<code>E</code>, you get a dropdown menu in which you can search through all your entries. Once you select one, it creates a note that, by default, uses your <strong>citation key</strong> as the title, and adds a bunch of information to the preamble of your note. It can also add other information, such as the abstract or, more interestingly… <em>a link to your Zotero entry</em>. When you click on that link, it opens Zotero; if it is already open, it selects the reference you clicked on.</p>
 <p>This is a lot of information, I know. That is why I will first show how I’m using this plugin now and then I will talk a bit more about how to customize the literature note and create other links to Zotero entries by hand.</p>
 <div id="how-i-use-it" class="section level2">
@@ -97,7 +97,7 @@ Setting this up required me to copy the information from Zotero, and I found it 
 <img src="images/literaturenote.png" alt="" />
 <p class="caption">Literature note example.</p>
 </div>
-<p>The main bibliographical information is in the Yaml (but need not be), and then there is a hyperlink that shows the citation key (which, preceded by a <code>@</code>, is also the name of the note) and takes you to the Zotero entry: if I click on it, it goes to Zotero and highlights that reference.</p>
+<p>The main bibliographical information is in the Yaml<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> (but need not be), and then there is a hyperlink that shows the citation key (which, preceded by a <code>@</code>, is also the name of the note) and takes you to the Zotero entry: if I click on it, it goes to Zotero and highlights that reference.</p>
 <p>I will later add the abstract, the outline of the paper and some comments on why I’m reading it. I also manually create the “Koptjevskaja-Tamm &amp; Sahlgren (2014)” folder to add my new literature note and, later, other notes I might want to make.</p>
 <p>{{% callout info %}}
 Next to creating the literature note, if you are also using the “Daily notes” plugin of Obsidian, it will automatically add an internal link to your new literature note in your current Daily note! Awesome integration with your new favorite journal!
@@ -113,10 +113,10 @@ Next to creating the literature note, if you are also using the “Daily notes�
 <img src="images/insertcitation.png" alt="" />
 <p class="caption">Choosing “insert citation” from the command palette.</p>
 </div>
-<p>The plugin allows you two kinds of citation —you access the primary one by pressing <code>Enter</code> and the secondary one with <code>Shift</code>+<code>Enter</code>. By default, this will insert something like <code>[@lenci_2018]</code>, i.e. the <a href="https://pandoc.org/MANUAL.html#extension-citations">pandoc format</a> used by R markdown. But, as I will show later, you can customize it to return <code>[[@lenci_2018]]</code>, and therefore it becomes a link that you know for sure will take you to a(n eventual) literature note for that source. You can even customize it to return <code>[@lenci_2018](zotero://select/items/@lenci_2018)</code>, that is, the Zotero entry in your Desktop app!<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<p>As a plus, you can then copy the texts with references to your R markdown files to create nice articles with perfect citations, just by replacing <code>[[</code> with <code>[</code> and <code>]]</code> with <code>]</code>.</p>
+<p>The plugin allows you two kinds of citation —you access the primary one by pressing <code>Enter</code> and the secondary one with <code>Shift</code>+<code>Enter</code>. By default, this will insert something like <code>[@lenci_2018]</code>, i.e. the <a href="https://pandoc.org/MANUAL.html#extension-citations">pandoc format</a> used by R Markdown. But, as I will show later, you can customize it to return <code>[[@lenci_2018]]</code>, and therefore it becomes a link that you know for sure will take you to a(n eventual) literature note for that source. You can even customize it to return <code>[@lenci_2018](zotero://select/items/@lenci_2018)</code>, that is, the Zotero entry in your Desktop app!<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>As a plus, you can then copy the texts with references to your R Markdown files to create nice articles with perfect citations, just by replacing <code>[[</code> with <code>[</code> and <code>]]</code> with <code>]</code>.</p>
 </div>
-<div id="customize-the-plugin" class="section level2">
+<div id="setup" class="section level2">
 <h2>Customize the plugin</h2>
 <p>For a better, smoother, more tailored experience with the citation plugin, you can customize it in a few ways. I will show here what it looks like for me.</p>
 <p>In the Settings of Obsidian and the section for the Citation plugin, you first have a few configuration items to take care of.</p>
@@ -126,8 +126,8 @@ Next to creating the literature note, if you are also using the “Daily notes�
 </div>
 <ul>
 <li>I use BibLaTex (as opposed to JSON) format for my entries, which I described above (as BibTex).</li>
-<li>I have exported my full Zotero library as a <code>Library.bib</code> file, which is stored at the top level of my vault. If you make changes to your library, you have to export it again, but then Obsidian automatically refreshes.</li>
-<li>When I create a literature note, it’s automatically saved within “Reading notes” (and then I move it to the folder of that source).</li>
+<li>I have exported my full Zotero library as a <code>Library.bib</code> file, which is stored at the top level of my vault<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. If you make changes to your library, you have to export it again, but then Obsidian automatically refreshes.</li>
+<li>When I create a literature note, it’s automatically saved within the folder “Reading notes” (and then I move it to the folder of that source).</li>
 </ul>
 <p>Under the basic configuration settings there are some instructions on how to deal with the following customization sections. You will write templates with variables between double curly braces, which means that they will be replaced with the matching information for the reference you cite. In other words, once you select the reference with citation key <code>montes_2021</code>, all the variables here that say <code>{{citekey}}</code> will be replaced by <code>montes_2021</code>.</p>
 <div class="figure">
@@ -159,7 +159,9 @@ In case you are not aware, you can create hyperlinks in markdown with square bra
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>In R markdown, you can use <code>knitr::write_bib()</code> to create the same output as before, with nice citation keys.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>The pattern to create the link to the Zotero entry is <code>zotero://select/items/@</code> + the citekey (e.g. <code>lenci_2018</code>)<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>In R Markdown, you can use <code>knitr::write_bib()</code> to create the same output as before, with nice citation keys.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Note that in the right side the image reads “Invalid YAML”. I learned this a few days after first writing this post: the colons <em>inside the title</em> of this reference mess up the <a href="https://en.wikipedia.org/wiki/YAML">YAML</a>. It can be solved by just surrounding the title with quotation marks. I am not sure how we can <em>use</em> this as metadata, though.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>The pattern to create the link to the Zotero entry is <code>zotero://select/items/@</code> + the citekey (e.g. <code>lenci_2018</code>)<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>This is the folder in your computer where your Vault lives. In my case it is also in my synchronized OneDrive for back-up.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
