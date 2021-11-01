@@ -1,0 +1,213 @@
+---
+title: Academic Writing in R Markdown II
+author: Mariana Montes
+date: '2021-10-31'
+slug: academic-writing-in-r-markdown-ii
+categories:
+  - academic
+tags:
+  - Research
+  - R Markdown
+  - Writing
+subtitle: 'Writng my PhD Thesis in R Markdown'
+summary: 'What I learned from writing my dissertation with R Markdown. First part of at two-parts post on Academic Writing with R Markdown'
+authors: []
+lastmod: '2021-11-01'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+bibliography: bib.bib
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<style>
+.caption {
+  font-size: 0.9rem;
+}
+.article-style img {
+  margin-bottom:0;
+}
+</style>
+<p>As a researcher that has found out about <a href="../2021-10-30-academic-writing-in-r-markdown-i/">the marvels of R Markdown</a>, how can you go about writing a <em>book</em>? I offer here my experience writing <a href="cloudspotting.marianamontes.me/">my own PhD thesis</a> in R Markdown. I must remark that by the time I started writing my dissertation I had some solid experience with R Markdown and R, which helped a lot. Learning R Markdown while struggling with your thesis might not be the best idea, unless —a bit like me— you like figuring out formatting tools as a <a href="http://www.structuredprocrastination.com/">productive procrastination activity</a> that clears your mind from other taxing aspects of writing.</p>
+<p>In each section of this post I will look at a few things of interest that are particular to writing thesis in <code>bookdown</code> (the package to write books in R Markdown) or that I found particularly useful and interesting for my experience.</p>
+<div id="output-htmlpdf" class="section level1">
+<h1>Output: HTML/PDF</h1>
+<p>The <code>bookdown</code> package supports <a href="https://bookdown.org/yihui/bookdown/output-formats.html">three main formats</a>: HTML, PDF and e-books. I will only talk about the first two because they are the ones I used. I knew from the beginning that I wanted at least those two formats: PDF for the printed version that I would have to hand in and HTML to show it to the world in a digital version, like all those other online books I was loving to find. However, I first focused on the HTML only because when I started looking into <code>bookdown</code> I found <a href="https://bookdown.org/yihui/bookdown/latexpdf.html">this</a>:</p>
+<blockquote>
+<p>We strongly recommend that you use an HTML output format instead of LaTeX when you develop a book, since you will not be too distracted by the typesetting details, which can bother you a lot if you constantly look at the PDF output of a book. Leave the job of careful typesetting to the very end (ideally after you have really finished the content of the book).</p>
+</blockquote>
+<p>I agree that HTML output is more reliable in terms of formatting, while <span class="math inline">\(\LaTeX\)</span> (PDF) output can have some weird stuff that will put you off, such as ugly or not well positioned tables (that looked so good in the HTML version!) or code that runs out of the margins if you use code-snippets. <em>However</em>, I do recommend generating the PDF output anyways, just to <em>check that it compiles</em>. HTML is more lenient than PDF in that it will (almost) always run and at most show you funky output in cases where <span class="math inline">\(\LaTeX\)</span> will just crash with an error message that you will probably not understand. Such issues can often be resolved by <a href="https://yihui.org/tinytex/r/#debugging">reinstalling stuff</a>, but sometimes it’s a simple thing like some weird symbol in your table. You don’t want to write your whole thesis (or even half of it) and <em>then</em> realize that the PDF just doesn’t compile, because you won’t solve that in just a few hours. That is why I recommend running the PDF anyways, to make sure it is birthed properly, but still look at the output in HTML only (which will always be beautiful and make you happy).</p>
+<p>Regarding HTML, I like the <a href="https://bookdown.org/yihui/bookdown/html.html#bs4-book">bs4-book</a> format the most<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, among other things because of the secondary menu on the right and the pop-up footnotes. I changed the primary color to <span style="background-color:#086a6a;color:white;padding:5px;border-radius:25px">#086a6a</span> and then every time I created the HTML it just filled me with joy. Whatever I wrote, it looked gorgeous and professional, and all I had to do was type it. It really makes your day.</p>
+<p>Finally, if you need to ask for feedback, writing comments on an HTML file is not something many people know <a href="https://web.hypothes.is/">how to do</a>, so you will want to create the PDF. In any case, one of the advantages of R Markdown is that you can use the exact same input to generate both outputs! There are few things that don’t work exactly the same, though, that I will discuss <a href="#render">below</a>, such as features of tables that are specific to one format, or matching the font in your graphs to the font in the rest of your text. Fortunately, the <code>knitr</code> package (that works with <code>rmarkdown</code>) offers you the functions <code>is_html_output()</code> and <code>is_latex_output()</code>, which return <code>TRUE</code> when the outputs are HTML and <span class="math inline">\(\LaTeX\)</span> respectively and <code>FALSE</code> otherwise. You can use these functions to make your plots and tables adapt to the format of your output.</p>
+</div>
+<div id="chapters" class="section level1">
+<h1>Macro organization: chapters and frontmatter</h1>
+<p>A book typically has chapters. As such, <code>bookdown</code> treats the multiple .Rmd files in your project as chapters that are unified in the final product. For an HTML book, this is going to be a website with different HTML pages but one unifying menu or table of contents. Here you must distinguish between the title of your chapter and the name of the file. For example, Chapters 2, 3 and 4 of my dissertation are called “From corpora to clouds,” “Visualization tools” and “Case studies,” but the <em>files</em> are called “workflow,” “nephovis” and “dataset” respectively, with .Rmd extension in the R Markdown version and .html extension when rendered. This means that I can use code names related to the kind of content in my chapter for the names of the files, but then change the title of the chapter as much as I want without any issues. It also means that you will only actually see the original name of my file if you look at the URL (e.g. <a href="https://cloudspotting.marianamontes.me/dataset.html">https://cloudspotting.marianamontes.me/dataset.html</a>), but you will mostly pay attention to the title (“Case studies”) or even the title in the tab of your browser (“Chapter 4 Case studies | Cloudspotting”). The PDF version of the book, on the other hand, is only one file with consecutive page numbering, and the original file names are nowhere to be seen.</p>
+<p>{{% callout note %}}</p>
+<p>Note that, by default, <code>bookdown</code> will merge all the .Rmd files in your project in alphabetical order, but you can override that by listing your desired files in the desired order in the <code>_bookdown.yml</code> configuration file (see <a href="https://bookdown.org/yihui/bookdown/usage.html">this doc</a>). This is particularly handy if you want to only select one or a few chapters to show to someone in PDF, as I learned after painstakingly trying to print-to-PDF selected pages of my PDF.</p>
+<p>{{% /callout %}}</p>
+<p>Chapters are, of course, not the only unit in which to divide your text. At a higher level, you can have <a href="https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#special-headers">parts and appendices</a>, which make a nice division in the HTML table of contents and get their own pages in the PDF output. At a lower level, you can have sections and subsections, which you create by lowering the level of the headings: from <code>#</code> for the title of the chapter to <code>##</code> to the first subheader, then <code>###</code> and so on. Chapters will be automatically numbered, but you can un-number them by adding a <code>{-}</code> at the end, e.g. for a preface or the references section. When they are numbered, you can set whether the number is preceded by <em>Chapter</em> or maybe <em>Capítulo</em>, <em>Capitolo</em>, <em>Hoofdstuk</em>, etc., by editing the <code>_bookdown.yml</code> configuration file.</p>
+<pre class="yml"><code>language:
+    ui:
+        chapter_name: &quot;Chapter &quot;</code></pre>
+<p>For cross-referencing chapters, sections and subsections, I suggest adding a code name to the section as well. For example, you may have a temporary heading “The methodological part” to which you assign the codename “methods”:</p>
+<pre class="md"><code># The methodological part {#methods}</code></pre>
+<p>Anywhere else in your book, you can reference that title with <code>\@ref(methods)</code>, which will then be replaced by the correct numbering with a hyperlink to the appropriate header, e.g. “3” if it’s Chapter 3, “3.2” if it’s the second section of chapter 3, etc. You can move the heading, change its level (e.g. from 3.2 to 3.1.2), change the title itself —yet, as long as the codename between the curly braces remains the same, the cross-reference will adapt and keep working <em>from anywhere in your book</em>. And if you eventually post the HTML version online, you can even have an URL that takes you to that section, like <a href="https://cloudspotting.marianamontes.me/semantic-interpretation.html#prototypical-clouds">this link to section 6.2.3 in my thesis</a> (how cool is that?!).</p>
+<p>A final amazing point of sections within chapters is that, in R Studio, you can keep track of your internal organization with a small outline on the right side and you can even collapse a section, that is, hide the content while you are editing. In the image below, for example, you can see the outline of the <a href="https://cloudspotting.marianamontes.me/dataset.html">forth chapter of my thesis</a> and that the third level headings “The nouns,” “The adjectives” and “The verbs” are collapsed: their content is hidden and a yellow box with a double-headed arrow shows up in its stead. I achieved this by clicking on the tiny triangles next to the headings. As a result, I can move around a file more easily, skipping long sections that I don’t want to deal with yet.</p>
+<div class="figure"><span style="display:block;" id="fig:myfig"></span>
+<img src="images/collapse_sections.png" alt="Screenshot of the editing pane of R Studio, showing an outline of a file on the right side, and collapsing (hiding the content of) a few headings in the main text." width="605" />
+<p class="caption">
+Figure 1: Outline and collapsed sections in R Studio editor.
+</p>
+</div>
+<p>I want to close this section with a very technical adventure: how to add a personalized frontmatter to the PDF output. At the beginning of the thesis, I needed a mandatory title page required by the Faculty, but I also wanted to add a page with a dedication, a list of figures, a list of tables (because I’m demanding like that) and, as if that was not enough, I wanted them, the preface (my abstract) and acknowledgements sections to be numbered with those lowercase roman numbers, so that the first page of Chapter 1 was “page 1” instead. But, because it is quite technical and not something you would worry about until the end, it’s collapsed under the following paragraph.</p>
+<details class="spoiler">
+<summary>
+I want to add the frontmatter!
+</summary>
+<div id="frontmatter" class="section level2">
+<h2>Adding a frontmatter (in PDF)</h2>
+<p>First, I have two .tex (raw <span class="math inline">\(\LaTeX\)</span> files) that you can just copy and adjust with your own data. There is <a href="https://github.com/montesmariana/phdThesis/raw/main/preamble.tex"><code>preamble.tex</code></a> and <a href="https://github.com/montesmariana/phdThesis/raw/main/titlepage.tex"><code>titlepage.tex</code></a>, which are then referenced in the <code>_output.yml</code> configuration file:</p>
+<pre class="yml"><code>bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+    before_body: titlepage.tex
+    after_body: afterbody.tex</code></pre>
+<p>The <code>preamble.tex</code> file has a bunch of <span class="math inline">\(\LaTeX\)</span> instructions, starting with a number of packages that are loaded:</p>
+<ul>
+<li><code>\usepackage[backend=biber,  style=unified,maxcitenames=3,maxbibnames=99]{biblatex}</code> to deal with <a href="#citations">citations</a>, in particular the Unified Stylesheet for Linguistics</li>
+<li><code>\usepackage[nottoc]{tocbibind}</code> for lists of tables and figures (see <a href="http://www.ctex.org/documents/packages/bibref/tocbibind.pdf">docs</a>)</li>
+<li><code>\usepackage{fancyhdr}</code> for fancier headers; I suggest checking <a href="https://www.overleaf.com/learn/latex/Headers_and_footers">Overleaf docs</a> to learn more about it.</li>
+</ul>
+<p>It also sets up a nice dedication format. Whatever you change here will have to do with the formatting itself, but I recommend googling suggestions to see how you would want to change them. If you like what it looks like in <a href="https://cloudspotting.marianamontes.me/phdThesis.pdf">my thesis</a>, then don’t change anything.</p>
+<p>The <code>titlepage.tex</code> has actual content. The first line, with the <code>\includepdf{}</code> command, adds <a href="#cover">a frontcover</a>; a similar line is found as the only content of <code>afterbody.tex</code> for the back cover. Then I set up the title page adding the Faculty logo and the different pieces of text that I need. <em>Those</em> you should adapt to your own text —take into account that you will need to change the paths to the images. Then I add empty pages with <code>\newpage</code> and finally a separated page with the dedication, that you will have to adapt as well (unless you also want to dedicate your thesis to my parents: your choice).
+At the end of the file there is a command, <code>\frontmatter</code>, that starts the frontmatter proper: everything after that will automatically receive the lowercase roman numbers. As you can see in the file of my <a href="https://github.com/montesmariana/phdThesis/raw/main/00-gracias.Rmd">acknowledgements</a>, I end the frontmatter with the <code>\mainmatter</code> command (the rest of the <span class="math inline">\(\LaTeX\)</span> code is to adjust the headers), so that the normal numbering starts.</p>
+<p>The lists of figures (<code>lof</code>) and tables (<code>lot</code>) are then activated in the YAML of <code>index.Rmd</code>, where I also include some instructions for the size and margins of the pages using the <a href="https://www.overleaf.com/learn/latex/Page_size_and_margins">geometry package</a>:</p>
+<pre class="md"><code>geometry: &#39;paperwidth=160mm, paperheight=240mm, margin=2cm, bindingoffset=0cm&#39;
+lof: true
+lot: true</code></pre>
+</details>
+</div>
+</div>
+<div id="render" class="section level1">
+<h1>Rendering your data: tables, plots and more</h1>
+<p>One of the things I like the most about R Markdown is that I can generate my tables and plots writing a bit of code in the same file where I am writing the rest of my text. The link between the data and the rendering is never erased. I will not talk about <em>how</em> to do that, but I do want to list some resources that have made the experience more enjoyable, mostly by making everything prettier.</p>
+<p>First, one way of rendering a table is with the <code>kable()</code> function of the <code>knitr</code> package <span class="citation">(<a href="#ref-R-knitr" role="doc-biblioref">Xie 2021b</a>)</span>, and it’s OK. But then there is <code>kableExtra</code> <span class="citation">(<a href="#ref-R-kableExtra" role="doc-biblioref">Zhu 2021</a>)</span>, which has amazing functionalities to play with tables both <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html">in HTML</a> and <a href="http://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf">in <span class="math inline">\(\LaTeX\)</span></a>, such as merging columns or rows, conditional formatting, footnotes, <a href="https://cloudspotting.marianamontes.me/dataset.html#tab:lemmafreq"><em>plots inside your table</em></a>, etc. Some things will work the same way for both formats, while others will not. Most notably, in PDF it is relevant to make a very long table span over multiple pages or a very wide table to be shown in its own landscape page; in HTML, instead, you would prefer a scrollbox: only a limited space is used for the table and the reader can scroll down or to the side to see more content. The <code>kableExtra</code> package offers all these options.</p>
+<p>{{% callout warning %}}</p>
+<p>Something I didn’t know until I was fixing the formatting of my thesis is that, while <span class="math inline">\(\LaTeX\)</span> can be very smart at positioning your figures without leaving huge blank spaces, it does not do the same with tables. I did have to move some text around to fit the tables with the flow.</p>
+<p>{{% /callout %}}</p>
+<p>When creating plots, I like using the <code>ggplot2</code> package and its multiple extensions for specific kinds of graphs. I also discovered <code>ggpubr</code> <span class="citation">(<a href="#ref-R-ggpubr" role="doc-biblioref">Kassambara 2020</a>)</span>, and I used its <code>theme_pubr()</code> for very neat theming of my plots.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> For most of my graphs, I used <span class="citation"><a href="#ref-okabe.ito_2002" role="doc-biblioref">Okabe and Ito</a> (<a href="#ref-okabe.ito_2002" role="doc-biblioref">2002</a>)</span>’s colorblind-friendly color scheme, available as <code>colorblindr::scale_OkabeIto()</code> <span class="citation">(<a href="#ref-R-colorblindr" role="doc-biblioref">McWhite and Wilke 2021</a>)</span>, but I also used the <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">viridis scales</a>.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Another useful package is <code>cowplot</code> <span class="citation">(<a href="#ref-R-cowplot" role="doc-biblioref">Wilke 2021</a>)</span>, from which I use <code>plot_grid()</code> to <a href="https://cloudspotting.marianamontes.me/shapes.html#fig:grey6">bring several plots together in one figure</a> and <a href="http://www.lreding.com/nonstandard_deviations/2017/08/19/cowmarg/">other functions</a> to create <a href="https://cloudspotting.marianamontes.me/shapes.html#fig:fscorePmi">marginal plots</a> (plots in the margins of other plots).</p>
+<p>An interesting thing I noticed late into the formatting of my thesis was that the default font of the plots matched the HTML default font very well, but not the serif default font in the PDF output. After a bit of digging I decided that “Bookman Old Style” was the font that I could get that matched the PDF output the best, so I followed the instructions of the <a href="https://github.com/wch/extrafont"><code>extrafont</code> package</a> <span class="citation">(<a href="#ref-R-extrafont" role="doc-biblioref">Winston Chang 2014</a>)</span>, set a <code>plot_text</code> variable dependent on the output of the file, and then used it in theming functions such as <code>ggpubr::theme_pubr()</code> when I created some plot, or in <code>cowplot::plot_grid()</code> when I labeled the plots I was grouping.</p>
+<pre class="r"><code>plot_text &lt;- if (knitr::is_latex_output()) &quot;Bookman Old Style&quot; else &quot;&quot;
+
+... + # ggplot code
+theme_pubr(base_family = plot_text)
+
+plot_grid(..., label_fontfamily = plot_text)</code></pre>
+<p>{{% callout note %}}</p>
+<p>Setting up variables like this and creating functions can help you generate multiple plots with consistent format.</p>
+<p>{{% /callout %}}</p>
+<p>As I mentioned <a href="../2021-10-30-academic-writing-in-r-markdown-i/">before</a>, one winning feature of R Markdown is that you don’t need to rearrange tables and figures to fit the flow of the text. This is trivial in HTML, where each file is a virtually endless page to scroll down through, so tables and figures simply appear where you want them to. In PDF, figures may be moved around so they are not split by a change of page, and tables may be moved to the start of the following page. So, this shouldn’t worry you. However, some people fret about the position of tables and figures because they may use references such as “the following figure” or “this table,” which I may use in a post like this but is not really appropriate in an academic setting. Instead, you want cross-references. I <a href="#chapters">already mentioned</a> how to reference a heading; referencing figures, plots or even <a href="https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#equations">equations</a> is not very different, except that the code name must be prefixed by <code>fig</code>, <code>tab</code> and <code>eq</code>, respectively. For example, I could reference the figure above, Figure <a href="#fig:myfig">1</a>, which I simply called <code>myfig</code>, by typing <code>\@ref(fig:myfig)</code>. This produces the number, and I have to manually precede it with “Figure.” The code name is the name of the R chunk with which you generated the figure/table:</p>
+<pre><code>```{r, figname}
+# ...code to generate plot
+# This figure will be referenced with \@ref(fig:figname)
+```</code></pre>
+<p>Another neat addition of <code>bookdown</code> is the use of references for captions. Normally, you would add the caption to a figure as a <code>fig.cap</code> chunk option, and to a table as a <code>caption</code> argument in <code>kable()</code>, but then you don’t have much room for formatting. The alternative is to create a reference as a line in R Markdown starting like <code>(ref:figname)</code>, and then use <code>'(ref:figname)'</code> where you would have used the caption. That way, you can write longer and fancier captions and avoid cluttered chunk options. For example, the code below will generate Figure <a href="#fig:mycats">2</a>, which is referenced as <code>Figure \@ref(fig:mycats)</code>.</p>
+<pre class="md"><code>(ref:mycats) These are my cats, **Chi** is black and *Sai* is tabby.
+```{r, mycats, echo = FALSE, fig.cap = &#39;These are my cats, <strong>Chi</strong> is black and <em>Sai</em> is tabby.&#39;, fig.alt=&quot;Picture of two cats on a window. One is black, sitting flat
+and looking outside. The other one is tabby, sitting straight and
+elegantly looking at the camera.&quot;}
+knitr::include_graphics(&quot;images/mycats.jpg&quot;)
+```</code></pre>
+
+<div class="figure"><span style="display:block;" id="fig:mycats"></span>
+<img src="images/mycats.jpg" alt="Picture of two cats on a window. One is black, sitting flat and looking outside. The other one is tabby, sitting straight and elegantly looking at the camera." width="2064" />
+<p class="caption">
+Figure 2: These are my cats, <strong>Chi</strong> is black and <em>Sai</em> is tabby.
+</p>
+</div>
+</div>
+<div id="citations" class="section level1">
+<h1>So academic: citations!</h1>
+<p>A great deal of academic writing involves interacting with other research, mainly through citations. This is extremely simple with R Markdown, especially if you use Zotero and even more if you enhance it with Better BibTex: I talked about it <a href="../2021-10-23-obsidian-and-zotero/">before</a>.</p>
+<p>As the <a href="https://bookdown.org/yihui/bookdown/citations.html">documentation</a> shows, citing in R Markdown follows pandoc’s system and is pretty straightforward. Basically you have a citation key, e.g. <code>montes_2021</code>, you precede it with <code>@</code> if you want to integrate it in the text as <span class="citation"><a href="#ref-montes_2021" role="doc-biblioref">Montes</a> (<a href="#ref-montes_2021" role="doc-biblioref">2021</a>)</span>, and then you can also surround it with <code>[ ]</code> if you want it in parentheses <span class="citation">(<a href="#ref-montes_2021" role="doc-biblioref">Montes 2021</a>)</span> or precede it with <code>-</code> if you want to exclude the name, because you mentioned it before -<span class="citation"><a href="#ref-montes_2021" role="doc-biblioref">Montes</a> (<a href="#ref-montes_2021" role="doc-biblioref">2021</a>)</span>. In order to add a page number, you just place it between square brackets (<code>@montes_2021 [50]</code> generates <span class="citation"><a href="#ref-montes_2021" role="doc-biblioref">Montes</a> (<a href="#ref-montes_2021" role="doc-biblioref">2021, 50</a>)</span>) or, if you’re already inside, separate them by a comma (<code>[@montes_2021 50]</code> generates <span class="citation">(<a href="#ref-montes_2021" role="doc-biblioref">Montes 2021, 50</a>)</span><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>), and if you want to list multiple sources next to each other you can just separate them with semicolons (<code>[@R-rmarkdown; @R-bookdown]</code> generates <span class="citation">(<a href="#ref-R-rmarkdown" role="doc-biblioref">Allaire et al. 2021</a>; <a href="#ref-R-bookdown" role="doc-biblioref">Xie 2021a</a>)</span><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>).</p>
+<p>R Markdown needs two sources of information: the .bib file with all your entries in BibTex format and your .csl file with the citation stylesheet format. This is taken care of in the YAML of the <a href="https://github.com/montesmariana/phdThesis/blob/main/index.Rmd"><code>index.html</code></a>, in my case with the <code>bibliography</code>, <code>biblio-style</code> (for PDF) and <code>csl</code> (for HTML) fields.</p>
+<pre class="yml"><code>bibliography: [assets/bib/PhDCitations.bib, assets/bib/packages.bib]
+biblio-style: unified
+csl: assets/bib/unified-style-sheet-for-linguistics.csl</code></pre>
+<p>The <code>bibliography</code> field lists two .bib files: the first is a collection of Zotero entries that I exported as BibTex, while the second I generated with <code>knitr::write_bib()</code> to obtain the correct citations of all the R packages I had used. The <code>biblio-style</code> field is the one that talks to <code>biber</code> and the <code>biblatex</code> citation package as specified in both <code>_output.yml</code> and <code>preamble.tex</code> (as I showed <a href="#frontmatter">before</a>). For the HTML output I used the .csl file (downloaded, if I’m not mistaken, from Zotero itself). In both cases I’m referencing the Unified Stylesheet for Linguistics. In any case, it is very neat that you can just write all your references and your full text and only take care of the precise stylesheet at the end or when you want to procrastinate with this kind of minutiae. Your full text will adjust accordingly.</p>
+<p>Note that certain stylesheets may include instructions on the order of sources when you cite multiple ones at the same time (order in which you typed? Family name? Year?). When you write a prefix between the brackets, e.g. <code>[cf. @source1, @source2]</code>, if that source is moved around, so is the prefix.</p>
+<p>I would like to close this section with a note on formatting, not always ‘citations’ per se. First:</p>
+<blockquote>
+<p>In case you are not that familiar with markdown, you can easily create a blockquote by prefixing the paragraph with <code>&gt;</code>.</p>
+</blockquote>
+<p>Second, if you are writing about <em>linguistics</em>, you will probably want to include linguistic examples. Here I have good news and bad news. As far as I know, there is <span class="math inline">\(\LaTeX\)</span> <a href="https://cipanglo.hypotheses.org/1221">support for glosses</a>, but no nice tool for HTML. If there is demand, I suppose it could be created. If you don’t need glosses but still would benefit of linguistic examples such as (1), Pandoc <a href="https://pandoc.org/MANUAL.html#numbered-example-lists">does have you covered</a>. You precede your sentence with a codename in parentheses and starting with <code>@</code> (e.g. <code>(@ex1) This is a linguistic example</code>) and then you can reference it anywhere as <code>(@ex1)</code>. The number is consecutive across your full book and is surrounded by parenthesis in the PDF format but looks like a normal numbered list in HTML. I’ve found code to fix that in HTML when you have one file, but not for a book. If anyone has ideas on how to customize it, I’m interested!</p>
+<ol class="example" style="list-style-type: decimal">
+<li>This is a linguistic example.</li>
+</ol>
+</div>
+<div id="cover" class="section level1">
+<h1>Finally: a cover</h1>
+<p>OMG you’re done already?! You have a nice cover and all!<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
+<p>I only added the cover to my PDF output after sending it to print, when I had to send a digital version. I had a PDF for the front cover and one for the back, and I added them with the <code>\includepdf{}</code> <span class="math inline">\(\LaTeX\)</span> command at the beginning of <code>titlepage.tex</code> and as only content of <code>afterbody.tex</code>, which are called in the <code>_output.yml</code> configuration file.</p>
+<figure style="float:right;width:30%;">
+<img src="images/front-cover.png" alt='Title reading "Cloudspotting. Visual Analytics for Distributional Semantics", followed by the name of the author, "Mariana Montes", in a white background with pieces of colorful scatterplots.'/ style="margin:1rem;">
+<figcaption>
+Cover of my thesis.
+</figcaption>
+</figure>
+<p>For the HTML version, I only added the cover when I made my thesis public after my defense (and I didn’t generate a PDF afterwards). Imitating the source code of one of Hadley Wickam’s books<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> I added <code>![Cover image](front-cover.png){.cover width=250}</code> after the title of the Preface (in <code>index.Rmd</code>). I understand that <code>.cover</code> is a CSS class that takes care of all the beauty and neatness of how the cover is presented. In the original case I think the image is also a hyperlink to the Amazon page where you can buy the book (I probably should make mine a hyperlink to my pdf…).</p>
+<p>Good luck with yours! I hope this post encourages you and helps you to try to write your own thesis, or a book, or anything else, in R Markdown too!</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-rmarkdown" class="csl-entry">
+Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2021. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.
+</div>
+<div id="ref-R-ggpubr" class="csl-entry">
+Kassambara, Alboukadel. 2020. <em>Ggpubr: Ggplot2 Based Publication Ready Plots</em>. <a href="https://rpkgs.datanovia.com/ggpubr/">https://rpkgs.datanovia.com/ggpubr/</a>.
+</div>
+<div id="ref-R-colorblindr" class="csl-entry">
+McWhite, Claire D., and Claus O. Wilke. 2021. <em>Colorblindr: Simulate Colorblindness in r Figures</em>. <a href="https://github.com/clauswilke/colorblindr">https://github.com/clauswilke/colorblindr</a>.
+</div>
+<div id="ref-montes_2021" class="csl-entry">
+Montes, Mariana. 2021. <span>“Cloudspotting: Visual Analytics for Distributional Semantics.”</span> PhD thesis, <span>Leuven</span>: <span>KU Leuven</span>.
+</div>
+<div id="ref-okabe.ito_2002" class="csl-entry">
+Okabe, Masataka, and Kei Ito. 2002. <span>“Color <span>Universal Design</span> (<span>CUD</span>). <span>How</span> to Make Figures and Presentations That Are Friendly to <span>Colorblind</span> People.”</span> <span>J*Fly Data Depository for Drosophila researchers</span>. November 20, 2002. <a href="https://jfly.uni-koeln.de/color/">https://jfly.uni-koeln.de/color/</a>.
+</div>
+<div id="ref-R-cowplot" class="csl-entry">
+Wilke, Claus O. 2021. <em>Cowplot: Streamlined Plot Theme and Plot Annotations for Ggplot2</em>. <a href="https://wilkelab.org/cowplot/">https://wilkelab.org/cowplot/</a>.
+</div>
+<div id="ref-R-extrafont" class="csl-entry">
+Winston Chang. 2014. <em>Extrafont: Tools for Using Fonts</em>. <a href="https://github.com/wch/extrafont">https://github.com/wch/extrafont</a>.
+</div>
+<div id="ref-R-bookdown" class="csl-entry">
+Xie, Yihui. 2021a. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
+</div>
+<div id="ref-R-knitr" class="csl-entry">
+———. 2021b. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
+</div>
+<div id="ref-R-kableExtra" class="csl-entry">
+Zhu, Hao. 2021. <em>kableExtra: Construct Complex Table with Kable and Pipe Syntax</em>. <a href="https://CRAN.R-project.org/package=kableExtra">https://CRAN.R-project.org/package=kableExtra</a>.
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I’m quite sure that the section about this format did not exist yet in the Bookdown book and I had to do some digging to figure out how it was named. I’m happy it has more documentation now!<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>It also has functions for very typical plots, making it easier for example to create a boxplot and show the significance of the difference between groups.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Even more recently I discovered the color palettes of <a href="https://cran.r-project.org/web/packages/ggsci/vignettes/ggsci.html">ggsci</a>, but I haven’t used them yet.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>How pages are indicated depnd on the citation stylesheet.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Note that R Markdown adds the <em>a</em> at the end by itself.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>I used <a href="https://inkscape.org/">Inkscape</a> to design mine, by the way. It’s open-source and vector based, working on .svg and then creating PNG, JPG or PDF output, as you prefer. I used <code>ggplot2::ggsave(device = "png", bg = "transparent")</code> on a lot of my plots to save them in a separate folder and then selected and imported a bunch of them and played around until it looked nice. I had just got my second dose of the COVID vaccine so that was the only intellectual effort I could do that day.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>The perks of open-source and GitHub repositories!<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
