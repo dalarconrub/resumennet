@@ -24,7 +24,7 @@ bibliography: bib.bib
 
 ```{r, include=FALSE}
 knitr::write_bib(
-  c("rmarkdown", "rmdformats", "xaringan", "blogdown", "bookdown", "vitae", "officedown"),
+  c("rmarkdown", "rmdformats", "xaringan", "blogdown", "bookdown", "vitae", "officedown", "todor"),
   file = "bib.bib"
 )
 ```
@@ -86,7 +86,7 @@ I think one reason for this is that with MS Word you can use styles, while in R 
 Next to this core component, other advantages of R Markdown (and $\LaTeX$) over MS Word are:
 
 - **Formatting of images and tables**:  They are much more neatly formatted and located, there is no need to move them around to fit the page, or not nearly as much as with Word.
-- **Commenting text**: You have a paragraph or section that you don't want to get rid of just yet but want out of the way? In MS Word you would need to cut and paste to another file with all the other misfits: in R Markdown you just *comment* the text. If you've never done programming this just consists of surrounding the text in special symbols^[R Studio has you covered with `Ctrl`+`Shift`+`C`.] so that it is invisible to the program. You will still have the text in your source file but will not be rendered in the output.
+- **Commenting text**: You have a paragraph or section that you don't want to get rid of just yet but want out of the way? In MS Word you would need to cut and paste to another file with all the other misfits: in R Markdown you just *comment* the text. If you've never done programming this just consists of surrounding the text in special symbols^[R Studio has you covered with `Ctrl`+`Shift`+`C`.] so that it is invisible to the program. You will still have the text in your source file but will not be rendered in the output. Better yet: the `todor` package [@R-todor] helps you manage comments starting with `TODO`, `NOTE`, `FIXME`, etc., making it easy to find and track all such comments *in a project*, like searchable post-its!
 - **Cross-references**: Creating cross-references to another section of your text, to figures or to tables is extremely easy and straightforward. They are also automatically refreshed ---in MS Word the last time I did this I had to select the full text and "update fields". Citations also become cross-references to the reference at the end of your text.
 
 ## Why not $\LaTeX$?
