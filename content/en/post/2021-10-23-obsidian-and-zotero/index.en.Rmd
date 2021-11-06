@@ -97,7 +97,7 @@ As an example, let's say I want to add a folder for notes on Koptjevskaja-Tamm a
 knitr::include_graphics('images/selectentry.png')
 ```
 
-This creates literature note in my "Reading notes" folder, like the one shown in \@ref(fig:literaturenote):
+This creates literature note in my "Reading notes" folder, like the one shown in Figure \@ref(fig:literaturenote):
 
 ```{r, literaturenote, echo=FALSE, fig.cap = 'Example of literature note.', fig.alt = 'Screenshot of an Obsidian onte, in editing mode on the left and preview mode on the right. The title of the note is "@koptjevskaja-tamm.sahlgren_2014", the citation key of the source. The YAML has a field, authors, year, and pages fields with bibligographical information from the entry, and after it there is a link showing the citation key and taking you to the Zotero entry.'}
 knitr::include_graphics('images/literaturenote.png')
