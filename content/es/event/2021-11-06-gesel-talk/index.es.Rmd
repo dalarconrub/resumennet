@@ -1,0 +1,34 @@
+---
+title: Métodos distribucionales y visualización
+author: Mariana Montes
+date: '2021-11-06 13:00:00'
+slug: gesel-talk
+categories:
+  - academic
+tags:
+  - Distributional semantics
+  - Corpus-based semantics
+  - Visualization
+subtitle: 'aplicados a la semántica léxica'
+summary: 'Charla organizada por GESEL online.'
+authors: []
+lastmod: '`r Sys.Date()`'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+El 6 de noviembre de 2021 di una charla organizada por el [Grupo de Estadística para Estudios del Lenguaje](https://gesel.github.io/), dentro del ciclo de charlas "Herramientas y métodos para el análisis cuantitativo del lenguaje". Hablé de mi [tesis doctoral](https://cloudspotting.marianamontes.me/), con una rápida introducción a modelos distribucionales e ilustraciones de las herramientas de visualización más centrales en mi tesis: [nephovis](https://qlvl.github.io/NephoVis/) y una [shiny app](https://marianamontes.shinyapps.io/Level3/).
+
+Fue una hermosa experiencia y me alegra haber llevado un poco más de mi trabajo a Argentina.
+
+```{r, echo=FALSE}
+xaringanExtra::embed_xaringan(
+  url = "https://slides.marianamontes.me/gesel/",
+  ratio = "16:9"
+)
+```
+
