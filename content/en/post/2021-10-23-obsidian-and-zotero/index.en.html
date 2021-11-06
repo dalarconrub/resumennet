@@ -60,24 +60,30 @@ projects: []
 <p>The word next to the <code>@</code> symbol points to the type of element (e.g. ‘Manual’, ‘Book’), and the entry consists of key-value pairs with different kinds of bibliographical information. In this case, I obtained it via the <code>toBibtex()</code> and <code>citation()</code> functions in R, but you can often find this format as an option for downloading a citation, or as an export option in Zotero. If you have a file with BibTex entries, you can also import them to Zotero (or if you copy a BibTex entry, you can import it to Zotero from the clipboard!).</p>
 <p>R Markdown and <span class="math inline">\(\LaTeX\)</span> can read BibTex files: you just enter the citation key and, when your text is compiled, your source is cited perfectly. For example, in R Markdown I could write <code>[@montes_2021]</code> to cite my thesis, and it would be rendered as <code>(Montes 2021)</code> or however it should be based on the chosen citation style. Then, all the relevant information tied to the citation key <code>montes_2021</code> would be used in the full reference.</p>
 <p>The entries above, however, have no citation key. As it stands, you have to add them manually, before the comma in the first line of each entry.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> When, instead, you export your entries from Zotero without Better BibTex, the default keys tend to be long names in camelCase, such as <code>montesCloudspotting2021</code>. Better BibTex gives you a nicer default pattern and the possibility to create your own template for easier-to-remember citation keys.</p>
-<p>Once you have <a href="https://retorque.re/zotero-better-bibtex/installation/">installed Better BibTex</a>, you will find a new tab in your Zotero Preferences, where you can define a <a href="https://docs.jabref.org/setup/citationkeypatterns">template</a> for your citation keys. Mine uses, in lower case, the last name of the first author, separated by a period from the last name of the second author or, if there are more than two, <em>etal</em>. Then, it adds an underscore and the year.</p>
-<div class="figure">
-<img src="images/bbkey.png" alt="" />
-<p class="caption">Zotero menu to tailor Better BibTex.</p>
+<p>Once you have <a href="https://retorque.re/zotero-better-bibtex/installation/">installed Better BibTex</a>, you will find a new tab in your Zotero Preferences (see Figure <a href="#fig:bbtsettings">1</a>), where you can define a <a href="https://docs.jabref.org/setup/citationkeypatterns">template</a> for your citation keys. Mine uses, in lower case, the last name of the first author, separated by a period from the last name of the second author or, if there are more than two, <em>etal</em>. Then, it adds an underscore and the year.</p>
+<div class="figure"><span style="display:block;" id="fig:bbtsettings"></span>
+<img src="images/bbkey.png" alt="Window of &quot;Zotero Preferences&quot;, with seven tabs. The rightmost one, &quot;Better BibTeX&quot;, is selected, showing five tabs for settings and focusing on the first, &quot;Citation keys&quot;. In a field titled &quot;Citation by format&quot;, it reads &quot;[auth.etal:lower]_[year]&quot;." width="503" />
+<p class="caption">
+Figure 1: Zotero menu to tailor Better BibTex.
+</p>
 </div>
-<p>This is a good pattern for me because it’s similar to how I’m used to thinking of the sources I cite: <code>montes_2021</code> for Montes (2021); <code>kiela.clark_2014</code> for Kiela &amp; Clark (2014); <code>heylen.etal_2015</code> for Heylen et al. (2015). When multiple publications have the same key, Better BibTex automatically adds an <em>a</em>, <em>b</em>, <em>c</em>… to the citation key. You have to remember which is which, but looking it up is not so hard either:</p>
-<div class="figure">
-<img src="images/zoteroentries.png" alt="" />
-<p class="caption">List of Zotero entries with citation keys.</p>
+<p>This is a good pattern for me because it’s similar to how I’m used to thinking of the sources I cite: <code>montes_2021</code> for Montes (2021); <code>kiela.clark_2014</code> for Kiela &amp; Clark (2014); <code>heylen.etal_2015</code> for Heylen et al. (2015). When multiple publications have the same key, Better BibTex automatically adds an <em>a</em>, <em>b</em>, <em>c</em>… to the citation key. You have to remember which is which, but looking it up is not so hard either (see Figure <a href="#fig:entrylist">2</a>).</p>
+<div class="figure"><span style="display:block;" id="fig:entrylist"></span>
+<img src="images/zoteroentries.png" alt="Screenshot of a list of entries in Zotero, with four columns: &quot;Title&quot;, with the titles of different entries, &quot;Creator&quot;, with the family names of the authors, &quot;Date&quot;, with the year of publication, and &quot;Citation Key&quot;, with the citation key in the format described above." width="626" />
+<p class="caption">
+Figure 2: List of Zotero entries with citation keys.
+</p>
 </div>
 <p>In short, using Better BibTex gives you a nicer experience with BibTex files, e.g. using R Markdown or <span class="math inline">\(\LaTeX\)</span>. Now… what about Obsidian?</p>
 </div>
 <div id="howto" class="section level1">
 <h1>Citation plugin for Obsidian</h1>
-<p>I can make Obsidian and Zotero talk to each other thanks to <a href="https://github.com/hans/obsidian-citation-plugin">a plugin</a>. Obsidian requires you to first enable community plugins, but then it’s really easy to install it.</p>
-<div class="figure">
-<img src="images/obsidiancomplugin.png" alt="" />
-<p class="caption">Window to set up Obsidian community plugins.</p>
+<p>I can make Obsidian and Zotero talk to each other thanks to <a href="https://github.com/hans/obsidian-citation-plugin">a plugin</a>. Obsidian requires you to first enable community plugins (see Figure <a href="#fig:complug">3</a>), but then it’s really easy to install it.</p>
+<div class="figure"><span style="display:block;" id="fig:complug"></span>
+<img src="images/obsidiancomplugin.png" alt="Screenshot of Obsidian settings to activate a community plugin: in the left sidebar, the option &quot;Community pluging&quot; is selected, and in the main side &quot;Safe mode&quot; is deactivated." width="772" />
+<p class="caption">
+Figure 3: Window to set up Obsidian community plugins.
+</p>
 </div>
 <p>Once you turn off ‘Safe mode’, you have to ‘browse community plugins’, search for the citation plugin, install it <em>and enable it</em> to use it. That’s it. Note that in order for it to <em>work</em> properly you still need export your Zotero library and tell Obsidian where it is, as I mention <a href="#setup">below</a>.</p>
 <p>One of its most interesting features is the <strong>literature note</strong>: a note with bibliographical information extracted from your Zotero entry… well, technically, from a BibTex file exported from Zotero (or any other bibliography manager). I will address this later, but for now let’s assume you have a BibTex file with all your Zotero data. With <code>Ctrl</code>+<code>Shift</code>+<code>E</code>, you get a dropdown menu in which you can search through all your entries. Once you select one, it creates a note that, by default, uses your <strong>citation key</strong> as the title, and adds a bunch of information to the preamble of your note. It can also add other information, such as the abstract or, more interestingly… <em>a link to your Zotero entry</em>. When you click on that link, it opens Zotero; if it is already open, it selects the reference you clicked on.</p>
@@ -87,15 +93,19 @@ projects: []
 <p>Back when I was using Evernote, I had one notebook per source I read and its first note was a sort of bibliographical card, with basic information so I remembered what it was a long time later (it also forced me to check the outline of a paper, for example, and get more familiar with it before reading it). Sometimes, when a source A cited another source B I had already taken notes from, I would link the citation in notebook A to the bibliographical card of B.
 Setting this up required me to copy the information from Zotero, and I found it sad that it wasn’t really <em>connected</em> to Zotero itself.</p>
 <p>With Obsidian, inside my research vault, I have a folder for “Reading notes”, where I plan to add folders for different sources (and import them from Evernote, too). It turns out that one of the citation plugin’s main features, the literature note, is precisely an <em>automatic version</em> of my beloved bibliographical card!</p>
-<p>As an example, let’s say I want to add a folder for notes on Koptjevskaja-Tamm and Sahlgren’s (2014) paper. First, I press <code>Ctrl</code>+<code>Shift</code>+<code>E</code> and select the right entry.</p>
-<div class="figure">
-<img src="images/selectentry.png" alt="" />
-<p class="caption">Select entry from citation plugin.</p>
+<p>As an example, let’s say I want to add a folder for notes on Koptjevskaja-Tamm and Sahlgren’s (2014) paper. First, I press <code>Ctrl</code>+<code>Shift</code>+<code>E</code> and select the right entry (Figure <a href="#fig:selectentry">4</a>).</p>
+<div class="figure"><span style="display:block;" id="fig:selectentry"></span>
+<img src="images/selectentry.png" alt="Screenshot of list of entries that pops up. In the search barc on top, it reads &quot;koptj&quot;, and a group of citations matching the search text is filtered." width="797" />
+<p class="caption">
+Figure 4: Select entry from citation plugin.
+</p>
 </div>
-<p>This creates the following literature note in my “Reading notes” folder:</p>
-<div class="figure">
-<img src="images/literaturenote.png" alt="" />
-<p class="caption">Literature note example.</p>
+<p>This creates literature note in my “Reading notes” folder, like the one shown in <a href="#fig:literaturenote">5</a>:</p>
+<div class="figure"><span style="display:block;" id="fig:literaturenote"></span>
+<img src="images/literaturenote.png" alt="Screenshot of an Obsidian onte, in editing mode on the left and preview mode on the right. The title of the note is &quot;@koptjevskaja-tamm.sahlgren_2014&quot;, the citation key of the source. The YAML has a field, authors, year, and pages fields with bibligographical information from the entry, and after it there is a link showing the citation key and taking you to the Zotero entry." width="707" />
+<p class="caption">
+Figure 5: Example of literature note.
+</p>
 </div>
 <p>The main bibliographical information is in the Yaml<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> (but need not be), and then there is a hyperlink that shows the citation key (which, preceded by a <code>@</code>, is also the name of the note) and takes you to the Zotero entry: if I click on it, it goes to Zotero and highlights that reference.</p>
 <p>I will later add the abstract, the outline of the paper and some comments on why I’m reading it. I also manually create the “Koptjevskaja-Tamm &amp; Sahlgren (2014)” folder to add my new literature note and, later, other notes I might want to make.</p>
@@ -103,15 +113,19 @@ Setting this up required me to copy the information from Zotero, and I found it 
 Next to creating the literature note, if you are also using the “Daily notes” plugin of Obsidian, it will automatically add an internal link to your new literature note in your current Daily note! Awesome integration with your new favorite journal!
 {{% /callout %}}</p>
 <p>Because the name of the note follows your chosen citation key pattern, you can easily use it to reference the source as well as the bibliographical data. So my current (new) practice is to add <em>all</em> references (that is, when I take notes from a source that is citing another source I might be interested in) in the format of internal notes.</p>
-<p>For example, suppose I’m taking notes for Koptjevskaja-Tamm &amp; Sahlgren (2014) and it references Lenci (2018). I could write it as <code>[[@lenci_2018]]</code>, i.e. an internal link to the literature note that I could create for that second source. Even if I have not created the note yet, Obsidian lets me create the link, which means that (i) whenever I create the note it will be already linked and (ii) <em>notes that cite the same source will be linked in the note network</em>. The image below shows a bit of my network of notes: there is no literature note for <code>@curran_2004</code> yet, but it is referenced in two notes and thus connects them.</p>
-<div class="figure">
-<img src="images/network.png" alt="" />
-<p class="caption">Snippet of network linked by a note that does not exist yet.</p>
+<p>For example, suppose I’m taking notes for Koptjevskaja-Tamm &amp; Sahlgren (2014) and it references Lenci (2018). I could write it as <code>[[@lenci_2018]]</code>, i.e. an internal link to the literature note that I could create for that second source. Even if I have not created the note yet, Obsidian lets me create the link, which means that (i) whenever I create the note it will be already linked and (ii) <em>notes that cite the same source will be linked in the note network</em>. Figure <a href="#fig:network">6</a> shows a bit of my network of notes: there is no literature note for <code>@curran_2004</code> yet, but it is referenced in two notes and thus connects them.</p>
+<div class="figure"><span style="display:block;" id="fig:network"></span>
+<img src="images/network.png" alt="Screenshot of a section of an Obsidian network graph of notes, with three nodes and two edges highlighted. The central node is called &quot;@curran_2004&quot; and the nodes connected to it read &quot;Proposed method&quot; and &quot;Analyses&quot;." width="474" />
+<p class="caption">
+Figure 6: Snippet of network linked by a note that does not exist yet.
+</p>
 </div>
-<p>The easy citation key pattern means that I can guess what the reference should look like, but if there is a chance that it actually ends in <em>a</em>, <em>b</em>, etc., I can also use the plugin’s citation tool. I haven’t created a hotkey for it yet, so I have to go to Obsidian’s command palette and choose <code>Citations: Insert Markdown citation</code>, which takes me to a menu of all my references again.</p>
-<div class="figure">
-<img src="images/insertcitation.png" alt="" />
-<p class="caption">Choosing “insert citation” from the command palette.</p>
+<p>The easy citation key pattern means that I can guess what the reference should look like, but if there is a chance that it actually ends in <em>a</em>, <em>b</em>, etc., I can also use the plugin’s citation tool. I haven’t created a hotkey for it yet, so I have to go to Obsidian’s command palette and choose <code>Citations: Insert Markdown citation</code> (see Figure <a href="#fig:insertcitation">7</a>), which takes me to a menu of all my references again.</p>
+<div class="figure"><span style="display:block;" id="fig:insertcitation"></span>
+<img src="images/insertcitation.png" alt="Screenshot of the command palette: a selection menu with a search bar on top reading &quot;Select a command...&quot;. The ninth option is highlighted and reads &quot;Citations: Insert Markdown citation&quot;." width="521" />
+<p class="caption">
+Figure 7: Choosing “insert citation” from the command palette.
+</p>
 </div>
 <p>The plugin allows you two kinds of citation —you access the primary one by pressing <code>Enter</code> and the secondary one with <code>Shift</code>+<code>Enter</code>. By default, this will insert something like <code>[@lenci_2018]</code>, i.e. the <a href="https://pandoc.org/MANUAL.html#extension-citations">pandoc format</a> used by R Markdown. But, as I will show later, you can customize it to return <code>[[@lenci_2018]]</code>, and therefore it becomes a link that you know for sure will take you to a(n eventual) literature note for that source. You can even customize it to return <code>[@lenci_2018](zotero://select/items/@lenci_2018)</code>, that is, the Zotero entry in your Desktop app!<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <p>As a plus, you can then copy the texts with references to your R Markdown files to create nice articles with perfect citations, just by replacing <code>[[</code> with <code>[</code> and <code>]]</code> with <code>]</code>.</p>
@@ -119,10 +133,12 @@ Next to creating the literature note, if you are also using the “Daily notes�
 <div id="setup" class="section level2">
 <h2>Customize the plugin</h2>
 <p>For a better, smoother, more tailored experience with the citation plugin, you can customize it in a few ways. I will show here what it looks like for me.</p>
-<p>In the Settings of Obsidian and the section for the Citation plugin, you first have a few configuration items to take care of.</p>
-<div class="figure">
-<img src="images/customcit1.png" alt="" />
-<p class="caption">Customizing your citation plugin: basics.</p>
+<p>In the Settings of Obsidian and the section for the Citation plugin, you first have a few configuration items to take care of (Figure <a href="#fig:customcit1">8</a>).</p>
+<div class="figure"><span style="display:block;" id="fig:customcit1"></span>
+<img src="images/customcit1.png" alt="Screenshot of Obsidian settings to activate customize the citation plugin. One the left sidebar, &quot;Citations&quot; is selected. The main area is titled &quot;Citation plugin settings&quot; and there are three sections underneath: &quot;Citation database format&quot;, which offers a dropdown menu in which &quot;BibLaTex&quot; has been selected; &quot;Citation database path&quot;, which asks for text input and reads &quot;Library.bib&quot;, and Literature note folder, which also asks for text input and reads &quot;Reading notes&quot;." width="768" />
+<p class="caption">
+Figure 8: Customizing your citation plugin: basics.
+</p>
 </div>
 <dl>
 <dt>Citation database format</dt>
@@ -137,19 +153,23 @@ In a previous version of this post I said:</p>
 <p>If you make changes to your library, you have to export it again, but then Obsidian automatically refreshes.</p>
 </blockquote>
 <p>But, it turns out, Better BibTex offers you the option of keeping track of your exported library/collection in Zotero, so that every time you modify it <em>the file is automatically updated</em>.</p>
-<div class="figure">
-<img src="images/autoupdate.png" alt="" />
-<p class="caption">Keep track of the exported file.</p>
+<div class="figure"><span style="display:block;" id="fig:autoupdate"></span>
+<img src="images/autoupdate.png" alt="Screenshot of the &quot;Export&quot; prompt in Zotero. In the dropdown menu next to the &quot;Format&quot; option, &quot;Better BibTex&quot; was selected. Underneath there is a checklist and the last item, &quot;Keep updated&quot;, is checked and highlighted with an orange circle." width="234" />
+<p class="caption">
+Figure 9: Keep track of the exported file.
+</p>
 </div>
 <dl>
 <dt>Literature note folder</dt>
 <dd><p>When I create a literature note, it’s automatically saved within the folder “Reading notes” (and then I move it to the folder of that source).</p>
 </dd>
 </dl>
-<p>Under the basic configuration settings there are some instructions on how to deal with the following customization sections. You will write templates with variables between double curly braces, which means that they will be replaced with the matching information for the reference you cite. In other words, once you select the reference with citation key <code>montes_2021</code>, all the variables here that say <code>{{citekey}}</code> will be replaced by <code>montes_2021</code>.</p>
-<div class="figure">
-<img src="images/customcit2.png" alt="" />
-<p class="caption">Customizing literature note.</p>
+<p>Under the basic configuration settings there are some instructions on how to deal with the following customization sections (Figure <a href="#fig:customcit2">10</a>). You will write templates with variables between double curly braces, which means that they will be replaced with the matching information for the reference you cite. In other words, once you select the reference with citation key <code>montes_2021</code>, all the variables here that say <code>{{citekey}}</code> will be replaced by <code>montes_2021</code>.</p>
+<div class="figure"><span style="display:block;" id="fig:customcit2"></span>
+<img src="images/customcit2.png" alt="Screenshot of Obsidian settings to activate customize the citation plugin. On the sidebar, the &quot;Citations&quot; plugin options are selected. On the main side there is a heading that reads &quot;Literature note templates&quot; followed by two sections with a title and a text input area. The first one is &quot;Literature note title template&quot; and the input reads &quot;@{{citekey}}&quot;. The second one is &quot;Literature note content template&quot; and its input shows template variables surrounded by double curly braces as shown below." width="756" />
+<p class="caption">
+Figure 10: Customizing the literature note.
+</p>
 </div>
 <p>Given those instructions, the title of my literature notes starts with a <code>@</code> followed by the citation key (variable: <code>{{citekey}}</code>, example value: <code>montes_2021</code>). The initial information will be determined by the values in that template: a yaml will be created adding the values of <code>{{title}}</code> (the title of the referenced work), <code>{{authorString}}</code> (the names of the authors), <code>{{year}}</code> (the publication date) and <code>{{page}}</code> (the number of pages or the pages range), and then the body will include the hyperlink to the Zotero entry and, if available, the abstract.</p>
 <pre class="md"><code>---
@@ -164,10 +184,12 @@ page(s): {{page}}
 <p>{{% callout note %}}
 In case you are not aware, you can create hyperlinks in markdown with square brackets followed by round brackets. For example, <code>[my thesis]</code> <code>(https://cloudspotting.marianamontes.me)</code> will show the text in brackets and take you to the text in parenthesis: <a href="https://cloudspotting.marianamontes.me">my thesis</a>. Obsidian’s <code>[[text]]</code> is a shortcut for <code>[text]</code> <code>(text)</code>. Therefore, if I take a citation key <code>{{citekey}}</code> and place it between the square brackets, and then the <code>{{zoteroSelectURI}}</code> variable between the round brackets, I will get a hyperlink that looks like the citation key but takes me to the Zotero entry, as I showed in the example of my literature note above.
 {{% /callout %}}</p>
-<p>The same knowledge can be used with the last section of the customization, which relates to the citation templates.</p>
-<div class="figure">
-<img src="images/customcit3.png" alt="" />
-<p class="caption">Customize citation.</p>
+<p>The same knowledge can be used with the last section of the customization (Figure <a href="#fig:customcit3">11</a>), which relates to the citation templates.</p>
+<div class="figure"><span style="display:block;" id="fig:customcit3"></span>
+<img src="images/customcit3.png" alt="Screenshot of Obsidian settings to customize the citation plugin. On the left side bar, &quot;Citations&quot; is highlighted. On the main area, titled &quot;Markdown citation templates&quot;, there is a description followed by two fields with a title and an input area. The input of &quot;Markdown primary citation template&quot; reads an incomplete &quot;[@{{citekey}}]({{zoteroSelectURI}})&quot;, while the input of &quot;Markdown secondary citation template&quot; reads &quot;[[@{{citekey}}]]&quot;." width="750" />
+<p class="caption">
+Figure 11: Customize citation.
+</p>
 </div>
 <p>As I mentioned before, you can have a primary and a secondary citation: when you ask for the citation in the command palette and it shows you the possible entries, <code>Enter</code> prints the primary citation and <code>Shift</code>+<code>Enter</code> prints the secondary one. In the images above, I designed the primary citation to print the hyperlink to the Zotero entry, and the secondary one to print the reference to the literature note <code>[[@{{citekey}}]]</code>, e.g. <code>[[@montes_2021]]</code>.</p>
 <p>Finally, I would like to point out that I’ve been working with both Markdown and Better BibTex for a while, so if you haven’t, this can look like a lot to take. I hope you can find the time to experiment with this (or at least copy what I did, it might work for you!) and it helps your note taking, bibliography management and general levels of fun and stress!</p>
