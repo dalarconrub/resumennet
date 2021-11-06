@@ -1,5 +1,5 @@
 ---
-title: Obsidian and Zotero
+title: Obsidian y Zotero
 author: Mariana Montes
 date: '2021-10-23'
 slug: obsidian-and-zotero
@@ -8,9 +8,9 @@ categories:
 tags:
   - Research
 subtitle: ''
-summary: "Now that I learned about Obsidian, I'm readjusting how I take notes and organize my literature readings. The next step is to integrate it with Zotero!"
+summary: "Ahora que descubrí Obsidian estoy reajustando cómo tomo notas y organizo mis lecturas bibliográficas. El paso siguiente es... ¡integralo con Zotero!"
 authors: []
-lastmod: '`r Sys.Date()`'
+lastmod: '2021-10-23T19:16:27+02:00'
 featured: no
 image:
   caption: ''
@@ -28,43 +28,42 @@ projects: []
   margin-bottom:0;
 }
 </style>
-On October 12 and 19 (2021) I participated in a few amazing sessions organized by some colleagues at the Linguistics Department, titled *I was never taught how to do this*.
+
+El 12 y 19 de octubre (2021) participé de dos fantásticas sesiones organizadas por algunos colegas del Departamento de Lingüística, tituladas *I was never taught how to do this* (Nunca me enseñaron a hacer esto).
 
 ```{r, echo=FALSE}
 blogdown::shortcode('tweet', '1451512845057855490')
 ```
 
-I got to talk about [Git and Github](../learning-slopes/), [Zotero](https://www.zotero.org/) (with Giulia Mazzola) and [Evernote](https://evernote.com/). I've used Evernote for note-taking for the last 6 years and a half (so, most of my research career up to now) and Zotero for bibliography management for a bit longer. However, as we were preparing our presentation, Katharina Meissl introduced me to [Obsidian](https://obsidian.md/) and now ---I want to [move everything to Obsidian and just stay there](https://github.com/akosbalasko/yarle).
+Me tocó hablar de [Git y Github](../2021-04-10-learning-slopes/index.en.html), [Zotero](https://www.zotero.org/) (con Giulia Mazzola) y [Evernote](https://evernote.com/). He usado Evernote para tomar nota por 6 años y medio ya (la mayor parte de mi carrera de investigación) y Zotero por un poco más. Sin embargo, cuando estábamos preparando la presentación Katharina Meissl nos mostró [Obsidian](https://obsidian.md/) y ahora ---quiero [mudar todo a Obsidian e instalarme para siempre](https://github.com/akosbalasko/yarle).
 
-<!-- This new discovery came right on time for a new stage of my life: now [I am a doctor](../../event/2021-09-21-defense/), currently working as a post-doc. While my tasks are quite similar, it is an excellent point to take stock and change some practices. Moreover, after creating a blog, slides and my own thesis with R Markdown, I'm excited to soak markdown into everything else. -->
+Acá quiero hablar de cómo estoy integrando Zotero (y [Better BibTex](https://retorque.re/zotero-better-bibtex/)) con Obsidian y cómo afecta mi toma de notas y su organización. Primero voy a [presentar Better BibTex](#bb) y luego explicar [cómo lo combinamos, junto con Zotero, con Obsidian por medio de un plugin de terceros](#howto).
 
-Here I will talk about how I'm integrating Zotero (and [Better BibTex](https://retorque.re/zotero-better-bibtex/)) with Obsidian and how that is reshaping my notes and organization. First I will [introduce Better BibTex](#bb) and then [how we combine it and Zotero with Obsidian via a community plugin](#howto).
+# Zotero y Better BibTex {#bb}
 
-# Zotero and Better BibTex {#bb}
+Better BibTex te ayuda a limpiar y administrat tus referencias en Zotero. Puede que tenga más funciones de las que conozco, pero la aplicación que más me interesa es la de definir una **citation key (clave de citación)**^[Todo lo relacionado con Better BibTex me aparece en inglés aunque ponga Zotero en español]. Si sólo usás Zotero en combinación con MS Word o Open Office, esto puede ser irrelevante, pero cuando trabajás con [archivos de bib(la)tex](http://www.bibtex.org/), p.ej. para $\LaTeX$ o R Markdown, es muy importante.
 
-Better BibTex helps you clean and manage your Zotero references. It may have more functions than I'm aware of, but the main feature I'm interested in is in defining the **citation key**. If you only use Zotero in combination with MS Word or Open Office, this might be irrelevant, but when you handle [bib(la)tex files](http://www.bibtex.org/), e.g. for $\LaTeX$ or R Markdown, it's super important.
-
-A BibTex entry looks like these:
+Una entrada de BibTex se ve así:
 
 ```{r, echo=FALSE, comment=""}
 toBibtex(citation('blogdown'))
 ```
 
-The word next to the `@` symbol points to the type of element (e.g. 'Manual', 'Book'), and the entry consists of key-value pairs with different kinds of bibliographical information. In this case, I obtained it via the `toBibtex()` and `citation()` functions in R, but you can often find this format as an option for downloading a citation, or as an export option in Zotero. If you have a file with BibTex entries, you can also import them to Zotero (or if you copy a BibTex entry, you can import it to Zotero from the clipboard!).
+La palabra precedida por `@` indica el tipo de elemento (p.ej. *Manual* 'Manual', *Book* 'Libro'), y la entrada en sí consiste en pares de etiquetas con valores con distintos tipos de información bibliográfica. En este caso, la obtuve por medio de las funciones `toBibtex()` y `citation()` en R, pero también se puede encontrar este formato como opción para descargar una cita o entre las opciones de exportación de Zotero. Si tenés un archivo con entradas de BibTex, también las podés importar a Zotero (o si copias una entrada de BibTex, ¡podés importarla a Zotero desde el portapapeles!).
 
-R Markdown and $\LaTeX$ can read BibTex files: you just enter the citation key and, when your text is compiled, your source is cited perfectly. For example, in R Markdown I could write `[@montes_2021]` to cite my thesis, and it would be rendered as `(Montes 2021)` or however it should be based on the chosen citation style. Then, all the relevant information tied to the citation key `montes_2021` would be used in the full reference.
+R Markdown y $\LaTeX$ pueden leer archivos de BibTex: les das la *citation key* y, cuando se compila el texto, tu fuente es citada a la perfección. Por ejemplo, en R Markdown podría escribir `[@montes_2021]` para citar mi tesis, y se vería `(Montes 2021)` o lo que sea que corresponda según el estilo de citación. Luego, toda la información relevante conectada a la *citation key* `montes_2021` sería recolectada para la referencia completa.
 
-The entries above, however, have no citation key. As it stands, you have to add them manually, before the comma in the first line of each entry.^[In R Markdown, you can use `knitr::write_bib()` to create the same output as before, with nice citation keys.] When, instead, you export your entries from Zotero without Better BibTex, the default keys tend to be long names in camelCase, such as `montesCloudspotting2021`. Better BibTex gives you a nicer default pattern and the possibility to create your own template for easier-to-remember citation keys.
+Sin embargo, las entradas de arriba no tienen *citation key*. Por defecto, tendrías que agregarlas manualmente, antes de la coma en la primera línea de cada entrada.^[En R Markdown, podés usar `knitr::write_bib()` para crear el mismo resultado pero con buenas *citation keys*.] Cuando exportás tus entradas de Zotero sin Better BibTex, por otro lado, tenés claves por defecto pero suelen ser nombres largos en camelCase, p. ej. `montesCloudspotting2021`. Better BibTex te da un patrón básico más lindo y la posibilidad de crear tus propias plantillas para *citation keys* más fáciles de recordar.
 
-Once you have [installed Better BibTex](https://retorque.re/zotero-better-bibtex/installation/), you will find a new tab in your Zotero Preferences, where you can define a [template](https://docs.jabref.org/setup/citationkeypatterns) for your citation keys. Mine uses, in lower case, the last name of the first author, separated by a period from the last name of the second author or, if there are more than two, *etal*. Then, it adds an underscore and the year.
+Una vez que has [instalado Better BibTex](https://retorque.re/zotero-better-bibtex/installation/), vas a encontrar una nueva sección en las Preferencias de Zotero, en la que podés definir una [plantilla](https://docs.jabref.org/setup/citationkeypatterns) para tus *citation keys*. La mía usa, en minúscula, el apellido del primer autor, separado con un punto del apellido del segudno autor o, cuando hay más de dos, *etal*. Luego agrega un guión bajo y el año.
 
-![Zotero menu to tailor Better BibTex.](images/bbkey.png)
+![Menú de Zotero para personalizar Better BibTex.](images/bbkey.png)
 
-This is a good pattern for me because it's similar to how I'm used to thinking of the sources I cite: `montes_2021` for Montes (2021); `kiela.clark_2014` for Kiela & Clark (2014); `heylen.etal_2015` for Heylen et al. (2015). When multiple publications have the same key, Better BibTex automatically adds an *a*, *b*, *c*... to the citation key. You have to remember which is which, but looking it up is not so hard either:
+Este es un buen patrón para mí porque se parece a cómo pienso en las referencias que cito: `montes_2021` para Montes (2021); `kiela.clark_2014` para Kiela & Clark (2014); `heylen.etal_2015` para Heylen et al. (2015). Cuando varias publicaciones terminan con la misma clave, Better BibTex agrega automáticamente *a*, *b*, *c*... a las claves correspondientes. Tenés que recordar cuál es cual, pero tampoco es tan difícil buscarlas:
 
-![List of Zotero entries with citation keys.](images/zoteroentries.png)
+![Lista de entradas de Zotero con claves de citación.](images/zoteroentries.png)
 
-In short, using Better BibTex gives you a nicer experience with BibTex files, e.g. using R Markdown or $\LaTeX$. Now... what about Obsidian?
+En otras palabras, Better BibTex te ofrece una experiencia más amena con los archivos BibTex, por ejemplo si usás R Markdown o $\LaTeX$. Ahora bien... ¿qué hay de Obsidian?
 
 # Citation plugin for Obsidian {#howto}
 
@@ -72,7 +71,7 @@ I can make Obsidian and Zotero talk to each other thanks to [a plugin](https://g
 
 ![Window to set up Obsidian community plugins.](images/obsidiancomplugin.png)
 
-Once you turn off 'Safe mode', you have to 'browse community plugins', search for the citation plugin, install it *and enable it* to use it. That's it. Note that in order for it to *work* properly you still need export your Zotero library and tell Obsidian where it is, as I mention [below](#setup).
+Once you turn off 'Safe mode', you have to 'browse community plugins', search for the citation plugin, install it *and enable it* to use it. That's it.
 
 One of its most interesting features is the **literature note**: a note with bibliographical information extracted from your Zotero entry... well, technically, from a BibTex file exported from Zotero (or any other bibliography manager). I will address this later, but for now let's assume you have a BibTex file with all your Zotero data. With `Ctrl`+`Shift`+`E`, you get a dropdown menu in which you can search through all your entries. Once you select one, it creates a note that, by default, uses your **citation key** as the title, and adds a bunch of information to the preamble of your note. It can also add other information, such as the abstract or, more interestingly... *a link to your Zotero entry*. When you click on that link, it opens Zotero; if it is already open, it selects the reference you clicked on.
 
@@ -93,9 +92,7 @@ This creates the following literature note in my "Reading notes" folder:
 
 ![Literature note example.](images/literaturenote.png)
 
-The main bibliographical information is in the Yaml[^yaml] (but need not be), and then there is a hyperlink that shows the citation key (which, preceded by a `@`, is also the name of the note) and takes you to the Zotero entry: if I click on it, it goes to Zotero and highlights that reference.
-
-[^yaml]: Note that in the right side the image reads "Invalid YAML". I learned this a few days after first writing this post: the colons *inside the title* of this reference mess up the [YAML](https://en.wikipedia.org/wiki/YAML). It can be solved by just surrounding the title with quotation marks. I am not sure how we can *use* this as metadata, though.
+The main bibliographical information is in the Yaml (but need not be), and then there is a hyperlink that shows the citation key (which, preceded by a `@`, is also the name of the note) and takes you to the Zotero entry: if I click on it, it goes to Zotero and highlights that reference.
 
 I will later add the abstract, the outline of the paper and some comments on why I'm reading it. I also manually create the "Koptjevskaja-Tamm & Sahlgren (2014)" folder to add my new literature note and, later, other notes I might want to make.
 
@@ -117,7 +114,7 @@ The plugin allows you two kinds of citation ---you access the primary one by pre
 
 As a plus, you can then copy the texts with references to your R Markdown files to create nice articles with perfect citations, just by replacing `[[` with `[` and `]]` with `]`.
 
-## Customize the plugin {#setup}
+## Customize the plugin
 
 For a better, smoother, more tailored experience with the citation plugin, you can customize it in a few ways. I will show here what it looks like for me.
 
@@ -125,24 +122,9 @@ In the Settings of Obsidian and the section for the Citation plugin, you first h
 
 ![Customizing your citation plugin: basics.](images/customcit1.png)
 
-Citation database format
-
-:   I use BibLaTex (as opposed to JSON) format for my entries, which I described above (as BibTex).
-
-Citation database path
-
-:    I have exported my full Zotero library as a `Library.bib` file, which is stored at the top level of my vault^[This is the folder in your computer where your Vault lives. In my case it is also in my synchronized OneDrive for back-up.].
-In a previous version of this post I said:
-
-> If you make changes to your library, you have to export it again, but then Obsidian automatically refreshes.
-
-But, it turns out, Better BibTex offers you the option of keeping track of your exported library/collection in Zotero, so that every time you modify it _the file is automatically updated_.
-
-![Keep track of the exported file.](images/autoupdate.png)
-
-Literature note folder
-
-:    When I create a literature note, it's automatically saved within the folder "Reading notes" (and then I move it to the folder of that source).
+- I use BibLaTex (as opposed to JSON) format for my entries, which I described above (as BibTex).
+- I have exported my full Zotero library as a `Library.bib` file, which is stored at the top level of my vault. If you make changes to your library, you have to export it again, but then Obsidian automatically refreshes.
+- When I create a literature note, it's automatically saved within "Reading notes" (and then I move it to the folder of that source).
 
 Under the basic configuration settings there are some instructions on how to deal with the following customization sections. You will write templates with variables between double curly braces, which means that they will be replaced with the matching information for the reference you cite. In other words, once you select the reference with citation key `montes_2021`, all the variables here that say `{{citekey}}` will be replaced by `montes_2021`.
 
