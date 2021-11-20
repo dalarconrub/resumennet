@@ -40,7 +40,7 @@ On the other hand, we make mistakes, it happens. If we have to type, there will 
 
 Because I will. Because we cannot see everything and understand everything and remember everything. Because research is done in community, compensating each researcher's partiality (limited perspective, memory, interests) with other researchers'. And that other researcher can be yourself, in another moment, with another perspective and memories and understanding.
 
-## I want my future self to understand me
+## I want my future self to understand me {#future-self}
 
 If I cannot really trust past selves to be infallible, I cannot expect my future selves to think I am, right? If I cannot remember what I was thinking when I did that thing the other day, I should know, tomorrow's self will have a different idea of what I am thinking now. She may forget. She may misremember. She might have more important things to focus on.
 
