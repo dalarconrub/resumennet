@@ -33,7 +33,8 @@ If I write this properly, after this post you will be able to create an R projec
 <li>anyone with access to your project can reproduce it;</li>
 <li>you can rerun everything you need with one line of code.</li>
 </ul>
-<p>The output of this workflow can be found in <a href="https://github.com/montesmariana/doenLaten">its GitHub repository</a>, but the idea is to give you the instructions to start it <em>from scratch</em>. Let’s go!</p>
+<p>The output of this workflow can be found in <a href="https://github.com/montesmariana/doenLaten">its GitHub repository</a>, but the idea is to give you the instructions to start it <em>from scratch</em>. It is a looong post with a lot of detail, so sit back and relax, take your time and enjoy the ride.
+Let’s go!</p>
 <div id="initialize-a-project" class="section level1">
 <h1>Initialize a project</h1>
 <p>Some time ago I learned about RStudio projects. I don’t remember when, and I don’t remember the foggy, chaotic times before. Now and then I imagine what my life would be like if I worked on R without projects and chills go up my spine.</p>
@@ -66,7 +67,7 @@ Figure 1: Screenshots of the first steps creating an R Studio project.
 </div>
 <div id="the-dataset" class="section level1">
 <h1>The dataset</h1>
-<p>Since this project is about data analysis, we first need to download some data. I wanted to give a linguistics example, ideally not in English (there is enough of that already), so I chose the <code>doenLaten</code> dataset of Natalia Levshina’s <a href="https://github.com/levshina/Rling">Rling package</a>, companion of her wonderful <em>How to do linguistics with R</em> <span class="citation">(<a href="#ref-levshina_2015" role="doc-biblioref">Levshina 2015</a>)</span>. To install the package you can follow the instructions on the README file, and then the dataset is available with <code>data()</code>:</p>
+<p>Since this project is about data analysis, we first need to acquire some data. I wanted to give a linguistics example, ideally not in English (there is enough of that already), so I chose the <code>doenLaten</code> dataset of Natalia Levshina’s <a href="https://github.com/levshina/Rling">Rling package</a>, companion of her wonderful <em>How to do linguistics with R</em> <span class="citation">(<a href="#ref-levshina_2015" role="doc-biblioref">Levshina 2015</a>)</span>. To install the package you can follow the instructions on the README file, and then the dataset is available with <code>data()</code>:</p>
 <pre class="r"><code>install.packages(&#39;path/to/file/Rling_1.0.tar.gz&#39;,
                  type = &#39;source&#39;, repos = NULL)
 data(doenLaten, package = &#39;Rling&#39;)</code></pre>
@@ -190,7 +191,7 @@ As shown below, <code>head(doenLaten)</code> shows us the first rows of the data
 </tr>
 </tbody>
 </table>
-<p>In order to make this more comparable to a typical analysis, where you would have your own copy of the data, we’ll have to save the dataset as a file in our project folder. This invites us to start loading the <code>tidyverse</code> package (or at least <code>readr</code>) but… it does not exist! If you try <code>library(tidyverse)</code> and you had already installed it, you might be confused. But remember that we set up <code>renv</code> in this project, which means that it only uses the project-specific library: you have to install all the packages that you want to use again (technically, make a local copy if you have them installed already). Our next steps are then the following:</p>
+<p>In order to make this more comparable to a typical analysis, where you would have your own copy of the data, we’ll have to save the dataset as a file in our project folder. This invites us to start loading the <code>tidyverse</code> package (or at least <code>readr</code>) but… it does not exist! If you try <code>library(tidyverse)</code> like you have many times before in your computer you might be confused by its sudden absence. But remember that we set up <code>renv</code> in this project, which means that it only uses the project-specific library: you have to install all the packages that you want to use again (technically, make a local copy if you have them installed already). Our next steps are then the following:</p>
 <ul>
 <li>Install tidyverse (which we’ll use later as well) with <code>install.packages('tidyverse')</code>;</li>
 <li>Save the dataset as a csv file with <code>readr::write_csv(doenLaten, 'data.csv')</code></li>
@@ -209,13 +210,13 @@ readr::write_csv(doenLaten, &#39;data.csv&#39;)</code></pre>
 </div>
 <div id="the-analysis" class="section level1">
 <h1>The analysis</h1>
-<p>In Chapter 12 of <em>How to do linguistics with R</em>, Levshina uses this dataset to illustrate logistic regression. She shows how to use <code>rms::lrm()</code> and <code>stats::glm()</code> with a focus on the former because of its detailed output. Here I will only use <code>glm()</code> because, while it’s harder to obtain the <span class="math inline">\(C\)</span> value and similar statistics, I know how to get the data for a prettier table that we’ll report at the end of the post. I will also add some rough explanation of how to interpret the output, strongly informed by <span class="citation">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>, but I won’t delve into the linguistic consequences —this is just so that if you, readers, are not familiar with logistic regression, your head doesn’t blow up in so many pieces.</p>
-<p>First we will create a new R script to explore the output of the analysis. Writing code in an R script rather than on the console is a good practice, because you WILL want to run things again at some point, and it’s easier to find that code in a file than in the console. (I often start testing ideas in the console and it is the equivalent of whisking egg whites with a fork because the whisk is in a different room: wrongly placed laziness.)</p>
+<p>In Chapter 12 of <em>How to do linguistics with R</em>, Levshina uses this dataset to illustrate logistic regression. She shows how to use <code>rms::lrm()</code> and <code>stats::glm()</code> with a focus on the former because of its detailed output. Here I will only use <code>glm()</code> because, while it’s harder to obtain the <span class="math inline">\(C\)</span> value and similar statistics, I know how to get the data for a prettier table that we’ll report at the end of the post. I will also add some rough explanation of how to interpret the output, strongly informed by <span class="citation">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>, but I won’t delve into the linguistic consequences —this is just so that if you, reader, are not familiar with logistic regression, your head doesn’t blow up in so many pieces.</p>
+<p>First we will create a new R script to explore the output of the analysis. Writing code in an R script rather than on the console is a good practice, because you WILL want to run things again at some point, and it’s easier to find that code in a file than in the console. (I often start testing ideas in the console and it’s the equivalent of whisking egg whites with a fork because the whisk is in a different room: wrongly placed laziness.)</p>
 <pre class="r"><code># analysis.R
 library(tidyverse)
 
 doenLaten &lt;- read_csv(&#39;data.csv&#39;, show_col_types = F)</code></pre>
-<p>If we use <code>doenLaten</code> from the <code>Rling</code> package directly, it is a dataframe where each column is a factor, sometimes with a predefine reference level. However, if we use the dataset as we stored it, <code>readr::read_csv()</code> will automatically read the columns as character vectors. This brings us to another step that we will often have in data analysis between opening our file and actually modelling. In this case, we will turn all character columns into factors and manually change the reference values of the response and the Country predictor to fit Levshina’s original dataset:</p>
+<p>If we use <code>doenLaten</code> from the <code>Rling</code> package directly, it is a dataframe where each column is a factor, sometimes with a predefine reference level. However, if we use the dataset as we stored it, <code>readr::read_csv()</code> will automatically read the columns as character vectors. This brings us to another step that we will often have in data analysis between opening our file and actually modelling: cleaning the data. In this case, we will turn all character columns into factors and manually change the reference values of the response and the Country predictor to match the original format of Levshina’s dataset:</p>
 <pre class="r"><code>doenLaten &lt;- doenLaten %&gt;% 
   mutate(across(where(is.character), factor), # change all character vectors into factors
          Aux = fct_relevel(Aux, &#39;laten&#39;), # set up &#39;laten&#39; as the first level of Aux
@@ -251,17 +252,17 @@ summary(m)</code></pre>
 ## AIC: 349.7
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
-<p>The algorithm compares the second level of the response variable (in this case <em>doen</em>) to the first, <em>aka</em> reference level (here <em>laten</em>); the values under the <code>Estimate</code> column correspond to the log odds of finding <em>doen</em> rather than <em>laten</em>. In particular, the value of the <code>Estimate</code> for the Intercept corresponds to the log odds of finding <em>doen</em> rather than <em>laten</em> when all predictors are at their reference level (the first level of the factor), that is, when Causation is <em>affective</em>, the effective predicate is <em>intransitive</em> and the language variety is <em>Netherlandic Dutch</em>. Positive log odds indicate that <em>doen</em> is more likely, whereas negative log odds indicate that <em>laten</em> is more likely:</p>
+<p>The algorithm compares the second level of the response variable (in this case <em>doen</em>) to the first, <em>aka</em> reference level (here <em>laten</em>); the values under the <code>Estimate</code> column correspond to the log odds of finding <em>doen</em> rather than <em>laten</em>. In particular, the value of the <code>Estimate</code> for the Intercept corresponds to the log odds of finding <em>doen</em> rather than <em>laten</em> when all predictors are at their reference level (the first level of the factor), that is, when Causation is <em>affective</em>, the effective predicate is <em>intransitive</em> and the language variety is <em>Netherlandic Dutch</em>. Positive log odds indicate that <em>doen</em> is more likely, whereas negative log odds indicate that <em>laten</em> is more likely.</p>
+<p>The simple odds, which are more easily interpretable, can be computed with <code>exp()</code>. In this case, the log odds of the Intercept are 1.863, and the simple log odds are therefore 6.444. The interpretation is that, when all predictors are at their reference level, <em>doen</em> is 6.444 times more likely than <em>laten</em>.</p>
 <pre class="r"><code>doenLaten %&gt;% 
   filter(Causation == &#39;Affective&#39;, EPTrans == &#39;Intr&#39;, Country == &#39;NL&#39;) %&gt;% 
   count(Aux)</code></pre>
 <pre><code>##     Aux  n
 ## 1 laten  3
 ## 2  doen 20</code></pre>
-<p>The simple odds, which are more easily interpretable, can be computed with <code>exp()</code>. In this case, the log odds of the Intercept are 1.863, and the simple log odds are therefore 6.444, which is equal to 20/3, the respective frequencies of <em>doen</em> and <em>laten</em> when all predictors are at their reference level. The interpretation is that, when all predictors are at their reference level, <em>doen</em> is 6.444 times more likely than <em>laten</em>.</p>
 <pre class="r"><code>exp(m$coefficients[[&#39;(Intercept)&#39;]])</code></pre>
 <pre><code>## [1] 6.443584</code></pre>
-<p>When it comes to the predictors, the <code>Estimate</code> refers to the log odds of <em>doen</em> for a given value of the variable (e.g. <em>Tr</em> for <code>EPTrans</code>) compared to the reference value (<em>Intr</em> for <code>EPTrans</code>). Negative log odds indicate that <em>doen</em> is less likely than the reference response value <em>laten</em>; the simple odds of <em>doen</em> against <em>laten</em> when the Effected Predicate is Transitive, all other variables being controlled for, are then 0.274, i.e. <em>doen</em> is about one fifth as likely as <em>laten</em>.</p>
+<p>When it comes to the predictors, the <code>Estimate</code> refers to the log odds ratio of <em>doen</em> for a given value of the variable (e.g. <em>Tr</em> for <code>EPTrans</code>) compared to the reference value (<em>Intr</em> for <code>EPTrans</code>). Negative values indicate that <em>doen</em> is less likely than the reference response value <em>laten</em>; the simple odds ratio of <em>doen</em> against <em>laten</em> when the Effected Predicate is Transitive, all other variables being controlled for, are then 0.274.</p>
 <p>Other important information is, of course, the p-value, indicating whether the Estimate is significant (i.e. that it wouldn’t be due to chance), and measures of precision, explained variation, etc. For <code>glm()</code> output, we can compute the <span class="math inline">\(C\)</span> value
 <!-- TODO add reference --> with <code>Hmisc::somers2()</code>, which takes the values predicted by the model and the actual output as 1s and 0s and returns <a href="https://www.rdocumentation.org/packages/Hmisc/versions/4.4-1/topics/somers2">the <span class="math inline">\(C\)</span> value along with other metrics</a>.</p>
 <p>Before running this, however, we have to go back to <code>temp.R</code> and run <code>install.packages('Hmisc')</code>. And even <em>before</em> that, we might want to use <code>renv</code> to take a snapshot of the package versions that we are using right now, since we know they work. That way, if we install <code>Hmisc</code> or other packages and something breaks, we can go back to this point with <code>renv::restore()</code>. So:</p>
@@ -330,7 +331,7 @@ get_c(m, data)</code></pre>
 <p>We’ll start creating an R Markdown document by selecting the appropriate option in the top left corner and setting up the basic data. In the meantime you will also have to accept installing <code>rmarkdown</code>, of course. I titled my file “Report” and set it to update the date every time I knit it (Figure <a href="#fig:startRmd">2</a>).</p>
 
 <div class="figure"><span style="display:block;" id="fig:startRmd"></span>
-<img src="images/rmd.png" alt="Two screenshots of the steps to create an R Markdown file, slightly overlapping. The first shows a dropdown menu with the option to create the file. The second shows a dialog window with that lets you name your file and select an initialization configuration." width="40%" />
+<img src="images/rmd.png" alt="Two screenshots of the steps to create an R Markdown file, slightly overlapping. The first shows a dropdown menu with the option to create the file. The second shows a dialog window with that lets you name your file and select an initialization configuration." width="70%" />
 <p class="caption">
 Figure 2: Screenshots of the first steps creating an R Markdown file.
 </p>
@@ -339,12 +340,12 @@ Figure 2: Screenshots of the first steps creating an R Markdown file.
 <script src="https://gist.github.com/montesmariana/9a8372c49b634e7962c06d697bfbaa43.js"></script>
 <p>I saved the file as <code>report.Rmd</code>.
 In it I wrote a very brief report loading the data and show the output of the regression model and the C value.
-The R Markdown raw file is shown below; the HTML output is shown in <a href="#fig:report1">3</a>`.</p>
-<div style="display: flex;gap:10px">
-<div style="width:50%">
+The R Markdown raw file is shown below; the HTML output is shown in Figure <a href="#fig:report1">3</a>.</p>
+<div style="display: flex; flex-wrap:wrap; justify-content:space-between;align-content:stretch;">
+<div style="width:430px;">
 <script src="https://gist.github.com/montesmariana/89ca44bb263ec4db4371d757c169d21d.js"></script>
 </div>
-<div>
+<div style="width:430px;">
 
 <div class="figure"><span style="display:block;" id="fig:report1"></span>
 <img src="images/report1.png" alt="HTML rendering of the first version of the R Markdown report." width="100%" />
@@ -383,7 +384,7 @@ Our personal <code>_targets.R</code> needs to have the following elements:</p>
 <p>We can now visualize the pipeline with <code>targets::tar_visnetwork()</code> (which, btw, requires us to install the <code>visNetwork</code> package, but it’s worth it!). The different objects are shown in Figure <a href="#fig:visnet1">4</a> as circles, functions are shown as triangles, the edges of the network show the dependency and the colors indicate whether the objects and the output are up to date or not. Right now, since we haven’t run anything from the workflow, everything is outdated.</p>
 
 <div class="figure"><span style="display:block;" id="fig:visnet1"></span>
-<img src="images/visnetwork1.png" alt="Linear network of blue circles and triangles representing the current pipeline." width="70%" />
+<img src="images/visnetwork1.png" alt="Linear network of blue circles and triangles representing the current pipeline." width="80%" />
 <p class="caption">
 Figure 4: Network representation of the initial pipeline.
 </p>
@@ -404,7 +405,7 @@ Figure 4: Network representation of the initial pipeline.
 <p>We can then access the different objects with <code>targets::tar_read()</code> or load them into the current environment with <code>targets::tar_load()</code>. Running <code>targets::tar_visnetwork()</code> again shows that everything is now up to date.</p>
 
 <div class="figure"><span style="display:block;" id="fig:visnet2"></span>
-<img src="images/visnetwork2.png" alt="Linear network of blue circles and triangles representing the current pipeline." width="70%" />
+<img src="images/visnetwork2.png" alt="Linear network of blue circles and triangles representing the current pipeline." width="80%" />
 <p class="caption">
 Figure 5: Network representation of the initial pipeline after running <code>targets::tar_make()</code>.
 </p>
@@ -418,11 +419,11 @@ Figure 5: Network representation of the initial pipeline after running <code>tar
 <li>In <code>_targets.R</code>, add to the bottom of the list of target objects <code>tar_render(report, 'report.Rmd')</code> (as long as your report file is also called ‘report.Rmd’).</li>
 <li>In <code>report.Rmd</code>, remove <code>source('analysis.R')</code>, add <code>library(targets)</code> instead and replace the calls to objects and functions with the appropriate <code>targets</code> functions:</li>
 </ol>
-<div style="display: flex;gap:10px">
-<div style="width:50%">
+<div style="display: flex; flex-wrap:wrap; justify-content:space-between;align-content:stretch;">
+<div style="width:430px;">
 <script src="https://gist.github.com/montesmariana/06b79e0d0851b6836e801fb6c8e8baa6.js"></script>
 </div>
-<div>
+<div style="width:430px;">
 
 <div class="figure"><span style="display:block;" id="fig:report2"></span>
 <img src="images/report2.png" alt="HTML rendering of the first version of the R Markdown report, with a new line indicating it's linked to the targets package." width="100%" />
@@ -476,11 +477,11 @@ tar_target(
 <li>In <code>report.Rmd</code>, we replace <code>summary(tar_read(m))</code> with <code>tar_read(pretty_table)</code>.</li>
 </ol>
 <p>In essence, we have added the output of <code>prettify_model(m, data)</code> to the pipeline, naming it <code>pretty_table</code>, and then called it from the report.
-After saving all the files, <code>targets::tar_visnetwork()</code> shows us a nice increase in complexity (see Figure @ref(fig(visnet4)).
+After saving all the files, <code>targets::tar_visnetwork()</code> shows us a nice increase in complexity (see Figure <a href="#fig:visnet4">8</a>).
 We have a new triangle representing <code>prettify_model()</code>, which is only linked to the new circle <code>pretty_table</code>; this circle depends on <code>m</code> and <code>data</code> while <code>report</code> depends on it. Only these new elements and <code>report</code> are now outdated, so a call to <code>targets::tar_make()</code> will skip refining the data and modelling and only focus on the table and report.</p>
 
 <div class="figure"><span style="display:block;" id="fig:visnet4"></span>
-<img src="images/visnetwork4.png" alt="Linear network of blue and black circles and triangles representing the current pipeline." width="70%" />
+<img src="images/visnetwork4.png" alt="Linear network of blue and black circles and triangles representing the current pipeline." width="80%" />
 <p class="caption">
 Figure 8: Network representation of the initial pipeline after adding <code>prettify_table()</code>.
 </p>

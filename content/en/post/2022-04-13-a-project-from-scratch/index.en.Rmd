@@ -39,7 +39,8 @@ If I write this properly, after this post you will be able to create an R projec
 - anyone with access to your project can reproduce it;
 - you can rerun everything you need with one line of code.
 
-The output of this workflow can be found in [its GitHub repository](https://github.com/montesmariana/doenLaten), but the idea is to give you the instructions to start it _from scratch_. Let's go!
+The output of this workflow can be found in [its GitHub repository](https://github.com/montesmariana/doenLaten), but the idea is to give you the instructions to start it _from scratch_. It is a looong post with a lot of detail, so sit back and relax, take your time and enjoy the ride.
+Let's go!
 
 # Initialize a project
 
@@ -83,7 +84,7 @@ We have now initialized a project. The file structure can be found in the Files 
 
 # The dataset
 
-Since this project is about data analysis, we first need to download some data. I wanted to give a linguistics example, ideally not in English (there is enough of that already), so I chose the `doenLaten` dataset of Natalia Levshina's [Rling package](https://github.com/levshina/Rling), companion of her wonderful *How to do linguistics with R* [@levshina_2015]. To install the package you can follow the instructions on the README file, and then the dataset is available with `data()`:
+Since this project is about data analysis, we first need to acquire some data. I wanted to give a linguistics example, ideally not in English (there is enough of that already), so I chose the `doenLaten` dataset of Natalia Levshina's [Rling package](https://github.com/levshina/Rling), companion of her wonderful *How to do linguistics with R* [@levshina_2015]. To install the package you can follow the instructions on the README file, and then the dataset is available with `data()`:
 
 ```{r, eval = FALSE}
 install.packages('path/to/file/Rling_1.0.tar.gz',
@@ -114,7 +115,7 @@ To get an idea of the data, we could run a few exploratory functions. For now, w
 skimr::skim(doenLaten)
 ```
 
-In order to make this more comparable to a typical analysis, where you would have your own copy of the data, we'll have to save the dataset as a file in our project folder. This invites us to start loading the `tidyverse` package (or at least `readr`) but... it does not exist! If you try `library(tidyverse)` and you had already installed it, you might be confused. But remember that we set up `renv` in this project, which means that it only uses the project-specific library: you have to install all the packages that you want to use again (technically, make a local copy if you have them installed already). Our next steps are then the following:
+In order to make this more comparable to a typical analysis, where you would have your own copy of the data, we'll have to save the dataset as a file in our project folder. This invites us to start loading the `tidyverse` package (or at least `readr`) but... it does not exist! If you try `library(tidyverse)` like you have many times before in your computer you might be confused by its sudden absence. But remember that we set up `renv` in this project, which means that it only uses the project-specific library: you have to install all the packages that you want to use again (technically, make a local copy if you have them installed already). Our next steps are then the following:
 
 - Install tidyverse (which we'll use later as well) with `install.packages('tidyverse')`;
 - Save the dataset as a csv file with `readr::write_csv(doenLaten, 'data.csv')`
@@ -137,9 +138,9 @@ After installing everything, we should restart R. To inspire you to even better 
 
 # The analysis
 
-In Chapter 12 of *How to do linguistics with R*, Levshina uses this dataset to illustrate logistic regression. She shows how to use `rms::lrm()` and `stats::glm()` with a focus on the former because of its detailed output. Here I will only use `glm()` because, while it's harder to obtain the $C$ value and similar statistics, I know how to get the data for a prettier table that we'll report at the end of the post. I will also add some rough explanation of how to interpret the output, strongly informed by @levshina_2015, but I won't delve into the linguistic consequences ---this is just so that if you, readers, are not familiar with logistic regression, your head doesn't blow up in so many pieces.
+In Chapter 12 of *How to do linguistics with R*, Levshina uses this dataset to illustrate logistic regression. She shows how to use `rms::lrm()` and `stats::glm()` with a focus on the former because of its detailed output. Here I will only use `glm()` because, while it's harder to obtain the $C$ value and similar statistics, I know how to get the data for a prettier table that we'll report at the end of the post. I will also add some rough explanation of how to interpret the output, strongly informed by @levshina_2015, but I won't delve into the linguistic consequences ---this is just so that if you, reader, are not familiar with logistic regression, your head doesn't blow up in so many pieces.
 
-First we will create a new R script to explore the output of the analysis. Writing code in an R script rather than on the console is a good practice, because you WILL want to run things again at some point, and it's easier to find that code in a file than in the console. (I often start testing ideas in the console and it is the equivalent of whisking egg whites with a fork because the whisk is in a different room: wrongly placed laziness.)
+First we will create a new R script to explore the output of the analysis. Writing code in an R script rather than on the console is a good practice, because you WILL want to run things again at some point, and it's easier to find that code in a file than in the console. (I often start testing ideas in the console and it's the equivalent of whisking egg whites with a fork because the whisk is in a different room: wrongly placed laziness.)
 
 ```{r, eval = FALSE}
 # analysis.R
@@ -148,7 +149,7 @@ library(tidyverse)
 doenLaten <- read_csv('data.csv', show_col_types = F)
 ```
 
-If we use `doenLaten` from the `Rling` package directly, it is a dataframe where each column is a factor, sometimes with a predefine reference level. However, if we use the dataset as we stored it, `readr::read_csv()` will automatically read the columns as character vectors. This brings us to another step that we will often have in data analysis between opening our file and actually modelling. In this case, we will turn all character columns into factors and manually change the reference values of the response and the Country predictor to fit Levshina's original dataset:
+If we use `doenLaten` from the `Rling` package directly, it is a dataframe where each column is a factor, sometimes with a predefine reference level. However, if we use the dataset as we stored it, `readr::read_csv()` will automatically read the columns as character vectors. This brings us to another step that we will often have in data analysis between opening our file and actually modelling: cleaning the data. In this case, we will turn all character columns into factors and manually change the reference values of the response and the Country predictor to match the original format of Levshina's dataset:
 
 ```{r, eval = FALSE}
 doenLaten <- doenLaten %>% 
@@ -165,21 +166,19 @@ m <- glm(Aux ~ Causation + EPTrans + Country, data = doenLaten, family = binomia
 summary(m)
 ```
 
-The algorithm compares the second level of the response variable (in this case *doen*) to the first, *aka* reference level (here *laten*); the values under the `Estimate` column correspond to the log odds of finding *doen* rather than *laten*. In particular, the value of the `Estimate` for the Intercept corresponds to the log odds of finding *doen* rather than *laten* when all predictors are at their reference level (the first level of the factor), that is, when Causation is *affective*, the effective predicate is *intransitive* and the language variety is *Netherlandic Dutch*. Positive log odds indicate that *doen* is more likely, whereas negative log odds indicate that *laten* is more likely:
+The algorithm compares the second level of the response variable (in this case *doen*) to the first, *aka* reference level (here *laten*); the values under the `Estimate` column correspond to the log odds of finding *doen* rather than *laten*. In particular, the value of the `Estimate` for the Intercept corresponds to the log odds of finding *doen* rather than *laten* when all predictors are at their reference level (the first level of the factor), that is, when Causation is *affective*, the effective predicate is *intransitive* and the language variety is *Netherlandic Dutch*. Positive log odds indicate that *doen* is more likely, whereas negative log odds indicate that *laten* is more likely.
+
+The simple odds, which are more easily interpretable, can be computed with `exp()`. In this case, the log odds of the Intercept are `r sprintf("%.3f", m$coefficients[['(Intercept)']])`, and the simple log odds are therefore `r sprintf("%.3f", exp(m$coefficients[['(Intercept)']]))`. The interpretation is that, when all predictors are at their reference level, *doen* is `r sprintf("%.3f", exp(m$coefficients[['(Intercept)']]))` times more likely than *laten*.
 
 ```{r}
 doenLaten %>% 
   filter(Causation == 'Affective', EPTrans == 'Intr', Country == 'NL') %>% 
   count(Aux)
-```
 
-The simple odds, which are more easily interpretable, can be computed with `exp()`. In this case, the log odds of the Intercept are `r sprintf("%.3f", m$coefficients[['(Intercept)']])`, and the simple log odds are therefore `r sprintf("%.3f", exp(m$coefficients[['(Intercept)']]))`, which is equal to 20/3, the respective frequencies of *doen* and *laten* when all predictors are at their reference level. The interpretation is that, when all predictors are at their reference level, *doen* is `r sprintf("%.3f", exp(m$coefficients[['(Intercept)']]))` times more likely than *laten*.
-
-```{r}
 exp(m$coefficients[['(Intercept)']])
 ```
 
-When it comes to the predictors, the `Estimate` refers to the log odds of *doen* for a given value of the variable (e.g. *Tr* for `EPTrans`) compared to the reference value (*Intr* for `EPTrans`). Negative log odds indicate that *doen* is less likely than the reference response value *laten*; the simple odds of *doen* against *laten* when the Effected Predicate is Transitive, all other variables being controlled for, are then `r sprintf("%.3f", exp(m$coefficients[['EPTransTr']]))`, i.e. *doen* is about one fifth as likely as *laten*.
+When it comes to the predictors, the `Estimate` refers to the log odds ratio of *doen* for a given value of the variable (e.g. *Tr* for `EPTrans`) compared to the reference value (*Intr* for `EPTrans`). Negative values indicate that *doen* is less likely than the reference response value *laten*; the simple odds ratio of *doen* against *laten* when the Effected Predicate is Transitive, all other variables being controlled for, are then `r sprintf("%.3f", exp(m$coefficients[['EPTransTr']]))`.
 
 Other important information is, of course, the p-value, indicating whether the Estimate is significant (i.e. that it wouldn't be due to chance), and measures of precision, explained variation, etc. For `glm()` output, we can compute the $C$ value
 <!-- TODO add reference --> with `Hmisc::somers2()`, which takes the values predicted by the model and the actual output as 1s and 0s and returns [the $C$ value along with other metrics](https://www.rdocumentation.org/packages/Hmisc/versions/4.4-1/topics/somers2).
@@ -267,7 +266,7 @@ We'll start creating an R Markdown document by selecting the appropriate option 
 
 (ref:startRmd) Screenshots of the first steps creating an R Markdown file.
 
-```{r, startRmd, echo = FALSE, fig.cap = '(ref:startRmd)', fig.alt="Two screenshots of the steps to create an R Markdown file, slightly overlapping. The first shows a dropdown menu with the option to create the file. The second shows a dialog window with that lets you name your file and select an initialization configuration.", out.width = '40%'}
+```{r, startRmd, echo = FALSE, fig.cap = '(ref:startRmd)', fig.alt="Two screenshots of the steps to create an R Markdown file, slightly overlapping. The first shows a dropdown menu with the option to create the file. The second shows a dialog window with that lets you name your file and select an initialization configuration.", out.width = '70%'}
 knitr::include_graphics("images/rmd.png")
 ```
 
@@ -277,15 +276,15 @@ I also removed all the content of the resulting file except for the metadata and
 
 I saved the file as `report.Rmd`.
 In it I wrote a very brief report loading the data and show the output of the regression model and the C value.
-The R Markdown raw file is shown below; the HTML output is shown in \@ref(fig:report1)`.
+The R Markdown raw file is shown below; the HTML output is shown in Figure \@ref(fig:report1).
 
-:::: {style="display: flex;gap:10px"}
+:::: {style="display: flex; flex-wrap:wrap; justify-content:space-between;align-content:stretch;"}
 
-::: {style="width:50%"}
+::: {style="width:430px;"}
 <script src="https://gist.github.com/montesmariana/89ca44bb263ec4db4371d757c169d21d.js"></script>
 :::
 
-::: {}
+::: {style="width:430px;"}
 (ref:report1) Screenshot of the first HTML report.
 
 ```{r, report1, echo = FALSE, fig.cap = '(ref:report1)', fig.alt="HTML rendering of the first version of the R Markdown report.", out.width = '100%'}
@@ -331,7 +330,7 @@ We can now visualize the pipeline with `targets::tar_visnetwork()` (which, btw, 
 
 (ref:visnet1) Network representation of the initial pipeline.
 
-```{r, visnet1, echo = FALSE, fig.cap = '(ref:visnet1)', fig.alt="Linear network of blue circles and triangles representing the current pipeline.", out.width = '70%'}
+```{r, visnet1, echo = FALSE, fig.cap = '(ref:visnet1)', fig.alt="Linear network of blue circles and triangles representing the current pipeline.", out.width = '80%'}
 knitr::include_graphics("images/visnetwork1.png")
 ```
 
@@ -357,7 +356,7 @@ We can then access the different objects with `targets::tar_read()` or load them
 
 (ref:visnet2) Network representation of the initial pipeline after running `targets::tar_make()`.
 
-```{r, visnet2, echo = FALSE, fig.cap = '(ref:visnet2)', fig.alt="Linear network of blue circles and triangles representing the current pipeline.", out.width = '70%'}
+```{r, visnet2, echo = FALSE, fig.cap = '(ref:visnet2)', fig.alt="Linear network of blue circles and triangles representing the current pipeline.", out.width = '80%'}
 knitr::include_graphics("images/visnetwork2.png")
 ```
 
@@ -370,13 +369,13 @@ While we have a `targets` pipeline set up, our report is still isolated from it.
 3. In `_targets.R`, add to the bottom of the list of target objects `tar_render(report, 'report.Rmd')` (as long as your report file is also called 'report.Rmd').
 4. In `report.Rmd`, remove `source('analysis.R')`, add `library(targets)` instead and replace the calls to objects and functions with the appropriate `targets` functions:
 
-:::: {style="display: flex;gap:10px"}
+:::: {style="display: flex; flex-wrap:wrap; justify-content:space-between;align-content:stretch;"}
 
-::: {style="width:50%"}
+::: {style="width:430px;"}
 <script src="https://gist.github.com/montesmariana/06b79e0d0851b6836e801fb6c8e8baa6.js"></script>
 :::
 
-::: {}
+::: {style="width:430px;"}
 (ref:report2) Screenshot of the HTML report after linking it to `targets`.
 
 ```{r, report2, echo = FALSE, fig.cap = '(ref:report2)', fig.alt="HTML rendering of the first version of the R Markdown report, with a new line indicating it's linked to the targets package.", out.width = '100%'}
@@ -436,12 +435,12 @@ tar_target(
 5. In `report.Rmd`, we replace `summary(tar_read(m))` with `tar_read(pretty_table)`.
 
 In essence, we have added the output of `prettify_model(m, data)` to the pipeline, naming it `pretty_table`, and then called it from the report.
-After saving all the files, `targets::tar_visnetwork()` shows us a nice increase in complexity (see Figure \@ref(fig(visnet4)).
+After saving all the files, `targets::tar_visnetwork()` shows us a nice increase in complexity (see Figure \@ref(fig:visnet4)).
 We have a new triangle representing `prettify_model()`, which is only linked to the new circle `pretty_table`; this circle depends on `m` and `data` while `report` depends on it. Only these new elements and `report` are now outdated, so a call to `targets::tar_make()` will skip refining the data and modelling and only focus on the table and report.
 
 (ref:visnet4) Network representation of the initial pipeline after adding `prettify_table()`.
 
-```{r, visnet4, echo = FALSE, fig.cap = '(ref:visnet4)', fig.alt="Linear network of blue and black circles and triangles representing the current pipeline.", out.width = '70%'}
+```{r, visnet4, echo = FALSE, fig.cap = '(ref:visnet4)', fig.alt="Linear network of blue and black circles and triangles representing the current pipeline.", out.width = '80%'}
 knitr::include_graphics("images/visnetwork4.png")
 ```
 
