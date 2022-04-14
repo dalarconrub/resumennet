@@ -1,0 +1,535 @@
+---
+title: A project from scratch
+author: Mariana Montes
+date: '2022-04-13'
+slug: a-project-from-scratch
+categories:
+  - data science
+tags:
+  - R
+  - R Markdown
+subtitle: ''
+summary: "Sometimes you find cool tools to improve your R experience but the documentation is challenging, assuming knowledge you don't have, previous steps you didn't take, a confidence that hides beyond the moving horizon. Hopefully, with this very long post you can create a solid sequence of steps to set up self-contained, reproducibe R projects and release you from about 40% of your daily dosis of anxiety."
+authors: []
+lastmod: '2022-04-13T17:48:58+02:00'
+featured: no
+image:
+  caption: 'Photo by <a href="https://unsplash.com/@12photography?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Lukasz Grudzien</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'
+  alt_text: 'Game cone in the starting tile'
+  focal_point: ''
+  preview_only: no
+projects: []
+bibliography: bib.bib
+---
+
+
+
+<p>When you first learn R, you rarely start by acquiring Best Practices: tips to keep your code organized, reproducible and at least not hopelessly messy. You wouldn’t, because you want to get results… and because Best Practices are solutions for problems that you haven’t encountered yet. It is hard enough to learn how to filter a dataframe in R when you have never encountered a dataframe that matters to you, let alone wanted to filter it. Learning the most appropriate folder structure to store the dataframe and your analysis does not really stand out as an interesting goal until you have so many dataframes you care about, so many questions to answer with code, that it overflows all logic and you can’t just keep track of it in a post-it any more. But by then you are not taking courses on R any more, and unless you happen to run into a colleague and the topic comes up of how much time you spent this morning trying to find the function that created the best plot you ever made, or unless you follow the right people on Twitter and they <a href="https://twitter.com/mdneuzerling/status/1513665573351145472?s=20&amp;t=5CTH6fXVTJ7ltMyqdc7Fmw">mention cool stuff</a> out of the blue… how will you learn those things? Even if you find out about amazing solutions to these problems, their implementation is not obvious enough. You have a cup of tea with a lump of sugar at the bottom, you find a spoon, but it doesn’t immediately occur to you that the spoon is the answer to your problem, because the documentation of the spoon incorrectly assumes you already know what <em>stirring</em> is. Or you find a video of somebody stirring their tea with the spoon, but you can’t figure out how they got the spoon inside the cup in the first place. What is worse: those who know how to use spoons have forgotten what it means to be unaware of them.</p>
+<p>I would like to address those feelings with this post. I recently found out about two R-project tools that blew my mind, and I want to start implementing them in my workflow. I also thought it could be practical to show how you can start up a project like this from scratch, maybe learning some Best Practices along the way. You don’t need to know all the tips at the beginning: you learn them best by messing up, and as long as things work, it’s fine.
+If I write this properly, after this post you will be able to create an R project and GitHub repository using the packages <code>here</code>, <code>targets</code> and <code>renv</code>, write a brief R Markdown report with some analysis of a (clean) dataset, and leave with the confidence that:</p>
+<ul>
+<li>you know what your project contains;</li>
+<li>the report matches your data and analysis;</li>
+<li>anyone with access to your project can reproduce it;</li>
+<li>you can rerun everything you need with one line of code.</li>
+</ul>
+<p>The output of this workflow can be found in <a href="https://github.com/montesmariana/doenLaten">its GitHub repository</a>, but the idea is to give you the instructions to start it <em>from scratch</em>. Let’s go!</p>
+<div id="initialize-a-project" class="section level1">
+<h1>Initialize a project</h1>
+<p>Some time ago I learned about RStudio projects. I don’t remember when, and I don’t remember the foggy, chaotic times before. Now and then I imagine what my life would be like if I worked on R without projects and chills go up my spine.</p>
+<p>RStudio projects support a <a href="https://www.tidyverse.org/blog/2017/12/workflow-vs-script/">project-oriented workflow</a>, where you have one folder for each different project you work on and the paths called within the project are always relative to the root of the project. Suppose, for example, that your project folder looks like this:</p>
+<pre class="shell"><code>|-- data/
+    |-- dataset.csv
+|-- scripts/
+    |-- code.R
+|-- report.Rmd
+|-- report.html</code></pre>
+<p>If you run code from <code>scripts/code.R</code>, you might want to find your dataset as <code>../data/dataset.csv</code>, whereas from <code>report.Rmd</code> you would need to read <code>data/dataset.csv</code>. But if you call <code>scripts/code.R</code> <em>from</em> <code>report.Rmd</code>, the path within <code>scripts/code.R</code> has to become <code>data/dataset.csv</code>! And if one day you decide to move <code>scripts/code.R</code> to a different folder, you will need to update the path to the dataset, even if the dataset itself didn’t move!
+You might be tempted to use absolute paths, like <code>C:/Users/username/projects/thisparticularproject/data/dataset.csv</code>, but then when you change computers it doesn’t work any more. A reproducible project should be able to change computers, at least.</p>
+<figure style="float:right;width:40%;">
+<img src="images/here.png" alt='A cartoon showing two paths side-by-side. On the left is a scary spooky forest, with spiderwebs and gnarled trees, with file paths written on the branches like “~/mmm/nope.csv” and “setwd(“/haha/good/luck/”), with a scared looking cute fuzzy monster running out of it. On the right is a bright, colorful path with flowers, rainbow and sunshine, with signs saying “here!” and “it’s all right here!” A monster facing away from us in a backpack and walking stick is looking toward the right path. Stylized text reads “here: find your path.”'/ style="margin:1rem;">
+<figcaption>
+<a href="https://github.com/allisonhorst/stats-illustrations/">Artwork by @allison_horst</a>
+</figcaption>
+</figure>
+<p>With the <a href="https://here.r-lib.org/"><code>here</code> package</a>, the <code>here::here()</code> function returns the absolute path of the project (in this case <code>C:/Users/username/projects/thisparticularproject</code>); if you move the project somewhere else, to another directory or computer, it will return whatever the absolute path turns out to be. Then, <code>here::here('data')</code> will return the path to the <code>data</code> folder wherever you call it from within the project. Therefore, either from <code>code.R</code>, <code>report.Rmd</code> or wherever else in the project, <code>here::here('data', 'dataset.csv')</code> will <em>always</em> point to <code>data/dataset.csv</code>. Neat, right?</p>
+<p>Organizing your work in projects also means that different studies, analyses, explorations are kept separate, and can even be run simultaneously without intervening with each other. For example, I can write this blog post on my blogdown project and create and work on a new, different project at the same time, each with their own RStudio window, their own log and data on memory, etc. While writing this I can go to the top right corner of my RStudio window, click on the triangle next to the name of my current project, select “New Project”, choose to create a normal project<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> and set up the main points: the name of the folder and its location (Figure <a href="#fig:startProject">1</a>). For about an year now I started making my projects as git repositories as well and storing them like all other git repositories, in a folder called <code>repos</code> which has a subfolder per username and then their repositories inside. For example, <code>repos/montesmariana</code> has all my git repositories, be they R Projects or not (e.g. python code); <code>repos/another-user/repo-I-cloned</code> stores some git repository by <code>another-user</code> that I cloned for their code or data, to collaborate with them, etc.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> The project creation wizard has the options to set up the project immediately as a git repository and to use <code>renv</code>; both can be applied post-hoc<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, but let’s go ahead and select them. I’m showing how to do this from scratch, after all.</p>
+
+<div class="figure"><span style="display:block;" id="fig:startProject"></span>
+<img src="images/createProj.png" alt="Three screenshots of the steps to create an RStudio project, slightly overlapping. The first shows a dropdown menu with the option to create an RStudio project. The second shows a window with options of the kinds of project to initialize, and the basic project indicated with a green rectangle. The third one shows a dialog window that lets you name your project and select an initialization configuration." width="80%" />
+<p class="caption">
+Figure 1: Screenshots of the first steps creating an R Studio project.
+</p>
+</div>
+<p>I’ve already talked about using git <a href="https://howtobecomearesearcher.wordpress.com/2022/02/14/git-your-version-straight-what-can-you-do-with-git-and-github/">elsewhere</a>, but what about <code>renv</code>? I actually learned about it recently and have not used it yet, but it appears to solve an issue I have had to work around before: package versioning for my projects. R 4.1 came out while I was writing my <a href="https://cloudspotting.marianamontes.me/">dissertation</a>, and I didn’t dare install it until it was finished, lest it make anything crash in my fragile bookdown project. If I had known what <code>renv</code> was, I could have kept my project isolated while using R 4.1 and the updated packages in other projects. In other contexts, <code>renv</code> will help me share projects with the precise information of the R and R package versions used to run everything and avoid conflicts that could arise between different versions of a function. To learn more about <code>renv</code> you may go to the <a href="https://rstudio.github.io/renv/articles/renv.html">documentation</a>.</p>
+<p>We have now initialized a project. The file structure can be found in the Files panel - it only has configuration files that characterize an R project (<code>.Rprofile</code>, <code>.Rproj.user/</code> and <code>projectname.Rproj</code>) with <code>renv</code> (<code>renv/</code> and <code>renv.lock</code>) and a git repository (<code>.git/</code> and <code>.gitignore</code>). Note that <code>.gitignore</code> files tell git what not to keep track of; an R Project with git will already write a list of file extensions that should be ignored, but <code>renv</code> also creates a <code>renv/.gitignore</code> with a list of directories within <code>renv</code> that git should ignore.</p>
+</div>
+<div id="the-dataset" class="section level1">
+<h1>The dataset</h1>
+<p>Since this project is about data analysis, we first need to download some data. I wanted to give a linguistics example, ideally not in English (there is enough of that already), so I chose the <code>doenLaten</code> dataset of Natalia Levshina’s <a href="https://github.com/levshina/Rling">Rling package</a>, companion of her wonderful <em>How to do linguistics with R</em> <span class="citation">(<a href="#ref-levshina_2015" role="doc-biblioref">Levshina 2015</a>)</span>. To install the package you can follow the instructions on the README file, and then the dataset is available with <code>data()</code>:</p>
+<pre class="r"><code>install.packages(&#39;path/to/file/Rling_1.0.tar.gz&#39;,
+                 type = &#39;source&#39;, repos = NULL)
+data(doenLaten, package = &#39;Rling&#39;)</code></pre>
+<p>Since we are still learning, we’ll open an empty R script, write the code in it and run it. Later, the <code>install.packages()</code> call should be removed or at least kept separate from analysis scripts.
+As shown below, <code>head(doenLaten)</code> shows us the first rows of the dataframe.</p>
+<pre class="r"><code>head(doenLaten)</code></pre>
+<pre><code>##     Aux Country  Causation EPTrans EPTrans1
+## 1 laten      NL   Inducive    Intr     Intr
+## 2 laten      NL   Physical    Intr     Intr
+## 3 laten      NL   Inducive      Tr       Tr
+## 4  doen      BE  Affective    Intr     Intr
+## 5 laten      NL   Inducive      Tr       Tr
+## 6 laten      NL Volitional    Intr     Intr</code></pre>
+<p>Levshina introduces this dataset in chapter 12 of her book, to illustrate logistic regression; you can look at the documentation with <code>help(doenLaten)</code>. Each of the 455 rows of this dataframe represents an observation of the Dutch Causative Construction (in English it would be “I <em>made</em> you do this”) with 5 variables:</p>
+<ul>
+<li><code>Aux</code>, specifying whether the constructions uses the verb <em>doen</em> or <em>laten</em> where English would use <em>make</em>;</li>
+<li><code>Country</code>, with level <code>NL</code> for data from the Netherlands and <code>BE</code> for Belgian data;</li>
+<li><code>Causation</code>, with four different kinds of causation depending on whether the Causee and/or the Causer are mental entities or not (I won’t get into that);</li>
+<li><code>EPTrans</code> and <code>EPTrans1</code>, which specify whether the Effected Predicate (e.g. <em>do</em> in <em>I made you do this</em>) is transitive (i.e. it carries a direct object) or not.</li>
+</ul>
+<p>The idea is to predict whether the observation contains <em>doen</em> on <em>laten</em> based on the other predictors; see <span class="citation">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015, 255–56</a>)</span> and her own PhD dissertation <span class="citation">(<a href="#ref-levshina_2011" role="doc-biblioref">Levshina 2011</a>)</span> for an explanation.</p>
+<p>To get an idea of the data, we could run a few exploratory functions. For now, we can still type them in our temporary R script where we loaded the data: <code>head(doenLaten)</code>, <code>str(doenLaten)</code>, <code>summary(doenLaten$Aux)</code> to get an idea of the frequencies of the response variable. A fancy way is with <code>skmir::skim()</code> (but note that if you do this in your new project you will need to install <code>skimr</code>):</p>
+<pre class="r"><code>skimr::skim(doenLaten)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-4">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">doenLaten</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">455</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="10%" />
+<col width="15%" />
+<col width="8%" />
+<col width="9%" />
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Aux</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">lat: 277, doe: 178</td>
+</tr>
+<tr class="even">
+<td align="left">Country</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">NL: 233, BE: 222</td>
+</tr>
+<tr class="odd">
+<td align="left">Causation</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">Ind: 185, Vol: 117, Aff: 90, Phy: 63</td>
+</tr>
+<tr class="even">
+<td align="left">EPTrans</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Int: 281, Tr: 174</td>
+</tr>
+<tr class="odd">
+<td align="left">EPTrans1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">Int: 276, Tr: 179</td>
+</tr>
+</tbody>
+</table>
+<p>In order to make this more comparable to a typical analysis, where you would have your own copy of the data, we’ll have to save the dataset as a file in our project folder. This invites us to start loading the <code>tidyverse</code> package (or at least <code>readr</code>) but… it does not exist! If you try <code>library(tidyverse)</code> and you had already installed it, you might be confused. But remember that we set up <code>renv</code> in this project, which means that it only uses the project-specific library: you have to install all the packages that you want to use again (technically, make a local copy if you have them installed already). Our next steps are then the following:</p>
+<ul>
+<li>Install tidyverse (which we’ll use later as well) with <code>install.packages('tidyverse')</code>;</li>
+<li>Save the dataset as a csv file with <code>readr::write_csv(doenLaten, 'data.csv')</code></li>
+</ul>
+<p>Our current temporary R script will look like this:</p>
+<pre class="r"><code># Untitled.R
+
+install.packages(&#39;../../levshina/Rling_1.0.tar.gz&#39;,
+                 # type = &#39;source&#39;, repos = NULL)
+data(doenLaten, package = &#39;Rling&#39;)
+head(doenLaten)
+
+install.packages(&#39;tidyverse&#39;)
+readr::write_csv(doenLaten, &#39;data.csv&#39;)</code></pre>
+<p>After installing everything, we should restart R. To inspire you to even better practices, I will pretend I always save my temporary R scripts and save the file as <code>temp.R</code> (hopefully we don’t have to run it again).</p>
+</div>
+<div id="the-analysis" class="section level1">
+<h1>The analysis</h1>
+<p>In Chapter 12 of <em>How to do linguistics with R</em>, Levshina uses this dataset to illustrate logistic regression. She shows how to use <code>rms::lrm()</code> and <code>stats::glm()</code> with a focus on the former because of its detailed output. Here I will only use <code>glm()</code> because, while it’s harder to obtain the <span class="math inline">\(C\)</span> value and similar statistics, I know how to get the data for a prettier table that we’ll report at the end of the post. I will also add some rough explanation of how to interpret the output, strongly informed by <span class="citation">Levshina (<a href="#ref-levshina_2015" role="doc-biblioref">2015</a>)</span>, but I won’t delve into the linguistic consequences —this is just so that if you, readers, are not familiar with logistic regression, your head doesn’t blow up in so many pieces.</p>
+<p>First we will create a new R script to explore the output of the analysis. Writing code in an R script rather than on the console is a good practice, because you WILL want to run things again at some point, and it’s easier to find that code in a file than in the console. (I often start testing ideas in the console and it is the equivalent of whisking egg whites with a fork because the whisk is in a different room: wrongly placed laziness.)</p>
+<pre class="r"><code># analysis.R
+library(tidyverse)
+
+doenLaten &lt;- read_csv(&#39;data.csv&#39;, show_col_types = F)</code></pre>
+<p>If we use <code>doenLaten</code> from the <code>Rling</code> package directly, it is a dataframe where each column is a factor, sometimes with a predefine reference level. However, if we use the dataset as we stored it, <code>readr::read_csv()</code> will automatically read the columns as character vectors. This brings us to another step that we will often have in data analysis between opening our file and actually modelling. In this case, we will turn all character columns into factors and manually change the reference values of the response and the Country predictor to fit Levshina’s original dataset:</p>
+<pre class="r"><code>doenLaten &lt;- doenLaten %&gt;% 
+  mutate(across(where(is.character), factor), # change all character vectors into factors
+         Aux = fct_relevel(Aux, &#39;laten&#39;), # set up &#39;laten&#39; as the first level of Aux
+         Country = fct_relevel(Country, &#39;NL&#39;) # set up &#39;NL&#39; as the first level of Country
+         )</code></pre>
+<p>For the modelling we’ll use <code>stats::glm()</code>, which takes a formula <code>Response ~ Predictor1 + Predictor2...</code> and a dataset. Saving the output in a variable allows us to explore it in different ways without having to rerun the modelling every time.</p>
+<pre class="r"><code>m &lt;- glm(Aux ~ Causation + EPTrans + Country, data = doenLaten, family = binomial)
+summary(m)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = Aux ~ Causation + EPTrans + Country, family = binomial, 
+##     data = doenLaten)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.4837  -0.5344  -0.3428   0.3838   2.5340  
+## 
+## Coefficients:
+##                     Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)           1.8631     0.3771   4.941 7.79e-07 ***
+## CausationInducive    -3.3725     0.3741  -9.015  &lt; 2e-16 ***
+## CausationPhysical     0.4661     0.6275   0.743 0.457575    
+## CausationVolitional  -3.7373     0.4278  -8.735  &lt; 2e-16 ***
+## EPTransTr            -1.2952     0.3394  -3.816 0.000136 ***
+## CountryBE             0.7085     0.2841   2.494 0.012633 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 609.05  on 454  degrees of freedom
+## Residual deviance: 337.70  on 449  degrees of freedom
+## AIC: 349.7
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>The algorithm compares the second level of the response variable (in this case <em>doen</em>) to the first, <em>aka</em> reference level (here <em>laten</em>); the values under the <code>Estimate</code> column correspond to the log odds of finding <em>doen</em> rather than <em>laten</em>. In particular, the value of the <code>Estimate</code> for the Intercept corresponds to the log odds of finding <em>doen</em> rather than <em>laten</em> when all predictors are at their reference level (the first level of the factor), that is, when Causation is <em>affective</em>, the effective predicate is <em>intransitive</em> and the language variety is <em>Netherlandic Dutch</em>. Positive log odds indicate that <em>doen</em> is more likely, whereas negative log odds indicate that <em>laten</em> is more likely:</p>
+<pre class="r"><code>doenLaten %&gt;% 
+  filter(Causation == &#39;Affective&#39;, EPTrans == &#39;Intr&#39;, Country == &#39;NL&#39;) %&gt;% 
+  count(Aux)</code></pre>
+<pre><code>##     Aux  n
+## 1 laten  3
+## 2  doen 20</code></pre>
+<p>The simple odds, which are more easily interpretable, can be computed with <code>exp()</code>. In this case, the log odds of the Intercept are 1.863, and the simple log odds are therefore 6.444, which is equal to 20/3, the respective frequencies of <em>doen</em> and <em>laten</em> when all predictors are at their reference level. The interpretation is that, when all predictors are at their reference level, <em>doen</em> is 6.444 times more likely than <em>laten</em>.</p>
+<pre class="r"><code>exp(m$coefficients[[&#39;(Intercept)&#39;]])</code></pre>
+<pre><code>## [1] 6.443584</code></pre>
+<p>When it comes to the predictors, the <code>Estimate</code> refers to the log odds of <em>doen</em> for a given value of the variable (e.g. <em>Tr</em> for <code>EPTrans</code>) compared to the reference value (<em>Intr</em> for <code>EPTrans</code>). Negative log odds indicate that <em>doen</em> is less likely than the reference response value <em>laten</em>; the simple odds of <em>doen</em> against <em>laten</em> when the Effected Predicate is Transitive, all other variables being controlled for, are then 0.274, i.e. <em>doen</em> is about one fifth as likely as <em>laten</em>.</p>
+<p>Other important information is, of course, the p-value, indicating whether the Estimate is significant (i.e. that it wouldn’t be due to chance), and measures of precision, explained variation, etc. For <code>glm()</code> output, we can compute the <span class="math inline">\(C\)</span> value
+<!-- TODO add reference --> with <code>Hmisc::somers2()</code>, which takes the values predicted by the model and the actual output as 1s and 0s and returns <a href="https://www.rdocumentation.org/packages/Hmisc/versions/4.4-1/topics/somers2">the <span class="math inline">\(C\)</span> value along with other metrics</a>.</p>
+<p>Before running this, however, we have to go back to <code>temp.R</code> and run <code>install.packages('Hmisc')</code>. And even <em>before</em> that, we might want to use <code>renv</code> to take a snapshot of the package versions that we are using right now, since we know they work. That way, if we install <code>Hmisc</code> or other packages and something breaks, we can go back to this point with <code>renv::restore()</code>. So:</p>
+<ul>
+<li>In <code>temp.R</code>, run <code>renv::snapshot()</code>, accept to save the data.</li>
+<li>In <code>temp.R</code>, run <code>install.packages('Hmisc')</code>.</li>
+<li>Add <code>library(Hmisc)</code> to the top of <code>analysis.R</code>.</li>
+<li>Get your <span class="math inline">\(C\)</span>!</li>
+</ul>
+<pre class="r"><code># analysis.R
+somers2(fitted(m), as.numeric(doenLaten$Aux)-1)[[&#39;C&#39;]]</code></pre>
+<pre><code>## [1] 0.8936539</code></pre>
+<p>For a proper logistic regression analysis I strongly recommend reading Levshina’s chapter and other appropriate sources; for the purposes of this excessively detailed post, I will stop here. Right now, our <code>analysis.R</code> file looks like this:</p>
+<pre class="r"><code># analysis.R
+library(tidyverse)
+library(Hmisc)
+
+doenLaten &lt;- read_csv(&#39;data.csv&#39;, show_col_types = F)
+doenLaten &lt;- doenLaten %&gt;% 
+  mutate(across(where(is.character), factor),
+         Aux = fct_relevel(Aux, &#39;laten&#39;),
+         Country = fct_relevel(Country, &#39;NL&#39;))
+
+m &lt;- glm(Aux ~ Causation + EPTrans + Country, data = doenLaten,
+         family = binomial)
+summary(m)
+somers2(fitted(m), as.numeric(doenLaten$Aux)-1)[[&#39;C&#39;]]</code></pre>
+</div>
+<div id="basic-report" class="section level1">
+<h1>Basic report</h1>
+<p>A script like this is… meh. You got your exploration, you started, more or less. But you wouldn’t send this as a report. How will you share this? How will this become part of your reporting? (Also: will your future self, a month from now, quickly understand what is going on?)</p>
+<p>We will therefore create a brief and simple R Markdown report. Before, however, we will package everything we did in simple functions that can be easily called; I wrote <a href="../writing-functions/">elsewhere</a> about my approach to functions, but <a href="https://books.ropensci.org/targets/functions.html">the dedicated chapter in the <code>targets</code> manual</a> is also interesting in relation to the logic of <code>targets</code>, which we’ll look into shortly.</p>
+<div id="everything-into-functions" class="section level2">
+<h2>Everything into functions</h2>
+<p>Each step of your <code>analysis.R</code> file will be surrounded by a function call, focusing on having a specific input and returning a specific output without side effects (such as storing a file). I must admit that I am normally way messier than this, but <code>targets</code> has inspired me:</p>
+<pre class="r"><code># analysis.R
+library(tidyverse)
+library(Hmisc)
+
+data_file &lt;- &#39;data.csv&#39;
+read_data &lt;- function(data_file) {
+  read_csv(data_file, show_col_types = F)
+}
+refactor_data &lt;- function(raw_data) {
+  raw_data %&gt;% mutate(across(where(is.character), factor),
+         Aux = fct_relevel(Aux, &#39;laten&#39;),
+         Country = fct_relevel(Country, &#39;NL&#39;))
+}
+model &lt;- function(mydata) {
+  glm(Aux ~ Causation + EPTrans + Country, data = mydata,
+         family = binomial)
+}
+
+get_c &lt;- function(model, mydata) {
+  somers2(fitted(model), as.numeric(mydata$Aux)-1)[[&#39;C&#39;]]  
+}</code></pre>
+<p>Now if you run <code>analysis.R</code> it’s not going to return anything, <em>do</em> anything that counts, but just load the libraries and declare the functions that you need. But you could still run everything with the following code:</p>
+<pre class="r"><code>data &lt;- read_data(data_file) %&gt;% refactor_data()
+m &lt;- model(data)
+summary(m)
+get_c(m, data)</code></pre>
+<p>When we write our R Markdown, we can now call the functions where we want the output.</p>
+</div>
+<div id="reporting-regression-results" class="section level2">
+<h2>Reporting regression results</h2>
+<p>We’ll start creating an R Markdown document by selecting the appropriate option in the top left corner and setting up the basic data. In the meantime you will also have to accept installing <code>rmarkdown</code>, of course. I titled my file “Report” and set it to update the date every time I knit it (Figure <a href="#fig:startRmd">2</a>).</p>
+
+<div class="figure"><span style="display:block;" id="fig:startRmd"></span>
+<img src="images/rmd.png" alt="Two screenshots of the steps to create an R Markdown file, slightly overlapping. The first shows a dropdown menu with the option to create the file. The second shows a dialog window with that lets you name your file and select an initialization configuration." width="40%" />
+<p class="caption">
+Figure 2: Screenshots of the first steps creating an R Markdown file.
+</p>
+</div>
+<p>I also removed all the content of the resulting file except for the metadata and the first chunk, resulting in the following content:</p>
+<script src="https://gist.github.com/montesmariana/9a8372c49b634e7962c06d697bfbaa43.js"></script>
+<p>I saved the file as <code>report.Rmd</code>.
+In it I wrote a very brief report loading the data and show the output of the regression model and the C value.
+The R Markdown raw file is shown below; the HTML output is shown in <a href="#fig:report1">3</a>`.</p>
+<div style="display: flex;gap:10px">
+<div style="width:50%">
+<script src="https://gist.github.com/montesmariana/89ca44bb263ec4db4371d757c169d21d.js"></script>
+</div>
+<div>
+
+<div class="figure"><span style="display:block;" id="fig:report1"></span>
+<img src="images/report1.png" alt="HTML rendering of the first version of the R Markdown report." width="100%" />
+<p class="caption">
+Figure 3: Screenshot of the first HTML report.
+</p>
+</div>
+</div>
+</div>
+<p>It’s a very ugly report, but it is a report and it shows what we have done. Before we move on to prettifying it or adding complexity, let’s take a look at <code>targets</code>!</p>
+<p>Oh, wait, before that, we should take advantage of our version control<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>: we are using git! We should save what we have done and commit it! In the Terminal (next to the console) just type <code>git commit -am "first report"</code>!</p>
+</div>
+</div>
+<div id="creating-a-workflow-with-targets" class="section level1">
+<h1>Creating a workflow with <code>targets</code></h1>
+<p>The <code>targets</code> package allows you to keep track of your workflow and of whether your output is up to date with each step. Crucially, it caches your results so that, if you modify part of your workflow, you only need to rerun that part and whatever depends on it. If you change the predictors in your model, you don’t need to change the variables from character vectors to factors again!</p>
+<p>To set up <code>targets</code>, we need to install the <code>targets</code> package (as before: do it in <code>temp.R</code>, and if you want, run <code>renv::snapshot()</code> again), which will create a file called <code>_targets.R</code>:</p>
+<script src="https://gist.github.com/montesmariana/9d90da5fdb923b70e5afac5a0d2eb159.js"></script>
+<p>The template has basic instructions and an example to get you going. You can read more in <a href="https://books.ropensci.org/targets/">the manual</a>. How do we adapt it?
+Our personal <code>_targets.R</code> needs to have the following elements:</p>
+<ol style="list-style-type: decimal">
+<li><p>A call to <code>library(targets)</code>, as in the template.</p></li>
+<li><p>A <code>source()</code> call to our file with code: <code>source('analysis.R')</code> in this case, but we might want to create an <code>R</code> folder to add such a script. You may not see the need now, but it will be useful for growing projects with more code.</p></li>
+<li><p>A call to <code>tar_option_set()</code> indicating the packages we need to load. This <em>replaces</em> the calls to <code>library()</code> at the beginning of <code>analysis.R</code>, so we’ll need to remove them from there.</p></li>
+<li><p>A list of target objects, matching files and functions to variables and setting up a pipeline. In our case:</p>
+<ol style="list-style-type: lower-alpha">
+<li>We can match the file path to <code>data_file</code>. This means that <code>targets</code> will watch that file and rerun everything depending on it if it changes.</li>
+<li>We can match the function that reads the file to <code>raw_data</code>, and then the function that changes the column types to <code>data</code>.</li>
+<li>We can match <code>m</code> to the function that runs the model and <code>C</code> to the function that obtains the c value.</li>
+</ol></li>
+</ol>
+<p>Notice that I don’t use the same names, and that I try to use verbs for the functions (defined in <code>analysis.R</code>) and nouns or letters for my objects. These changes result in the following code for <code>_targets.R</code>:</p>
+<script src="https://gist.github.com/montesmariana/a4052f01621df66ef40c6eeac81336e3.js"></script>
+<p>And we have changed <code>analysis.R</code> like so:</p>
+<script src="https://gist.github.com/montesmariana/963e33846c0762469064342b422a609e.js"></script>
+<p>We can now visualize the pipeline with <code>targets::tar_visnetwork()</code> (which, btw, requires us to install the <code>visNetwork</code> package, but it’s worth it!). The different objects are shown in Figure <a href="#fig:visnet1">4</a> as circles, functions are shown as triangles, the edges of the network show the dependency and the colors indicate whether the objects and the output are up to date or not. Right now, since we haven’t run anything from the workflow, everything is outdated.</p>
+
+<div class="figure"><span style="display:block;" id="fig:visnet1"></span>
+<img src="images/visnetwork1.png" alt="Linear network of blue circles and triangles representing the current pipeline." width="70%" />
+<p class="caption">
+Figure 4: Network representation of the initial pipeline.
+</p>
+</div>
+<p>If we run <code>targets::tar_make()</code>, each step of the pipeline in the <code>_targets.R</code> file is run and the output is stored in the <code>_targets</code> directory. The output shows that everything was run and how long it took.</p>
+<pre class="r"><code>targets::tar_make()
+#&gt; * start target data_file
+#&gt; * built target data_file
+#&gt; * start target raw_data
+#&gt; * built target raw_data
+#&gt; * start target data
+#&gt; * built target data
+#&gt; * start target m
+#&gt; * built target m
+#&gt; * start target C
+#&gt; * built target C
+#&gt; * end pipeline: 2.55 seconds</code></pre>
+<p>We can then access the different objects with <code>targets::tar_read()</code> or load them into the current environment with <code>targets::tar_load()</code>. Running <code>targets::tar_visnetwork()</code> again shows that everything is now up to date.</p>
+
+<div class="figure"><span style="display:block;" id="fig:visnet2"></span>
+<img src="images/visnetwork2.png" alt="Linear network of blue circles and triangles representing the current pipeline." width="70%" />
+<p class="caption">
+Figure 5: Network representation of the initial pipeline after running <code>targets::tar_make()</code>.
+</p>
+</div>
+<div id="reports-with-targets" class="section level2">
+<h2>Reports with <code>targets</code></h2>
+<p>While we have a <code>targets</code> pipeline set up, our report is still isolated from it. We can connect our R markdown report with the pipeline by adding it to the list in <code>_targets.R</code> with <code>tarchetypes::tar_render()</code>, and then calling the different objects and functions with <code>targets::tar_load()</code> and <code>targets::tar_read()</code>:</p>
+<ol style="list-style-type: decimal">
+<li>In <code>temp.R</code>, run <code>install.packages('tarchetypes')</code>.</li>
+<li>In <code>_targets.R</code>, add to the top <code>library(tarchetypes)</code>.</li>
+<li>In <code>_targets.R</code>, add to the bottom of the list of target objects <code>tar_render(report, 'report.Rmd')</code> (as long as your report file is also called ‘report.Rmd’).</li>
+<li>In <code>report.Rmd</code>, remove <code>source('analysis.R')</code>, add <code>library(targets)</code> instead and replace the calls to objects and functions with the appropriate <code>targets</code> functions:</li>
+</ol>
+<div style="display: flex;gap:10px">
+<div style="width:50%">
+<script src="https://gist.github.com/montesmariana/06b79e0d0851b6836e801fb6c8e8baa6.js"></script>
+</div>
+<div>
+
+<div class="figure"><span style="display:block;" id="fig:report2"></span>
+<img src="images/report2.png" alt="HTML rendering of the first version of the R Markdown report, with a new line indicating it's linked to the targets package." width="100%" />
+<p class="caption">
+Figure 6: Screenshot of the HTML report after linking it to <code>targets</code>.
+</p>
+</div>
+</div>
+</div>
+<p>The network visualization in Figure <a href="#fig:visnet3">7</a> now includes the R Markdown file.</p>
+
+<div class="figure"><span style="display:block;" id="fig:visnet3"></span>
+<img src="images/visnetwork3.png" alt="Linear network of blue and black circles and triangles representing the current pipeline." width="70%" />
+<p class="caption">
+Figure 7: Network representation of the initial pipeline after linking the R Markdown report.
+</p>
+</div>
+<p>Note that you can knit it independently (and, as shown in Figure <a href="#fig:report2">6</a>, it looks just like before!) but it won’t show as up to date unless you run <code>targets::tar_make()</code>. At this point, we should do it, take a <code>renv::snapshot()</code> and, in the Terminal, <code>git commit -am "add targets"</code>. When you run <code>targets::tar_make()</code>, note that it will skip all the steps that are up to date, and only run the report! This is particularly useful if what you ran before requires some intensive computation.</p>
+</div>
+<div id="what-if-you-change-something" class="section level2">
+<h2>What if you change something?</h2>
+<p>About a month ago I saw a presentation at the German Cognitive Linguistics Conference in which a researcher<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> showed the output from a regression model in a very beautiful, intuitive table. As someone who does not normally run regressions, I found it incredibly helpful to figure out how to interpret the data. Below you can see a function, <code>prettify_model()</code>, that I wrote to turn the output of <code>glm()</code> into a table strongly inspired by that presentation. I won’t explain the code here, but you can contact me if you are interested — the gist of it is that it takes the output of <code>glm()</code> and your dataframe as input, and returns an Rmarkdown-ready table.</p>
+<script src="https://gist.github.com/montesmariana/6e1b12cb1b73648c0c45d82e410118cc.js"></script>
+<p>This is an excellent opportunity to learn how to integrate any new addition — modifying existing code, adding functions or data… — to your existing <code>targets</code> pipeline:</p>
+<ol style="list-style-type: decimal">
+<li><p>In <code>temp.R</code>, install missing packages if needed. In our case, we need <code>kableExtra</code>. Because we actually need the development version of <code>kableExtra</code><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>, we will install it with <code>devtools::install_github()</code>, which means we need to install <code>devtools</code> first. So:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Run <code>install.packages('devtools')</code></li>
+<li>Run <code>devtools::install_github('haozhu233/kableExtra')</code></li>
+<li>If you’re not interested in <code>devtools</code> any more, you can finish off with <code>renv::remove('devtools')</code> to remove it from your project-specific library.</li>
+</ol></li>
+<li><p>In <code>analysis.R</code>, add the code for <code>prettify_model()</code>. Of course, I would suggest testing it, running the function definition and typing in the console:</p></li>
+</ol>
+<pre class="r"><code>library(tidyverse)
+library(kableExtra)
+library(targets)
+tar_load(m)
+tar_load(data)
+prettify_model(m, data)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Instead of adding <code>library(kableExtra)</code> to the top of <code>analysis.R</code>, we add ‘kableExtra’ to the vector of packages in the <code>tar_option_set()</code> call in <code>_targets.R</code>. That line will then become <code>tar_option_set(packages = c('tidyverse', 'Hmisc', 'kableExtra'))</code>.</li>
+<li>In <code>_targets.R</code>, we add the following <code>targets</code> object before the <code>tar_render()</code> call:</li>
+</ol>
+<pre class="r"><code># tar_target(C, get_c(m, data)),
+tar_target(
+    pretty_table,
+    prettify_model(m, data)
+  )
+#, tar_render(report, &#39;report.Rmd&#39;)</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>In <code>report.Rmd</code>, we replace <code>summary(tar_read(m))</code> with <code>tar_read(pretty_table)</code>.</li>
+</ol>
+<p>In essence, we have added the output of <code>prettify_model(m, data)</code> to the pipeline, naming it <code>pretty_table</code>, and then called it from the report.
+After saving all the files, <code>targets::tar_visnetwork()</code> shows us a nice increase in complexity (see Figure @ref(fig(visnet4)).
+We have a new triangle representing <code>prettify_model()</code>, which is only linked to the new circle <code>pretty_table</code>; this circle depends on <code>m</code> and <code>data</code> while <code>report</code> depends on it. Only these new elements and <code>report</code> are now outdated, so a call to <code>targets::tar_make()</code> will skip refining the data and modelling and only focus on the table and report.</p>
+
+<div class="figure"><span style="display:block;" id="fig:visnet4"></span>
+<img src="images/visnetwork4.png" alt="Linear network of blue and black circles and triangles representing the current pipeline." width="70%" />
+<p class="caption">
+Figure 8: Network representation of the initial pipeline after adding <code>prettify_table()</code>.
+</p>
+</div>
+<pre class="r"><code>targets::tar_make()
+#&gt; v skip target data_file
+#&gt; v skip target raw_data
+#&gt; v skip target data
+#&gt; v skip target m
+#&gt; v skip target C
+#&gt; * start target pretty_table
+#&gt; * built target pretty_table
+#&gt; * start target report
+#&gt; * built target report
+#&gt; * end pipeline: 4.48 seconds</code></pre>
+<p>Our report is now a bit prettier than it used to be (see Figure <a href="#fig:report3">9</a>). The output of the regression model is now rendered as an elegant table highlighting the Estimate (log odds ratio), the Significance (p-value) and the Odds Ratio, which was computed within <code>prettify_table()</code>. The rows with a p-value lower than 0.05 are in bold. The caption specifies which value is being predicted and the predictors also state clearly what the reference value is in each case, collapsing the rows that correspond to the same predictor.</p>
+
+<div class="figure"><span style="display:block;" id="fig:report3"></span>
+<img src="images/report3.png" alt="HTML rendering of the first version of the R Markdown report, with a pretty rendering of the regreesion results." width="90%" />
+<p class="caption">
+Figure 9: Screenshot of the HTML report with a prettier table for the regression results.
+</p>
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>Now we can take another <code>renv::snapshot()</code> and, in the Terminal, <code>git commit -am "prettify table"</code>. We could even connect the repository to GitHub and <a href="https://github.com/montesmariana/doenLaten">push it online</a>. We already have a basic workflow to keep adding functions and objects to. We could add more analyses and reporting, plots. We could do whatever we want!</p>
+<p>This post does not cover everything that would constitute a “good practice”. It does not tell you how to name files, to have an <code>R</code> folder for your code, a <code>data</code> folder for your data, a <code>reports</code> folder for your reports… I do think these are useful tips, but it’s hard to integrate them into your workflow until your projects are not complex enough to require them. And while they are good habits to incorporate, I felt it would be interesting to show how to <em>start</em> a project, rather messily, as if you didn’t really know what you are going to do (even which packages you will need), because that is often the case. Actual data science includes a LOT of data cleaning and exploration, testing out different ways of looking at the data, finding the best way to report it (see <a href="https://mdneuzerling.com/post/my-machine-learning-process-mistakes-included/">this post</a> for example). I tried to strike a balance between honest messiness and useful neatness. Hopefully you can follow this and feel confident of your tools to set up a self-contained, reproducible data analysis project, a neat scaffolding for the messes to come.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-levshina_2011" class="csl-entry">
+Levshina, Natalia. 2011. <span>“Doe Wat Je Niet Laten Kan: <span>A</span> Usage-Based Analysis of <span>Dutch</span> Causative Constructions.”</span> PhD thesis, <span>Leuven</span>: <span>KU Leuven</span>. <a href="https://lirias.kuleuven.be/retrieve/172344">https://lirias.kuleuven.be/retrieve/172344</a>.
+</div>
+<div id="ref-levshina_2015" class="csl-entry">
+———. 2015. <em>How to Do Linguistics with <span>R</span>: Data Exploration and Statistical Analysis</em>. <span>Amsterdam; Philadelphia</span>: <span>John Benjamins Publishing Company</span>.
+</div>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>It could also be a blogdown project, like this blog; a bookdown project, an R package…<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>I must give credit to Miguel Montes for the idea; I didn’t really see the point the first time he told me about it but I followed his advice and it has really paid off.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>If you want to learn how to set up git, especially if you have never used git and don’t have a GitHub account (I won’t cover that here), I recommend checking out Jenny Bryan et al.’s <a href="https://happygitwithr.com/index.html"><em>Happy Git with R</em></a>. <a href="https://rstudio.github.io/renv/articles/renv.html"><code>renv</code></a> can be initialized in an open project with <code>renv::init()</code>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>This could have been done multiple times before: when first setting up the project, when saving the data, with the first analysis… But I honestly forgot about it, and maybe by admitting it you can feel good about forgetting as well, and take it easy in the long road of incorporating git to your workflow.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Alicja Piotrowska presenting <em>Genitive variation in Danish and Swedish – the iconic motivation</em>.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>For some reason <code>kableExtra::collapse_rows()</code> is not working in the CRAN version at the moment.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
