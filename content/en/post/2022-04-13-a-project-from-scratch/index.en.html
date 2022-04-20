@@ -68,7 +68,7 @@ Figure 1: Screenshots of the first steps creating an R Studio project.
 <div id="the-dataset" class="section level1">
 <h1>The dataset</h1>
 <p>Since this project is about data analysis, we first need to acquire some data. I wanted to give a linguistics example, ideally not in English (there is enough of that already), so I chose the <code>doenLaten</code> dataset of Natalia Levshina’s <a href="https://github.com/levshina/Rling">Rling package</a>, companion of her wonderful <em>How to do linguistics with R</em> <span class="citation">(<a href="#ref-levshina_2015" role="doc-biblioref">Levshina 2015</a>)</span>. To install the package you can follow the instructions on the README file, and then the dataset is available with <code>data()</code>:</p>
-<pre class="r"><code>install.packages(&#39;path/to/file/Rling_1.0.tar.gz&#39;,
+<pre class="r"><code>install.packages(&#39;path/to/file/Rling_1.0.tar.gz&#39;, # use your own path
                  type = &#39;source&#39;, repos = NULL)
 data(doenLaten, package = &#39;Rling&#39;)</code></pre>
 <p>Since we are still learning, we’ll open an empty R script, write the code in it and run it. Later, the <code>install.packages()</code> call should be removed or at least kept separate from analysis scripts.
@@ -199,8 +199,8 @@ As shown below, <code>head(doenLaten)</code> shows us the first rows of the data
 <p>Our current temporary R script will look like this:</p>
 <pre class="r"><code># Untitled.R
 
-install.packages(&#39;../../levshina/Rling_1.0.tar.gz&#39;,
-                 # type = &#39;source&#39;, repos = NULL)
+# install.packages(&#39;../../levshina/Rling_1.0.tar.gz&#39;, 
+#                  type = &#39;source&#39;, repos = NULL)
 data(doenLaten, package = &#39;Rling&#39;)
 head(doenLaten)
 
@@ -253,7 +253,6 @@ summary(m)</code></pre>
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>The algorithm compares the second level of the response variable (in this case <em>doen</em>) to the first, <em>aka</em> reference level (here <em>laten</em>); the values under the <code>Estimate</code> column correspond to the log odds of finding <em>doen</em> rather than <em>laten</em>. In particular, the value of the <code>Estimate</code> for the Intercept corresponds to the log odds of finding <em>doen</em> rather than <em>laten</em> when all predictors are at their reference level (the first level of the factor), that is, when Causation is <em>affective</em>, the effective predicate is <em>intransitive</em> and the language variety is <em>Netherlandic Dutch</em>. Positive log odds indicate that <em>doen</em> is more likely, whereas negative log odds indicate that <em>laten</em> is more likely.</p>
-<p>The simple odds, which are more easily interpretable, can be computed with <code>exp()</code>. In this case, the log odds of the Intercept are 1.863, and the simple log odds are therefore 6.444. The interpretation is that, when all predictors are at their reference level, <em>doen</em> is 6.444 times more likely than <em>laten</em>.</p>
 <pre class="r"><code>doenLaten %&gt;% 
   filter(Causation == &#39;Affective&#39;, EPTrans == &#39;Intr&#39;, Country == &#39;NL&#39;) %&gt;% 
   count(Aux)</code></pre>
@@ -262,7 +261,7 @@ summary(m)</code></pre>
 ## 2  doen 20</code></pre>
 <pre class="r"><code>exp(m$coefficients[[&#39;(Intercept)&#39;]])</code></pre>
 <pre><code>## [1] 6.443584</code></pre>
-<p>When it comes to the predictors, the <code>Estimate</code> refers to the log odds ratio of <em>doen</em> for a given value of the variable (e.g. <em>Tr</em> for <code>EPTrans</code>) compared to the reference value (<em>Intr</em> for <code>EPTrans</code>). Negative values indicate that <em>doen</em> is less likely than the reference response value <em>laten</em>; the simple odds ratio of <em>doen</em> against <em>laten</em> when the Effected Predicate is Transitive, all other variables being controlled for, are then 0.274.</p>
+<p>When it comes to the predictors, the <code>Estimate</code> refers to the log odds ratio of <em>doen</em> for a given value of the variable (e.g. <em>Tr</em> for <code>EPTrans</code>) compared to the reference value (<em>Intr</em> for <code>EPTrans</code>). Negative values indicate that <em>doen</em> is less likely than the reference response value <em>laten</em>; the simple odds ratio of <em>doen</em> against <em>laten</em> when the Effected Predicate is Transitive, all other variables being controlled for, is then 0.274.</p>
 <p>Other important information is, of course, the p-value, indicating whether the Estimate is significant (i.e. that it wouldn’t be due to chance), and measures of precision, explained variation, etc. For <code>glm()</code> output, we can compute the <span class="math inline">\(C\)</span> value
 <!-- TODO add reference --> with <code>Hmisc::somers2()</code>, which takes the values predicted by the model and the actual output as 1s and 0s and returns <a href="https://www.rdocumentation.org/packages/Hmisc/versions/4.4-1/topics/somers2">the <span class="math inline">\(C\)</span> value along with other metrics</a>.</p>
 <p>Before running this, however, we have to go back to <code>temp.R</code> and run <code>install.packages('Hmisc')</code>. And even <em>before</em> that, we might want to use <code>renv</code> to take a snapshot of the package versions that we are using right now, since we know they work. That way, if we install <code>Hmisc</code> or other packages and something breaks, we can go back to this point with <code>renv::restore()</code>. So:</p>

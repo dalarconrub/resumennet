@@ -87,7 +87,7 @@ We have now initialized a project. The file structure can be found in the Files 
 Since this project is about data analysis, we first need to acquire some data. I wanted to give a linguistics example, ideally not in English (there is enough of that already), so I chose the `doenLaten` dataset of Natalia Levshina's [Rling package](https://github.com/levshina/Rling), companion of her wonderful *How to do linguistics with R* [@levshina_2015]. To install the package you can follow the instructions on the README file, and then the dataset is available with `data()`:
 
 ```{r, eval = FALSE}
-install.packages('path/to/file/Rling_1.0.tar.gz',
+install.packages('path/to/file/Rling_1.0.tar.gz', # use your own path
                  type = 'source', repos = NULL)
 data(doenLaten, package = 'Rling')
 ```
@@ -125,8 +125,8 @@ Our current temporary R script will look like this:
 ```{r, eval = FALSE}
 # Untitled.R
 
-install.packages('../../levshina/Rling_1.0.tar.gz',
-                 # type = 'source', repos = NULL)
+# install.packages('../../levshina/Rling_1.0.tar.gz', 
+#                  type = 'source', repos = NULL)
 data(doenLaten, package = 'Rling')
 head(doenLaten)
 
@@ -168,8 +168,6 @@ summary(m)
 
 The algorithm compares the second level of the response variable (in this case *doen*) to the first, *aka* reference level (here *laten*); the values under the `Estimate` column correspond to the log odds of finding *doen* rather than *laten*. In particular, the value of the `Estimate` for the Intercept corresponds to the log odds of finding *doen* rather than *laten* when all predictors are at their reference level (the first level of the factor), that is, when Causation is *affective*, the effective predicate is *intransitive* and the language variety is *Netherlandic Dutch*. Positive log odds indicate that *doen* is more likely, whereas negative log odds indicate that *laten* is more likely.
 
-The simple odds, which are more easily interpretable, can be computed with `exp()`. In this case, the log odds of the Intercept are `r sprintf("%.3f", m$coefficients[['(Intercept)']])`, and the simple log odds are therefore `r sprintf("%.3f", exp(m$coefficients[['(Intercept)']]))`. The interpretation is that, when all predictors are at their reference level, *doen* is `r sprintf("%.3f", exp(m$coefficients[['(Intercept)']]))` times more likely than *laten*.
-
 ```{r}
 doenLaten %>% 
   filter(Causation == 'Affective', EPTrans == 'Intr', Country == 'NL') %>% 
@@ -178,7 +176,7 @@ doenLaten %>%
 exp(m$coefficients[['(Intercept)']])
 ```
 
-When it comes to the predictors, the `Estimate` refers to the log odds ratio of *doen* for a given value of the variable (e.g. *Tr* for `EPTrans`) compared to the reference value (*Intr* for `EPTrans`). Negative values indicate that *doen* is less likely than the reference response value *laten*; the simple odds ratio of *doen* against *laten* when the Effected Predicate is Transitive, all other variables being controlled for, are then `r sprintf("%.3f", exp(m$coefficients[['EPTransTr']]))`.
+When it comes to the predictors, the `Estimate` refers to the log odds ratio of *doen* for a given value of the variable (e.g. *Tr* for `EPTrans`) compared to the reference value (*Intr* for `EPTrans`). Negative values indicate that *doen* is less likely than the reference response value *laten*; the simple odds ratio of *doen* against *laten* when the Effected Predicate is Transitive, all other variables being controlled for, is then `r sprintf("%.3f", exp(m$coefficients[['EPTransTr']]))`.
 
 Other important information is, of course, the p-value, indicating whether the Estimate is significant (i.e. that it wouldn't be due to chance), and measures of precision, explained variation, etc. For `glm()` output, we can compute the $C$ value
 <!-- TODO add reference --> with `Hmisc::somers2()`, which takes the values predicted by the model and the actual output as 1s and 0s and returns [the $C$ value along with other metrics](https://www.rdocumentation.org/packages/Hmisc/versions/4.4-1/topics/somers2).
