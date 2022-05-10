@@ -9495,3 +9495,14 @@ div.chart {
 
 .gist .blob-code, .blob-num {
   background-color: white !important; }
+
+div.alert-idea > div:first-child::before {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  color: #037e24;
+  content: '\f0a6'; }
+
+.alert-idea {
+  color: #037e24;
+  background-color: #ccddaa50;
+  border-color: #037e24; }
