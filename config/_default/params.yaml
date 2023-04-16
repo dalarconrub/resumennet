@@ -12,15 +12,15 @@ font_size: L
 
 # Contact (edit or remove options as required)
 
-email: mariana.montes@kuleuven.be
+email: dalarub@upo.es
 coordinates:
-  latitude: '50.877415'
-  longitude: '4.709262'
+  latitude: '37.35634108685059'
+  longitude: '-5.939026195739667'
 contact_links:
   - icon: twitter
     icon_pack: fab
     name: DM Me
-    link: 'https://twitter.com/roblerobusto'
+    link: 'https://twitter.com/psicodata'
   - icon: comments
     icon_pack: fas
     name: Discuss on Forum
