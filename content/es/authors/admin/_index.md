@@ -1,27 +1,31 @@
 ---
-bio: Mis intereses de investigación incluyen semántica cognitiva y de corpus y visualización de datos.
+bio: Mis intereses de investigación incluyen procesos cognitivos, función ejecutiva, salud y actividad física. 
 education:
   courses:
-  - course: Doctorado en Lingüística
-    institution: KU Leuven
-    year: 2017- 2021
-  - course: Licenciatura en Lengua y Literatura Italianas
-    institution: Universidad Nacional de Córdoba
-    year: 2011-2016
-email: "mariana.montes@kuleuven.be"
+  - course: Doctorado en Psicología
+    institution: Universidad Pablo de Olavide
+    year: 2008
+  - course: Ingienería Técnica Informática de Gestion
+    institution: Universidad Pablo de Olavide
+    year: 2011
+  - course: Licenciado en Psicología
+    institution: Universidad de Sevilla
+    year: 2002
+
+email: "dalarub@upo.es"
 highlight_name: false
 interests:
-- Lingüística Cognitiva
-- Lingüística de Corpus
-- Visualización de datos
-- Aikido
-- Iaido
-- Repostería
-- Ficción especulativa
+- Procesos Cognitivos
+- Función ejecutiva
+- Toma de decisiones
+- Ciencia de datos
+- Salud
+- Bienestar
+- Educación emocional
 organizations:
-- name: KU Leuven
-  url: https://www.kuleuven.be/kuleuven/
-role: Doctoranda en Lingüística
+- name: Universidad Pablo de Olavide
+  url: https://www.upo.es
+role: Profesor Contratado Doctor
 social:
 - icon: envelope
   icon_pack: fas
@@ -31,18 +35,18 @@ social:
   icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
-  link: https://twitter.com/roblerobusto
+  link: https://twitter.com/psicodata
 # - icon: graduation-cap
 #   icon_pack: fas
 #   link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
 - icon: github
   icon_pack: fab
-  link: https://github.com/montesmariana
-- icon: linkedin
+  link: https://github.com/dalarconrub
+- icon: researchgate
   icon_pack: fab
-  link: https://www.linkedin.com/mariana-montes-a373637b
+  link: https://www.researchgate.net/profile/David-Alarcon-Rubio
 superuser: true
-title: Mariana Montes
+title: David Alarcón
 ---
 
 Mi nombre es Mariana Montes, soy doctora en Lingüística y sigo descubriendo pasiones nuevas en R, R Markdown y visualización de datos.
