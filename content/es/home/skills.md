@@ -16,22 +16,30 @@ subtitle:
 # - Add/remove as many `feature` blocks below as you like.
 # - For available icons, see: https://wowchemy.com/docs/page-builder/#icons
 feature:
-- description: In love with Rmarkdown
+- description: Lenguajes y programas estadísticos
   icon: r-project
   icon_pack: fab
-  name: R
-- description: Now and then
+  name: R, Mplus, SPSS, Stata, Jamovi, JASP
+- description: Programación y Ciencia de Datos
   icon: python
   icon_pack: fab
-  name: Python
-- description: Getting the hang of it
+  name: C, Java, Python
+- description: Análisis de datos Cuantitativos y Cualitativos
   icon: chart-line
   icon_pack: fas
   name: Statistics
-- description: Fun and beautiful
+- description: Visualización de datos
   icon: js
   icon_pack: fab
   name: Javascript, D3.js
+- description: Desarrollo web
+  icon: wordpress
+  icon_pack: fab
+  name: Wordpress, Django, HUGO
+- description: Gestores de Referencias Zotero, Mendeley y Endnote
+  icon: mendeley
+  icon_pack: fab
+  name:  Zotero, Mendeley y Endnote
 
 # Uncomment to use emoji icons.
 #- icon = ":smile:"
