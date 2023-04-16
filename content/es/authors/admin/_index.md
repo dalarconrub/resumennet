@@ -1,5 +1,5 @@
 ---
-bio: Mis intereses de investigación incluyen procesos cognitivos, función ejecutiva, salud y actividad física. 
+bio: Mis intereses de investigación incluyen el análisis desde la psicología cultural de los procesos cognitivos relacionados con el aprendizaje, la salud y el bienestar emocional. 
 education:
   courses:
   - course: Doctorado en Ciencias Sociales
