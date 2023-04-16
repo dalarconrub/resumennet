@@ -36,7 +36,7 @@ feature:
   icon: wordpress
   icon_pack: fab
   name: Wordpress, Django, HUGO
-- description: Gestores de Referencias Zotero, Mendeley y Endnote
+- description: Gestores de Referencias
   icon: mendeley
   icon_pack: fab
   name:  Zotero, Mendeley y Endnote
