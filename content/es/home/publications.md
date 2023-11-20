@@ -38,6 +38,7 @@ design:
   view: 4
 
 
+---
 title: "Psychological impact after treatment in patients with head and neck cancer"
 date: 2023
 publishDate: 2023
@@ -52,7 +53,7 @@ links:
 name: DOI
 url: "https://doi.org/10.4317/medoral.25878"
 
-
+---
 title: "Managing customer experience dimensions in B2B express delivery services for better customer satisfaction: a PLS-SEM illustration"
 date: 2023
 publishDate: 2023
@@ -66,10 +67,7 @@ links:
 
 name: DOI
 url: "https://doi.org/10.1108/IJPDLM-04-2022-0127"
-
-
-
-
+---
 title: "The impact of home confinement by COVID-19 on mood state and adaptive behaviors in Spanish swimmers"
 date: 2023
 publishDate: 2023
@@ -82,9 +80,7 @@ url_pdf: "https://doi.org/10.29359/BJHPA.15.3.04"
 links:
 name: DOI
 url: "https://doi.org/10.29359/BJHPA.15.3.04"
-
-
-
+---
 title: "Efectos psicológicos del confinamiento por la COVID-19 en competidores de remo"
 date: 2023
 publishDate: 2023
@@ -95,7 +91,7 @@ featured: false
 publication: "Revista de Psicología Del Deporte"
 url_pdf: "https://www.rpd-online.com/index.php/rpd/article/view/1040"
 links:
-
+---
 name: URL
 url: "https://www.rpd-online.com/index.php/rpd/article/view/1040"
 title: "Risk Decision Making and Executive Function among Adolescents and Young Adults"
@@ -108,7 +104,7 @@ featured: false
 publication: "Behavioral sciences"
 url_pdf: "https://doi.org/10.3390/bs13020142"
 links:
-
+---
 name: DOI
 url: "https://doi.org/10.3390/bs13020142"
 title: "The Effect of Social Relationships on the Well-Being and Happiness of Older Adults Living Alone or with Relatives"
@@ -121,7 +117,7 @@ featured: false
 publication: "Healthcare"
 url_pdf: "https://doi.org/10.3390/healthcare11020222"
 links:
-
+---
 name: DOI
 url: "https://doi.org/10.3390/healthcare11020222"
 title: "Multilevel meta-analysis of school mindfulness-based intervention programs in Spain"
@@ -134,7 +130,7 @@ featured: false
 publication: "Revista de psicodidáctica"
 url_pdf: "https://doi.org/10.4317/medoral.25878"
 links:
-
+---
 name: DOI
 url: "https://doi.org/10.4317/medoral.25878"
 title: "Dimensions of athlete-coach relationship and sport anxiety as predictors of the changes in psychomotor and motivational welfare of child athletes after the implementation of the psychological workshops for coaches"
@@ -147,7 +143,7 @@ featured: false
 publication: "International Journal of Environmental Research and Public Health"
 url_pdf: "https://doi.org/10.3390/ijerph19063462"
 links:
-
+---
 name: DOI
 url: "https://doi.org/10.3390/ijerph19063462"
 title: "A Moderated Mediation Model of Wellbeing and Competitive Anxiety in Male Marathon Runners"
@@ -160,7 +156,7 @@ featured: false
 publication: "Frontiers in Psychology"
 url_pdf: "https://doi.org/10.3389/FPSYG.2022.800024"
 links:
-
+---
 name: DOI
 url: "https://doi.org/10.3389/FPSYG.2022.800024"
 title: "Inteligencia emocional percibida e intención de consumo de alcohol y marihuana en adolescentes"
@@ -173,7 +169,7 @@ featured: false
 publication: "Revista española de drogodependencias"
 url_pdf: "https://doi.org/10.4317/medoral.25878"
 links:
-
+---
 name: DOI
 url: "https://doi.org/10.4317/medoral.25878"
 title: "Levels of Plasma Coenzyme Q10 Are Associated with Physical Capacity and Cardiovascular Risk in the Elderly"
@@ -189,8 +185,5 @@ links:
 
 name: DOI
 url: "https://doi.org/10.3390/antiox11020279"
-
-
-
 
 ---
