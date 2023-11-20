@@ -10,7 +10,7 @@ active: true
 # Order that this section appears on the page.
 weight: 90
 
-title: Recent Publications
+title: Publicaciones
 subtitle: ''
 
 content:
@@ -42,22 +42,22 @@ design:
 II.1.1.	ÁRTICULOS EN REVISTAS INDEXADAS.
 
 Reyes, I., Arenilla, M., Alarcón, D., Jaenes, J., & Trujillo, M. (2023). Psychological impact after treatment in patients with head and neck cancer. Medicina Oral Patología Oral y Cirugia Bucal, e467-e473. https://doi.org/10.4317/medoral.25878 
-[PDF](https://drive.google.com/file/d/1NkpOcrwWUvUpDXcxz7_vJ2o3nDmsJWE7/view?usp=sharing)
+[**PDF**](https://drive.google.com/file/d/1NkpOcrwWUvUpDXcxz7_vJ2o3nDmsJWE7/view?usp=sharing)
 
 Cepeda-Carrión, I., Alarcon-Rubio, D., Correa-Rodriguez, C. and Cepeda-Carrion, G. (2023), Managing customer experience dimensions in B2B express delivery services for better customer satisfaction: a PLS-SEM illustration, International Journal of Physical Distribution & Logistics Management, Vol. ahead-of-print No. ahead-of-print. https://doi.org/10.1108/IJPDLM-04-2022-0127
-[PDF](https://drive.google.com/file/d/1NkpOcrwWUvUpDXcxz7_vJ2o3nDmsJWE7/view?usp=sharing)
+[**PDF**](https://drive.google.com/file/d/11Pqnn2nnywi2icNPFHEOBEgN6G7Y-xi5/view?usp=sharing)
 
 Jaenes, J. C., Alarcón, D., Arenilla, M. J., & Wilczynska, D. (2023). The impact of home confinement by COVID-19 on mood state and adaptive behaviors in Spanish swimmers. Baltic Journal of Health and Physical Activity, 15(3). https://doi.org/10.29359/BJHPA.15.3.04
-[PDF](https://drive.google.com/file/d/1NkpOcrwWUvUpDXcxz7_vJ2o3nDmsJWE7/view?usp=sharing)
+[**PDF**](https://drive.google.com/file/d/15lYOkEfvxlRNJfeoM369MHW4suSeUb1l/view?usp=sharing)
 
 Costa-Agudo, M., Villalba, M. J. A., Alarcón, D., Peñaloza-Gómez, R., Ponce-Carbajal, N., & Sánchez, J. C. J. (2023). Efectos psicológicos del confinamiento por la COVID-19 en competidores de remo. Revista de Psicología Del Deporte, 32(1), 13–20. https://www.rpd-online.com/index.php/rpd/article/view/1040
-[PDF](https://drive.google.com/file/d/1NkpOcrwWUvUpDXcxz7_vJ2o3nDmsJWE7/view?usp=sharing)
+[**PDF**](https://drive.google.com/file/d/15l_4pzaGgfoW2OSKNLAIBgLzG36R9_Jn/view?usp=sharing)
 
 Marquez-Ramos, F., Alarcon, D., Amian, J. G., Fernandez-Portero, C., Arenilla-Villalba, M. J., & Sanchez-Medina, J. (2023). Risk Decision Making and Executive Function among Adolescents and Young Adults. Behavioral sciences. https://doi.org/10.3390/bs13020142
-[PDF](https://drive.google.com/file/d/1NkpOcrwWUvUpDXcxz7_vJ2o3nDmsJWE7/view?usp=sharing)
+[**PDF**](https://drive.google.com/file/d/15pYV-aadeZEiTyAPmrQYUP64tl41Ku3s/view?usp=sharing)
 
 Fernandez-Portero, C., Amian, J. G., Alarcón, D., Arenilla Villalba, M. J., & Sánchez-Medina, J. A. (2023). The Effect of Social Relationships on the Well-Being and Happiness of Older Adults Living Alone or with Relatives. Healthcare, 11(2). https://doi.org/10.3390/healthcare11020222
-[PDF](https://drive.google.com/file/d/1NkpOcrwWUvUpDXcxz7_vJ2o3nDmsJWE7/view?usp=sharing)
+[**PDF**](https://drive.google.com/file/d/15ppBvhBxc_F_dePWU88aFBdBHqJBTw9v/view?usp=sharing)
 
 Arenilla Villalba, M. J., Alarcón, D., Povedano, M.A. (2022). Multilevel meta-analysis of school mindfulness-based intervention programs in Spain. Revista de psicodidáctica, 27(2), 109-117.
 [PDF](https://drive.google.com/file/d/1NkpOcrwWUvUpDXcxz7_vJ2o3nDmsJWE7/view?usp=sharing)
