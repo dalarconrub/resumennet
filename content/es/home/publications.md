@@ -41,7 +41,7 @@ design:
 
 II.1.1.	ÁRTICULOS EN REVISTAS INDEXADAS.
 
-Reyes, I., Arenilla, M., Alarcón, D., Jaenes, J., & Trujillo, M. (2023). Psychological impact after treatment in patients with head and neck cancer. Medicina Oral Patología Oral y Cirugia Bucal, e467-e473. https://doi.org/10.4317/medoral.25878 
+Reyes, I., Arenilla, M., Alarcón, D., Jaenes, J., & Trujillo, M. (2023). Psychological impact after treatment in patients with head and neck cancer. Medicina Oral Patología Oral y Cirugia Bucal, e467-e473. https://doi.org/10.4317/medoral.25878
 [**PDF**](https://drive.google.com/file/d/1NkpOcrwWUvUpDXcxz7_vJ2o3nDmsJWE7/view?usp=sharing)
 
 Cepeda-Carrión, I., Alarcon-Rubio, D., Correa-Rodriguez, C. and Cepeda-Carrion, G. (2023), Managing customer experience dimensions in B2B express delivery services for better customer satisfaction: a PLS-SEM illustration, International Journal of Physical Distribution & Logistics Management, Vol. ahead-of-print No. ahead-of-print. https://doi.org/10.1108/IJPDLM-04-2022-0127
