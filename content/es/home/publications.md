@@ -36,11 +36,9 @@ design:
   #   3 = Card
   #   4 = Citation (publication only)
   view: 4
----
----
+
 
 title: "The impact of home confinement by COVID-19 on mood state and adaptive behaviors in Spanish swimmers"
-
 date: 2023
 publishDate: 2023
 authors: ["Jaenes, J.", "Alarcón, D.", "Arenilla, M.", "Wilczynska, D."]
@@ -50,12 +48,6 @@ featured: false
 publication: "Baltic Journal of Health and Physical Activity"
 url_pdf: "https://doi.org/10.29359/BJHPA.15.3.04"
 links:
-
 name: DOI
 url: "https://doi.org/10.29359/BJHPA.15.3.04"
-
----
-
-
-
 ---
